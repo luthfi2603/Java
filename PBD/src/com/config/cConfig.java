@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 
 public class cConfig {
     // ini untuk mendefinisikan koneksi database kita
-    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    // private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/dbbarang";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
@@ -21,7 +21,8 @@ public class cConfig {
         // method untuk melakukan koneksi ke database
         try {
             // registrasi driver yang akan dipakai
-            Class.forName(JDBC_DRIVER);
+            // Class.forName(JDBC_DRIVER);
+            // DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 
             // buat koneksi ke database
             connect = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
@@ -36,7 +37,7 @@ public class cConfig {
         cConfig.connection();
 
         // isi nilai default dari variabel data
-        String data = "Maaf data tidak ada.";
+        String data = "";
 
         try {
             // buat object statement yang diambil dari koneksi
@@ -48,21 +49,97 @@ public class cConfig {
             // eksekusi query nya
             resultData = statement.executeQuery(query);
 
-            // set variabel data jadi null
-            data = "";
-
             // looping pengisian variabel data
             while(resultData.next()){
                 data += "ID Barang : " + resultData.getInt("idBarang") + ", Nama barang : " + resultData.getString("namaBarang") + "\n";
+            }
+
+            if(data == ""){
+                throw new Exception("Data tidak ditemukan!");
             }
 
             // close statement dan connection
             statement.close();
             connect.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            // tampilkan error kalo ada error
+            System.out.println("Error : " + e.getMessage());
         }
 
+        // pengembalian string dari method ini
+        return data;
+    }
+
+    public static String detailData(int id){
+        // memanggil static method connection
+        cConfig.connection();
+        // ini adalah nilai default yang dikembalikan
+        String data = "";
+
+        try {
+            // siapin object statement
+            statement = connect.createStatement();
+
+            String query = "SELECT * FROM tblbarang WHERE idBarang = " + id;
+            resultData = statement.executeQuery(query);
+
+            while(resultData.next()){
+                data += "- ID Barang : " + resultData.getInt("idBarang")
+                    + "\n- Nama barang : " + resultData.getString("namaBarang")
+                    + "\n- Stok barang : " + resultData.getInt("stokBarang")
+                    + " buah\n- Harga barang : Rp" + resultData.getInt("hargaBarang");
+            }
+
+            if(data == ""){
+                throw new Exception("Data tidak ditemukan!");
+            }
+
+            // close statement dan connection
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            // tampilkan error kalo ada error
+            System.out.println("Error : " + e.getMessage());
+        }
+
+        // pengembalian string dari method ini
+        return data;
+    }
+
+    public static String cariData(String keyword){
+        // memanggil static method connection
+        cConfig.connection();
+        // ini adalah nilai default yang dikembalikan
+        String data = "";
+
+        try {
+            // siapin object statement
+            statement = connect.createStatement();
+
+            String query = "SELECT * FROM tblbarang WHERE idBarang LIKE '%" + keyword + "%' OR namaBarang LIKE '%" + keyword + "%' OR stokBarang LIKE '%" + keyword + "%' OR hargaBarang LIKE '%" + keyword + "%'";
+            resultData = statement.executeQuery(query);
+
+            while(resultData.next()){
+                data += "- ID Barang : " + resultData.getInt("idBarang")
+                    + "\n- Nama barang : " + resultData.getString("namaBarang")
+                    + "\n- Stok barang : " + resultData.getInt("stokBarang")
+                    + " buah\n- Harga barang : Rp" + resultData.getInt("hargaBarang");
+                data += "\n--------------------------\n";
+            }
+
+            if(data == ""){
+                throw new Exception("Data tidak ditemukan!");
+            }
+
+            // close statement dan connection
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            // tampilkan error kalo ada error
+            System.out.println("Error : " + e.getMessage());
+        }
+
+        // pengembalian string dari method ini
         return data;
     }
 }

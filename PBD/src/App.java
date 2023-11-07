@@ -15,17 +15,17 @@ public class App {
             + "5. Update Data Barang\n"
             + "0. Exit\n"
             + "Pilih [1/2/3/4/5/0] : ");
-            pilihan = input.next();
+            pilihan = input.nextLine();
 
             switch(pilihan){
                 case "1":
                     cView.getAll();
                     break;
                 case "2":
-                    System.out.println("Detail Data Barang");
+                    cView.detailBarang();
                     break;
                 case "3":
-                    System.out.println("Cari Data Barang");
+                    cView.cariData();
                     break;
                 case "4":
                     System.out.println("Tambah Data Barang");
@@ -34,7 +34,7 @@ public class App {
                     System.out.println("Update Data Barang");
                     break;
                 case "0":
-                    System.out.println("Exit");
+                    System.out.println("\nExit");
                     break;
                 default:
                     System.out.println("Pilihan anda salah!");
