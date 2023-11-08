@@ -29,7 +29,7 @@ public class cConfig {
 
             // System.out.println("Koneksi Berhasil");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error : " + e.getMessage());
         }
     }
 
@@ -140,6 +140,28 @@ public class cConfig {
         }
 
         // pengembalian string dari method ini
+        return data;
+    }
+
+    public static boolean tambahData(String namaBarang, int stokBarang, int hargaBarang){
+        cConfig.connection();
+        boolean data = false;
+
+        try {
+            statement = connect.createStatement();
+            String query = "INSERT INTO tblbarang VALUES (NULL, '" + namaBarang + "', " + stokBarang + ", " + hargaBarang + ")";
+            if (statement.execute(query)) {
+                data = false;
+            } else {
+                data = true;
+            }
+
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            System.out.println("Error : " + e.getMessage());
+        }
+
         return data;
     }
 }

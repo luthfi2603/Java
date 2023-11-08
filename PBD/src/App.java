@@ -28,7 +28,7 @@ public class App {
                     cView.cariData();
                     break;
                 case "4":
-                    System.out.println("Tambah Data Barang");
+                    cView.tambahData();
                     break;
                 case "5":
                     System.out.println("Update Data Barang");
