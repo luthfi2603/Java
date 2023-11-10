@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class cView {
     private static Scanner input = new Scanner(System.in);
     private static int id, stokBarang, hargaBarang;
-    private static String keyword, namaBarang;
+    private static String keyword, namaBarang, stokBarangS, hargaBarangS;
 
     public static void getAll(){
         // pesan header
@@ -52,10 +52,36 @@ public class cView {
         // System.out.println("Nama barang : " + namaBarang + ", Stok barang : " + stokBarang + ", Harga barang : " + hargaBarang);
 
         if (cConfig.tambahData(namaBarang, stokBarang, hargaBarang)) {
-            System.out.println("Data barang berhasil ditambahakan!");
+            System.out.println("\nData barang berhasil ditambahakan!");
             cView.getAll();
         } else {
-            System.out.println("Data barang gagal ditambahakan!");
+            System.out.println("\nData barang gagal ditambahakan!");
+        }
+    }
+
+    public static void updateData(){
+        System.out.print("\n::: Update Data Barang :::\n"
+        + "Masukkan ID Barang : ");
+        id = input.nextInt();
+        input.nextLine();
+
+        System.out.print("\nGanti Data Barang\n(Kosongkan jika tidak ingin merubah data)\n"
+        + "Nama barang : ");
+        namaBarang = input.nextLine();
+
+        System.out.print("Stok barang : ");
+        stokBarangS = input.nextLine();
+        
+        System.out.print("Harga barang : ");
+        hargaBarangS = input.nextLine();
+
+        // System.out.println("ID Barang : " + id + ", Nama barang : " + namaBarang + ", Stok barang : " + stokBarang + ", Harga barang : " + hargaBarang);
+
+        if (cConfig.ubahData(id, namaBarang, stokBarangS, hargaBarangS)) {
+            System.out.println("\nData barang berhasil diubah!");
+            cView.getAll();
+        } else {
+            System.out.println("\nData barang gagal diubah!");
         }
     }
 }

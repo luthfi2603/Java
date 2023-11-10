@@ -31,7 +31,7 @@ public class App {
                     cView.tambahData();
                     break;
                 case "5":
-                    System.out.println("Update Data Barang");
+                    cView.updateData();
                     break;
                 case "0":
                     System.out.println("\nExit");

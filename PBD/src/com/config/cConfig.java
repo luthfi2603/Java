@@ -164,4 +164,54 @@ public class cConfig {
 
         return data;
     }
+    
+    public static boolean ubahData(int id, String namaBarang, String stokBarang, String hargaBarang){
+        cConfig.connection();
+        boolean data = false;
+
+        try {
+            statement = connect.createStatement();
+
+            String queryCek = "SELECT * FROM tblbarang WHERE idBarang = " + id,
+            namaCek = "";
+            int stokCek = 0, hargaCek = 0;
+
+            resultData = statement.executeQuery(queryCek);
+
+            while(resultData.next()){
+                namaCek = resultData.getString("namaBarang");
+                stokCek = resultData.getInt("stokBarang");
+                hargaCek = resultData.getInt("hargaBarang");
+            }
+
+            // validasi jika yang diisi di console kosong
+            if(!namaBarang.equalsIgnoreCase("")){
+                namaCek = namaBarang;
+            }
+            if(!stokBarang.equalsIgnoreCase("")){
+                stokCek = Integer.parseInt(stokBarang);
+            }
+            if(!hargaBarang.equalsIgnoreCase("")){
+                hargaCek = Integer.parseInt(hargaBarang);
+            }
+
+            // System.out.println(namaCek + " " + stokCek + " " + hargaCek);
+
+            String query = "UPDATE tblbarang SET namaBarang = '" + namaCek + "', stokBarang = '" + stokCek + "', hargaBarang = '" + hargaCek + "' WHERE idBarang = " + id;
+
+
+            if (statement.execute(query)) {
+                data = false;
+            } else {
+                data = true;
+            }
+
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            System.out.println("Error : " + e.getMessage());
+        }
+
+        return data;
+    }
 }
