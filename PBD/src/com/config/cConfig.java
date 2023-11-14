@@ -34,7 +34,7 @@ public class cConfig {
     }
 
     public static String getAllData(){
-        cConfig.connection();
+        connection();
 
         // isi nilai default dari variabel data
         String data = "";
@@ -44,7 +44,7 @@ public class cConfig {
             statement = connect.createStatement();
 
             // query select all data from database
-            String query = "SELECT idBarang, namaBarang FROM tblbarang";
+            String query = "SELECT idBarang, namaBarang FROM tblbarang WHERE isActive = '1'";
 
             // eksekusi query nya
             resultData = statement.executeQuery(query);
@@ -72,7 +72,7 @@ public class cConfig {
 
     public static String detailData(int id){
         // memanggil static method connection
-        cConfig.connection();
+        connection();
         // ini adalah nilai default yang dikembalikan
         String data = "";
 
@@ -80,7 +80,7 @@ public class cConfig {
             // siapin object statement
             statement = connect.createStatement();
 
-            String query = "SELECT * FROM tblbarang WHERE idBarang = " + id;
+            String query = "SELECT * FROM tblbarang WHERE isActive = '1' AND idBarang = " + id;
             resultData = statement.executeQuery(query);
 
             while(resultData.next()){
@@ -108,7 +108,7 @@ public class cConfig {
 
     public static String cariData(String keyword){
         // memanggil static method connection
-        cConfig.connection();
+        connection();
         // ini adalah nilai default yang dikembalikan
         String data = "";
 
@@ -116,7 +116,7 @@ public class cConfig {
             // siapin object statement
             statement = connect.createStatement();
 
-            String query = "SELECT * FROM tblbarang WHERE idBarang LIKE '%" + keyword + "%' OR namaBarang LIKE '%" + keyword + "%' OR stokBarang LIKE '%" + keyword + "%' OR hargaBarang LIKE '%" + keyword + "%'";
+            String query = "SELECT * FROM tblbarang WHERE isActive = '1' AND (idBarang LIKE '%" + keyword + "%' OR namaBarang LIKE '%" + keyword + "%' OR stokBarang LIKE '%" + keyword + "%' OR hargaBarang LIKE '%" + keyword + "%')";
             resultData = statement.executeQuery(query);
 
             while(resultData.next()){
@@ -144,12 +144,12 @@ public class cConfig {
     }
 
     public static boolean tambahData(String namaBarang, int stokBarang, int hargaBarang){
-        cConfig.connection();
+        connection();
         boolean data = false;
 
         try {
             statement = connect.createStatement();
-            String query = "INSERT INTO tblbarang VALUES (NULL, '" + namaBarang + "', " + stokBarang + ", " + hargaBarang + ")";
+            String query = "INSERT INTO tblbarang VALUES (NULL, '" + namaBarang + "', " + stokBarang + ", " + hargaBarang + ", '1')";
             if (statement.execute(query)) {
                 data = false;
             } else {
@@ -166,7 +166,7 @@ public class cConfig {
     }
     
     public static boolean ubahData(int id, String namaBarang, String stokBarang, String hargaBarang){
-        cConfig.connection();
+        connection();
         boolean data = false;
 
         try {
@@ -203,6 +203,29 @@ public class cConfig {
             if (statement.execute(query)) {
                 data = false;
             } else {
+                data = true;
+            }
+
+            statement.close();
+            connect.close();
+        } catch (Exception e) {
+            System.out.println("Error : " + e.getMessage());
+        }
+
+        return data;
+    }
+
+    public static boolean deleteData(int id){
+        connection();
+        boolean data = false;
+
+        try {
+            statement = connect.createStatement();
+
+            // String query = "DELETE FROM tblbarang WHERE idBarang = " + id;
+            String query = "UPDATE tblbarang SET isActive = '0' WHERE idBarang = " + id;
+
+            if(!statement.execute(query)){
                 data = true;
             }
 

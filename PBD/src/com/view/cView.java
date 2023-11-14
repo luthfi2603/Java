@@ -15,25 +15,29 @@ public class cView {
             + "3. Cari Data Barang\n"
             + "4. Tambah Data Barang\n"
             + "5. Update Data Barang\n"
+            + "6. Delete Data Barang\n"
             + "0. Exit\n"
             + "Pilih [1/2/3/4/5/0] : ");
             pilihan = input.nextLine();
 
             switch(pilihan){
                 case "1":
-                    cView.getAll();
+                    getAll();
                     break;
                 case "2":
-                    cView.detailBarang();
+                    detailBarang();
                     break;
                 case "3":
-                    cView.cariData();
+                    cariData();
                     break;
                 case "4":
-                    cView.tambahData();
+                    tambahData();
                     break;
                 case "5":
-                    cView.updateData();
+                    updateData();
+                    break;
+                case "6":
+                    deleteData();
                     break;
                 case "0":
                     System.out.println("\nExit");
@@ -95,7 +99,7 @@ public class cView {
 
         if (cConfig.tambahData(namaBarang, stokBarang, hargaBarang)) {
             System.out.println("\nData barang berhasil ditambahakan!");
-            cView.getAll();
+            getAll();
         } else {
             System.out.println("\nData barang gagal ditambahakan!");
         }
@@ -121,9 +125,23 @@ public class cView {
 
         if (cConfig.ubahData(id, namaBarang, stokBarangS, hargaBarangS)) {
             System.out.println("\nData barang berhasil diubah!");
-            cView.getAll();
+            getAll();
         } else {
             System.out.println("\nData barang gagal diubah!");
+        }
+    }
+    
+    public static void deleteData(){
+        System.out.print("\n::: Delete Data Barang :::\n"
+        + "Masukkan ID Barang : ");
+        id = input.nextInt();
+        input.nextLine();
+
+        if (cConfig.deleteData(id)) {
+            System.out.println("\nData barang berhasil dihapus!");
+            getAll();
+        } else {
+            System.out.println("\nData barang gagal dihapus!");
         }
     }
 }
