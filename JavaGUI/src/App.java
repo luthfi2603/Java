@@ -2,6 +2,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -46,17 +49,41 @@ public class App {
         title.setFont(new Font("Times New Roman Bold", Font.PLAIN, 30));
         
         JLabel nama = new JLabel("Nama");
-        nama.setBounds(20, 70, 300, 20);
-        nama.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        nama.setBounds(20, 70, 300, 24);
+        nama.setFont(new Font("Times New Roman", Font.PLAIN, 24));
         
         JTextField txtNama = new JTextField();
-        txtNama.setBounds(20, 95, 300, 30);
-        txtNama.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+        txtNama.setBounds(20, (int) nama.getLocation().getY() + 29, 500, 30);
+        txtNama.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+
+        JLabel password = new JLabel("Password");
+        password.setBounds(20, (int) txtNama.getLocation().getY() + 50, 300, 24);
+        password.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+        
+        JPasswordField txtPassword = new JPasswordField();
+        txtPassword.setBounds(20, (int) password.getLocation().getY() + 29, 500, 30);
+        txtPassword.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+
+        JLabel alamat = new JLabel("Alamat");
+        alamat.setBounds(20, (int) txtPassword.getLocation().getY() + 50, 300, 24);
+        alamat.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+
+        JTextArea txtAlamat = new JTextArea();
+        txtAlamat.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        txtAlamat.setLineWrap(true);
+        txtAlamat.setWrapStyleWord(true);
+
+        JScrollPane scrollTxtAlamat = new JScrollPane(txtAlamat);
+        scrollTxtAlamat.setBounds(20, (int) alamat.getLocation().getY() + 29, 500, 150);
 
         // finally
         content.add(title);
         content.add(nama);
         content.add(txtNama);
+        content.add(password);
+        content.add(txtPassword);
+        content.add(alamat);
+        content.add(scrollTxtAlamat);
         mainWindow.add(sidebar);
         mainWindow.add(header);
         mainWindow.add(content);
