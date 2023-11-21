@@ -8,6 +8,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -122,6 +126,37 @@ public class App {
         JScrollPane scrollContent = new JScrollPane(content);
         scrollContent.setBounds(200, 70, 938, 570);
 
+        JLabel agama = new JLabel("Agama");
+        agama.setBounds(20, (int) chTouring.getLocation().getY() + 50, 300, 30);
+        agama.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+
+        String[] pilihanAgama = {"Islam", "Kristen", "Hindu", "Buddha"};
+        JComboBox<String> cmbAgama = new JComboBox<String>(pilihanAgama);
+        cmbAgama.setBounds(20, (int) agama.getLocation().getY() + 29, 400, 30);
+        cmbAgama.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        cmbAgama.setBackground(Color.WHITE);
+        cmbAgama.addItem("Katholik");
+
+        JLabel pekerjaan = new JLabel("Pekerjaan");
+        pekerjaan.setBounds(20, (int) cmbAgama.getLocation().getY() + 50, 300, 24);
+        pekerjaan.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+
+        String[] listPekerjaan = {"Programmer", "Designer", "Data Analyst", "Influencer", "Youtuber"};
+        JList<String> lsPekerjaan = new JList<String>(listPekerjaan);
+        lsPekerjaan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+
+        int[] seleksi = {1, 3};
+        lsPekerjaan.setSelectedIndices(seleksi);
+        
+        JScrollPane scrollLsPekerjaan = new JScrollPane(lsPekerjaan);
+        scrollLsPekerjaan.setBounds(20, (int) pekerjaan.getLocation().getY() + 29, 400, 100);
+
+        JButton btnSubmit = new JButton("Submit");
+        btnSubmit.setBounds(20, (int) scrollLsPekerjaan.getLocation().getY() + 120, 120, 40);
+        btnSubmit.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+        btnSubmit.setBackground(new Color(45, 149, 150));
+        btnSubmit.setForeground(new Color(236, 244, 214));
+
         // finally
         content.add(title);
         content.add(nama);
@@ -137,9 +172,30 @@ public class App {
         content.add(chMancing);
         content.add(chGame);
         content.add(chTouring);
+        content.add(agama);
+        content.add(cmbAgama);
+        content.add(pekerjaan);
+        content.add(scrollLsPekerjaan);
+        content.add(btnSubmit);
         mainWindow.add(sidebar);
         mainWindow.add(header);
         mainWindow.add(scrollContent);
         mainWindow.setVisible(true);
+
+        JOptionPane.showMessageDialog(mainWindow, "Anda berhasil membuka aplikasi", "Informasi berhasil", JOptionPane.INFORMATION_MESSAGE);
+        
+        // int konfirmasi = JOptionPane.showConfirmDialog(mainWindow, "Yakin ingin membuka aplikasi?", "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        // System.out.println(konfirmasi);
+
+        // String inputValue = JOptionPane.showInputDialog("Please input a value");
+        // System.out.println(inputValue);
+
+        // Object[] possibleValues = {"First", "Second", "Third"};
+        // Object selectedValues = JOptionPane.showInputDialog(null, "Choose one", "Input", JOptionPane.INFORMATION_MESSAGE, null, possibleValues, possibleValues[0]);
+        // System.out.println(selectedValues);
+        
+        /* Object[] possibleValues = {"First", "Second", "Third"};
+        Object selectedValues = JOptionPane.showOptionDialog(null, "Choose one", "Input", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, possibleValues, possibleValues[2]);
+        System.out.println(selectedValues); */
     }
 }
