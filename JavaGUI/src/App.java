@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -65,9 +67,17 @@ public class App {
         JTextField txtNama = new JTextField();
         txtNama.setBounds(20, (int) nama.getLocation().getY() + 29, 500, 30);
         txtNama.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        
+        JLabel username = new JLabel("Username");
+        username.setBounds(20, (int) txtNama.getLocation().getY() + 50, 300, 24);
+        username.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+        
+        JTextField txtUsername = new JTextField();
+        txtUsername.setBounds(20, (int) username.getLocation().getY() + 29, 500, 30);
+        txtUsername.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 
         JLabel password = new JLabel("Password");
-        password.setBounds(20, (int) txtNama.getLocation().getY() + 50, 300, 24);
+        password.setBounds(20, (int) txtUsername.getLocation().getY() + 50, 300, 24);
         password.setFont(new Font("Times New Roman", Font.PLAIN, 24));
         
         JPasswordField txtPassword = new JPasswordField();
@@ -94,11 +104,13 @@ public class App {
         rdPria.setBounds(20, (int) jenisKelamin.getLocation().getY() + 29, 100, 30);
         rdPria.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         rdPria.setBackground(new Color(236, 244, 214));
+        rdPria.setActionCommand("Pria");
         
         JRadioButton rdPerempuan = new JRadioButton("Perempuan");
         rdPerempuan.setBounds(120, (int) jenisKelamin.getLocation().getY() + 29, 130, 30);
         rdPerempuan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         rdPerempuan.setBackground(new Color(236, 244, 214));
+        rdPerempuan.setActionCommand("Perempuan");
 
         ButtonGroup groupJenisKelamin = new ButtonGroup();
         groupJenisKelamin.add(rdPria);
@@ -157,10 +169,79 @@ public class App {
         btnSubmit.setBackground(new Color(45, 149, 150));
         btnSubmit.setForeground(new Color(236, 244, 214));
 
+        // event handling
+        // buat objek event
+        // cara 1
+        /* ActionListener clickButton = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                // response
+                System.out.println("Hello World");
+            }
+        }; */
+        btnSubmit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                // getter value dari inputan
+                // JTextField
+                String nama = txtNama.getText();
+                String username = txtUsername.getText();
+                // JPasswordField
+                String password = String.valueOf(txtPassword.getPassword());
+                // JTextArea
+                String alamat = txtAlamat.getText();
+                String jenisKelamin = "";
+                String hobi = "";
+                // JComboBox
+                String agama = cmbAgama.getSelectedItem().toString();
+                String pekerjaan = "";
+
+                // JRadioButton
+                try {
+                    jenisKelamin = groupJenisKelamin.getSelection().getActionCommand();
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(mainWindow, "Pilih jenis kelamin!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                // JCheckBox
+                if(chMancing.isSelected()){
+                    hobi += "Mancing,";
+                }
+                if(chGame.isSelected()){
+                    hobi += "Ngegame,";
+                }
+                if(chTouring.isSelected()){
+                    hobi += "Touring,";
+                }
+
+                // JList
+                int indexSelected[] = lsPekerjaan.getSelectedIndices();
+                for(int i = 0; i < indexSelected.length; i++){
+                    pekerjaan += lsPekerjaan.getModel().getElementAt(indexSelected[i]) + ",";
+                }
+
+                String message = 
+                    "Nama : " + nama + "\n"
+                    + "Username : " + username + "\n"
+                    + "Password : " + password + "\n"
+                    + "Alamat : " + alamat + "\n"
+                    + "Jenis Kelamin : " + jenisKelamin + "\n"
+                    + "Hobi : " + hobi + "\n"
+                    + "Agama : " + agama + "\n"
+                    + "Pekerjaan : " + pekerjaan + "\n"
+                ;
+
+                JOptionPane .showMessageDialog(mainWindow, message, "Hasil Inputan", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
         // finally
         content.add(title);
         content.add(nama);
         content.add(txtNama);
+        content.add(username);
+        content.add(txtUsername);
         content.add(password);
         content.add(txtPassword);
         content.add(alamat);
