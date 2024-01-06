@@ -14,6 +14,8 @@ import javax.swing.JScrollPane;
 // import javax.swing.JList;
 // import javax.swing.JButton;
 // import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -71,12 +73,33 @@ public class Table {
         tblUser.setRowHeight(25);
         tblUser.getTableHeader().setReorderingAllowed(false);
         tblUser.setShowVerticalLines(false);
+        tblUser.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblUser.setDragEnabled(true);
 
         dmUser.addRow(new Object[]{"Ibra Rizqy Siregar", "hyohoyh", "19"});
 
         JScrollPane scrollTblUser = new JScrollPane(tblUser);
         scrollTblUser.setBounds(20, (int) title.getLocation().getY() + 45, 600, 300);
         scrollTblUser.getViewport().setBackground(new Color(236, 244, 214));
+
+        // event
+        tblUser.addMouseListener(new java.awt.event.MouseAdapter(){
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent me){
+                int selectedIndex = tblUser.getSelectedRow();
+                String nama = tblUser.getValueAt(selectedIndex, 0).toString();
+                String username = tblUser.getValueAt(selectedIndex, 1).toString();
+                String umur = tblUser.getValueAt(selectedIndex, 2).toString();
+
+                String message = 
+                    "Nama : " + nama + "\n" +
+                    "Username : " + username + "\n" +
+                    "Umur : " + umur
+                ;
+
+                JOptionPane.showMessageDialog(mainWindow, message, "Hasil Seleksi", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
         
         // finally
         content.add(title);
