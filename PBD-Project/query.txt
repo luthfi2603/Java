@@ -1,0 +1,47 @@
+DROP TRIGGER IF EXISTS insert_pulsa_kuota_customer;
+DELIMITER //
+CREATE TRIGGER insert_pulsa_kuota_customer
+AFTER INSERT ON customer
+FOR EACH ROW
+BEGIN
+    INSERT INTO pulsa_kuota_customer VALUES (NULL, NEW.id_customer, 0, 0);
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS insert_saldo_mitra;
+DELIMITER //
+CREATE TRIGGER insert_saldo_mitra
+AFTER INSERT ON mitra
+FOR EACH ROW
+BEGIN
+    INSERT INTO saldo_mitra VALUES (NULL, NEW.id_mitra, 0);
+END //
+DELIMITER ;
+
+DROP VIEW IF EXISTS view_customer;
+CREATE VIEW view_customer AS
+SELECT id_customer, nama_customer, nomor_hp_customer, email_customer, password_customer FROM customer WHERE status_aktif = '1';
+
+DROP VIEW IF EXISTS view_all_mitra;
+CREATE VIEW view_all_mitra AS
+SELECT id_mitra, nama_mitra, email_mitra, password_mitra, status_verifikasi FROM mitra WHERE status_aktif = '1';
+
+DROP VIEW IF EXISTS view_mitra_terverifikasi;
+CREATE VIEW view_mitra_terverifikasi AS
+SELECT id_mitra, nama_mitra, email_mitra, password_mitra, status_verifikasi FROM mitra WHERE status_aktif = '1' AND status_verifikasi = '1';
+
+DROP VIEW IF EXISTS view_mitra_nonverifikasi;
+CREATE VIEW view_mitra_nonverifikasi AS
+SELECT id_mitra, nama_mitra, email_mitra, password_mitra, status_verifikasi FROM mitra WHERE status_aktif = '1' AND status_verifikasi = '0';
+
+DROP VIEW IF EXISTS view_all_paket;
+CREATE VIEW view_all_paket AS
+SELECT id_paket, nama_paket, deskripsi_paket, kuota, harga_paket FROM paket;
+
+DROP VIEW IF EXISTS view_paket_aktif;
+CREATE VIEW view_paket_aktif AS
+SELECT id_paket, nama_paket, deskripsi_paket, kuota, harga_paket FROM paket WHERE status_aktif = '1';
+
+DROP VIEW IF EXISTS view_paket_nonaktif;
+CREATE VIEW view_paket_nonaktif AS
+SELECT id_paket, nama_paket, deskripsi_paket, kuota, harga_paket FROM paket WHERE status_aktif = '0';
