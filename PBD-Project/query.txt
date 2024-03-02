@@ -45,3 +45,184 @@ SELECT id_paket, nama_paket, deskripsi_paket, kuota, harga_paket FROM paket WHER
 DROP VIEW IF EXISTS view_paket_nonaktif;
 CREATE VIEW view_paket_nonaktif AS
 SELECT id_paket, nama_paket, deskripsi_paket, kuota, harga_paket FROM paket WHERE status_aktif = '0';
+
+DROP VIEW IF EXISTS view_pulsa_kuota_customer;
+CREATE VIEW view_pulsa_kuota_customer AS
+SELECT
+    b.id_pulsa_kuota_customer,
+    a.id_customer,
+    a.nama_customer,
+    a.nomor_hp_customer,
+    b.pulsa_customer,
+    b.kuota_customer
+FROM customer a
+INNER JOIN pulsa_kuota_customer b ON b.id_customer = a.id_customer
+WHERE a.status_aktif = '1';
+
+DROP VIEW IF EXISTS view_saldo_mitra;
+CREATE VIEW view_saldo_mitra AS
+SELECT
+    b.id_saldo_mitra,
+    b.id_mitra,
+    a.nama_mitra,
+    a.email_mitra,
+    b.saldo_mitra
+FROM mitra a
+INNER JOIN saldo_mitra b ON b.id_mitra = a.id_mitra
+WHERE a.status_aktif = '1' AND a.status_verifikasi = '1';
+
+DROP VIEW IF EXISTS view_all_transaksi_pulsa;
+CREATE VIEW view_all_transaksi_pulsa AS
+SELECT
+    a.id_transaksi_pulsa,
+    b.id_customer,
+    b.nama_customer,
+    b.nomor_hp_customer,
+    a.jumlah_pulsa,
+    c.id_mitra,
+    c.nama_mitra,
+    a.waktu_transaksi,
+    a.status_transaksi
+FROM transaksi_pulsa a
+INNER JOIN customer b ON b.id_customer = a.id_customer
+INNER JOIN mitra c ON c.id_mitra = a.id_mitra
+WHERE a.status_aktif = '1';
+
+DROP VIEW IF EXISTS view_pending_transaksi_pulsa;
+CREATE VIEW view_pending_transaksi_pulsa AS
+SELECT
+    a.id_transaksi_pulsa,
+    b.id_customer,
+    b.nama_customer,
+    b.nomor_hp_customer,
+    a.jumlah_pulsa,
+    a.waktu_transaksi,
+    a.status_transaksi
+FROM transaksi_pulsa a
+INNER JOIN customer b ON b.id_customer = a.id_customer
+WHERE 
+    a.status_aktif = '1' AND 
+    a.status_transaksi = 'diproses' AND 
+    b.status_aktif = '1';
+
+DROP VIEW IF EXISTS view_done_transaksi_pulsa;
+CREATE VIEW view_done_transaksi_pulsa AS
+SELECT
+    a.id_transaksi_pulsa,
+    b.id_customer,
+    b.nama_customer,
+    b.nomor_hp_customer,
+    a.jumlah_pulsa,
+    c.id_mitra,
+    c.nama_mitra,
+    a.waktu_transaksi,
+    a.status_transaksi
+FROM transaksi_pulsa a
+INNER JOIN customer b ON b.id_customer = a.id_customer
+INNER JOIN mitra c ON c.id_mitra = a.id_mitra
+WHERE 
+    a.status_aktif = '1' AND 
+    a.status_transaksi = 'selesai';
+
+DROP VIEW IF EXISTS view_all_transaksi_paket;
+CREATE VIEW view_all_transaksi_paket AS
+SELECT
+    a.id_transaksi_paket,
+    b.id_customer,
+    b.nama_customer,
+    b.nomor_hp_customer,
+    c.id_paket,
+    c.nama_paket,
+    c.kuota,
+    c.harga_paket,
+    a.waktu_transaksi,
+    a.status_transaksi
+FROM transaksi_paket a
+INNER JOIN customer b ON b.id_customer = a.id_customer
+INNER JOIN paket c ON c.id_paket = a.id_paket
+WHERE a.status_aktif = '1';
+
+DROP VIEW IF EXISTS view_pending_transaksi_paket;
+CREATE VIEW view_pending_transaksi_paket AS
+SELECT
+    a.id_transaksi_paket,
+    b.id_customer,
+    b.nama_customer,
+    b.nomor_hp_customer,
+    c.id_paket,
+    c.nama_paket,
+    c.kuota,
+    c.harga_paket,
+    a.waktu_transaksi,
+    a.status_transaksi
+FROM transaksi_paket a
+INNER JOIN customer b ON b.id_customer = a.id_customer
+INNER JOIN paket c ON c.id_paket = a.id_paket
+WHERE 
+    a.status_aktif = '1' AND 
+    a.status_transaksi = 'diproses' AND 
+    b.status_aktif = '1';
+
+DROP VIEW IF EXISTS view_done_transaksi_paket;
+CREATE VIEW view_done_transaksi_paket AS
+SELECT
+    a.id_transaksi_paket,
+    b.id_customer,
+    b.nama_customer,
+    b.nomor_hp_customer,
+    c.id_paket,
+    c.nama_paket,
+    c.kuota,
+    c.harga_paket,
+    a.waktu_transaksi,
+    a.status_transaksi
+FROM transaksi_paket a
+INNER JOIN customer b ON b.id_customer = a.id_customer
+INNER JOIN paket c ON c.id_paket = a.id_paket
+WHERE 
+    a.status_aktif = '1' AND 
+    a.status_transaksi = 'selesai';
+
+DROP VIEW IF EXISTS view_all_transaksi_saldo;
+CREATE VIEW view_all_transaksi_saldo AS
+SELECT
+    a.id_transaksi_saldo,
+    b.id_mitra,
+    b.nama_mitra,
+    a.jumlah_saldo,
+    a.waktu_transaksi,
+    a.status_transaksi
+FROM transaksi_saldo a
+INNER JOIN mitra b ON b.id_mitra = a.id_mitra
+WHERE a.status_aktif = '1';
+
+DROP VIEW IF EXISTS view_pending_transaksi_saldo;
+CREATE VIEW view_pending_transaksi_saldo AS
+SELECT
+    a.id_transaksi_saldo,
+    b.id_mitra,
+    b.nama_mitra,
+    a.jumlah_saldo,
+    a.waktu_transaksi,
+    a.status_transaksi
+FROM transaksi_saldo a
+INNER JOIN mitra b ON b.id_mitra = a.id_mitra
+WHERE 
+    a.status_aktif = '1' AND
+    a.status_transaksi = 'diproses' AND
+    b.status_aktif = '1';
+
+DROP VIEW IF EXISTS view_done_transaksi_saldo;
+CREATE VIEW view_done_transaksi_saldo AS
+SELECT
+    a.id_transaksi_saldo,
+    b.id_mitra,
+    b.nama_mitra,
+    a.jumlah_saldo,
+    a.waktu_transaksi,
+    a.status_transaksi
+FROM transaksi_saldo a
+INNER JOIN mitra b ON b.id_mitra = a.id_mitra
+WHERE 
+    a.status_aktif = '1' AND
+    a.status_transaksi = 'selesai';
