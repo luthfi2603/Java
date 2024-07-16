@@ -226,3 +226,23 @@ INNER JOIN mitra b ON b.id_mitra = a.id_mitra
 WHERE 
     a.status_aktif = '1' AND
     a.status_transaksi = 'selesai';
+
+DROP TRIGGER IF EXISTS upadate_pulsa_customer;
+DELIMITER //
+CREATE TRIGGER upadate_pulsa_customer
+AFTER UPDATE ON transaksi_pulsa
+FOR EACH ROW
+BEGIN
+    UPDATE pulsa_kuota_customer SET pulsa_customer = pulsa_customer + OLD.jumlah_pulsa WHERE id_customer = OLD.id_customer;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS upadate_saldo_mitra;
+DELIMITER //
+CREATE TRIGGER upadate_saldo_mitra
+AFTER UPDATE ON transaksi_saldo
+FOR EACH ROW
+BEGIN
+    UPDATE saldo_mitra SET saldo_mitra = saldo_mitra + OLD.jumlah_saldo WHERE id_mitra = OLD.id_mitra;
+END //
+DELIMITER ;
