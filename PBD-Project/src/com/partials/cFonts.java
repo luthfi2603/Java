@@ -4,4 +4,10 @@ import java.awt.Font;
 
 public class cFonts {
     public static final Font TITLE_START_FONT = new Font("Poppins Semibold", Font.PLAIN, 26);
+    public static final Font EXIT_LINK_FONT = new Font("Poppins Bold", Font.PLAIN, 20);
+    public static final Font FORM_LABEL_FONT = new Font("Poppins Medium", Font.PLAIN, 18);
+    public static final Font TEXTFIELD_FONT = new Font("Poppins Regular", Font.PLAIN, 14);
+    public static final Font ERROR_LABEL_FONT = new Font("Poppins Light", Font.PLAIN, 12);
+    public static final Font START_LINK_FONT = new Font("Poppins Regular", Font.PLAIN, 12);
+    public static final Font BUTTON_FONT = new Font("Poppins Bold", Font.PLAIN, 16);
 }

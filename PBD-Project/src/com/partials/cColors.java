@@ -2,7 +2,7 @@ package com.partials;
 
 import java.awt.Color;
 
-public class cColor {
+public class cColors {
     public static final Color BLUE = new Color(90, 46, 161);
     public static final Color RED = new Color(255, 64, 129);
     public static final Color BLACK = new Color(0, 0, 0);
