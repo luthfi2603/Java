@@ -4,17 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.partials.cBigFont;
-import com.partials.cCheckBox;
 import com.partials.cColors;
 import com.partials.cExitLink;
 import com.partials.cFonts;
-import com.partials.cInfoLabel;
-import com.partials.cRadioButton;
-import com.partials.cScrollPane;
-import com.partials.cSidebarMenu;
-import com.partials.cTable;
-import com.partials.cTextArea;
 
 public abstract class cDashboardFrame extends JFrame {
     public JPanel sidebar = new JPanel();
@@ -28,23 +20,6 @@ public abstract class cDashboardFrame extends JFrame {
     public JLabel copyrightText = new JLabel("Copyright 2024, Muhammad Luthfi");
 
     public cExitLink exitLink = new cExitLink(938);
-
-    public cInfoLabel infoPulsa = new cInfoLabel("Sisa pulsa anda", 25, 25);
-
-    public cBigFont valuePulsa = new cBigFont("15.000", 25, 60);
-
-    public cRadioButton rd1 = new cRadioButton("Pilihan 1", "pilihan1", 25, 150, 100);
-    
-    public cCheckBox ch1 = new cCheckBox("Checkbox 1", "checkbox", 200, 150, 100);
-    
-    public cSidebarMenu berandaMenu = new cSidebarMenu("Beranda", 70);
-    
-    public cTextArea txtArea = new cTextArea(false);
-
-    public cScrollPane sp = new cScrollPane(txtArea, 25, (int) ch1.getLocation().getY() + 44, 300, 100);
-    
-    public cTable tableUser;
-    public cScrollPane spTable;
 
     public cDashboardFrame(){
         super();
@@ -93,28 +68,7 @@ public abstract class cDashboardFrame extends JFrame {
         copyrightText.setHorizontalAlignment(JLabel.CENTER);
         copyrightText.setVerticalAlignment(JLabel.CENTER);
 
-        txtArea.setText("Deserunt elit amet minim incididunt consequat veniam laborum est. Ut non laboris exercitation duis. Ea esse minim elit consectetur nulla. Ipsum aliquip commodo sunt sint nulla elit. Voluptate labore consequat exercitation do in et laboris. Nisi id non elit mollit anim ex commodo. Voluptate nostrud ea labore magna deserunt ad sint eu anim duis cupidatat aliquip.");
-
-        String[] dataUserHeader = {"Nama", "Username", "Umur"};
-        String[][] dataUser = {
-            {"Muhammad Luthfi", "ZeeroXc", "19"},
-            {"Rifqi Jabrah Rhae", "fortyche", "19"}
-        };
-
-        javax.swing.table.DefaultTableModel dmUser = new javax.swing.table.DefaultTableModel(dataUser, dataUserHeader);
-
-        tableUser = new cTable(dmUser);
-        spTable = new cScrollPane(tableUser, 348, (int) ch1.getLocation().getY() + 44, 500, 100);
-
-        content.add(infoPulsa);
-        content.add(valuePulsa);
-        content.add(rd1);
-        content.add(ch1);
-        content.add(sp);
-        content.add(spTable);
-
         sidebar.add(appText);
-        sidebar.add(berandaMenu);
         
         header.add(roleText);
         header.add(exitLink);

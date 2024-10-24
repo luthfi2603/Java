@@ -12,7 +12,7 @@ public abstract class cStartFrame extends JFrame {
     public JPanel bg = new JPanel();
     public JPanel cardStart = new JPanel();
     public cExitLink exitLink = new cExitLink(1168);
-    public JLabel titleStart = new JLabel("Title Start");
+    public JLabel titleStart = new JLabel();
 
     public cStartFrame(){
         super();
