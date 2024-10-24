@@ -1,10 +1,10 @@
 package com.program;
 
-import com.templates.cStartFrame;
+import com.templates.cDashboardFrame;
 
 public class App {
     public static void main(String[] args){
-        cStartFrame startFrame = new cStartFrame("Template Start");
-        startFrame.setVisible(true);
+        cDashboardFrame templateDashboard = new cDashboardFrame();
+        templateDashboard.setVisible(true);
     }
 }

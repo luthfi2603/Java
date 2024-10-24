@@ -10,4 +10,7 @@ public class cFonts {
     public static final Font ERROR_LABEL_FONT = new Font("Poppins Light", Font.PLAIN, 12);
     public static final Font START_LINK_FONT = new Font("Poppins Regular", Font.PLAIN, 12);
     public static final Font BUTTON_FONT = new Font("Poppins Bold", Font.PLAIN, 16);
+    public static final Font APP_FONT = new Font("Poppins Bold", Font.PLAIN, 30);
+    public static final Font ROLE_FONT = new Font("Poppins Semibold", Font.PLAIN, 20);
+    public static final Font MENU_TITLE_FONT = new Font("Poppins Semibold", Font.PLAIN, 36);
 }
