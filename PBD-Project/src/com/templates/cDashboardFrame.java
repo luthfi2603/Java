@@ -4,9 +4,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.partials.cBigFont;
+import com.partials.cCheckBox;
 import com.partials.cColors;
 import com.partials.cExitLink;
 import com.partials.cFonts;
+import com.partials.cInfoLabel;
+import com.partials.cRadioButton;
 
 public class cDashboardFrame extends JFrame {
     public JPanel sidebar = new JPanel();
@@ -17,8 +21,16 @@ public class cDashboardFrame extends JFrame {
     private JLabel appText = new JLabel("PulsaKu");
     public JLabel roleText = new JLabel("Role | Nama User");
     public JLabel menuTitle = new JLabel("Menu Title");
+    public JLabel copyrightText = new JLabel("Copyright 2024, Muhammad Luthfi");
 
     public cExitLink exitLink = new cExitLink(938);
+
+    public cInfoLabel infoPulsa = new cInfoLabel("Sisa pulsa anda", 25, 25);
+    public cBigFont valuePulsa = new cBigFont("15.000", 25, 60);
+
+    public cRadioButton rd1 = new cRadioButton("Pilihan 1", "pilihan1", 25, 150, 100);
+    
+    public cCheckBox ch1 = new cCheckBox("Checkbox 1", "checkbox", 200, 150, 100);
 
     public cDashboardFrame(){
         super();
@@ -60,6 +72,17 @@ public class cDashboardFrame extends JFrame {
         menuTitle.setBounds(30, 10, 600, 50);
         menuTitle.setForeground(cColors.BLACK_GRAY);
         menuTitle.setVerticalAlignment(JLabel.CENTER);
+        
+        copyrightText.setFont(cFonts.TEXTFIELD_FONT);
+        copyrightText.setBounds(0, 610, 1050, 20);
+        copyrightText.setForeground(cColors.GRAY);
+        copyrightText.setHorizontalAlignment(JLabel.CENTER);
+        copyrightText.setVerticalAlignment(JLabel.CENTER);
+
+        content.add(infoPulsa);
+        content.add(valuePulsa);
+        content.add(rd1);
+        content.add(ch1);
 
         sidebar.add(appText);
         
@@ -68,6 +91,7 @@ public class cDashboardFrame extends JFrame {
         
         main.add(content);
         main.add(menuTitle);
+        main.add(copyrightText);
 
         add(sidebar);
         add(header);
