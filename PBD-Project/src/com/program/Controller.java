@@ -18,11 +18,15 @@ public class Controller {
     }
     
     public static void showLoginMitra(){
-        
+        frameLoginAndRegister.setVisible(false);
+        frameLoginAndRegister.initsLoginMitra();
+        frameLoginAndRegister.setVisible(true);
     }
     
     public static void showDaftarMitra(){
-        
+        frameLoginAndRegister.setVisible(false);
+        frameLoginAndRegister.initsDaftarMitra();
+        frameLoginAndRegister.setVisible(true);
     }
     
     public static void showLoginAdmin(){
