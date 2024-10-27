@@ -1,16 +1,22 @@
 package com.views;
 
-import com.templates.cStartFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import com.partials.*;
+import com.program.Controller;
+import com.templates.cStartFrame;
 
 public class StartView extends cStartFrame {
     // komponen di halaman login customer
     private cFormLabel labelNoHpLoginCustomer = new cFormLabel("Nomor HP", 0, 84, 450, true);
     private cTextField txtNoHpLoginCustomer = new cTextField(65, 114, 320, true);
-    private cErrorLabel errorNoHpLoginCustomer = new cErrorLabel("Nomor HP kosong/salah!", 0, 149, 450, true);
+    private cErrorLabel errorNoHpLoginCustomer = new cErrorLabel("Nomor HP kosong!", 0, 149, 450, true);
     private cFormLabel labelPasswordLoginCustomer = new cFormLabel("Password", 0, 183, 450, true);
     private cPasswordField txtPasswordLoginCustomer = new cPasswordField(65, 213, 320, true);
-    private cErrorLabel errorPasswordLoginCustomer = new cErrorLabel("Password kosong/salah!", 0, 248, 450, true);
+    private cErrorLabel errorPasswordLoginCustomer = new cErrorLabel("Password kosong!", 0, 248, 450, true);
     private cBlueButton btnLoginLoginCustomer = new cBlueButton("Login", 65, 282, 320);
     private cStartLink toLoginMitraLoginCustomer = new cStartLink("Sudah punya akun mitra?", 322);
     private cStartLink toDaftarMitraLoginCustomer = new cStartLink("Daftar sebagai mitra", 342);
@@ -20,13 +26,13 @@ public class StartView extends cStartFrame {
     // komponen di halaman daftar customer
     private cFormLabel labelNamaDaftarCustomer = new cFormLabel("Nama", 0, 84, 450, true);
     private cTextField txtNamaDaftarCustomer = new cTextField(65, 114, 320, true);
-    private cErrorLabel errorNamaDaftarCustomer = new cErrorLabel("Nama kosong/salah!", 0, 149, 450, true);
+    private cErrorLabel errorNamaDaftarCustomer = new cErrorLabel("Nama kosong!", 0, 149, 450, true);
     private cFormLabel labelNoHpDaftarCustomer = new cFormLabel("Nomor HP", 0, 183, 450, true);
     private cTextField txtNoHpDaftarCustomer = new cTextField(65, 213, 320, true);
-    private cErrorLabel errorNoHpDaftarCustomer = new cErrorLabel("Nomor HP kosong/salah!", 0, 248, 450, true);
+    private cErrorLabel errorNoHpDaftarCustomer = new cErrorLabel("Nomor HP kosong!", 0, 248, 450, true);
     private cFormLabel labelPasswordDaftarCustomer = new cFormLabel("Password", 0, 282, 450, true);
     private cPasswordField txtPasswordDaftarCustomer = new cPasswordField(65, 312, 320, true);
-    private cErrorLabel errorPasswordDaftarCustomer = new cErrorLabel("Password kosong/salah!", 0, 347, 450, true);
+    private cErrorLabel errorPasswordDaftarCustomer = new cErrorLabel("Password kosong!", 0, 347, 450, true);
     private cBlueButton btnDaftarDaftarCustomer = new cBlueButton("Daftar", 65, 381, 320);
     private cStartLink toLoginMitraDaftarCustomer = new cStartLink("Sudah punya akun mitra?", 421);
     private cStartLink toDaftarMitraDaftarCustomer = new cStartLink("Daftar sebagai mitra", 441);
@@ -36,10 +42,10 @@ public class StartView extends cStartFrame {
     // komponen di halaman login mitra
     private cFormLabel labelEmailLoginMitra = new cFormLabel("Email", 0, 84, 450, true);
     private cTextField txtEmailLoginMitra = new cTextField(65, 114, 320, true);
-    private cErrorLabel errorEmailLoginMitra = new cErrorLabel("Email kosong/salah!", 0, 149, 450, true);
+    private cErrorLabel errorEmailLoginMitra = new cErrorLabel("Email kosong!", 0, 149, 450, true);
     private cFormLabel labelPasswordLoginMitra = new cFormLabel("Password", 0, 183, 450, true);
     private cPasswordField txtPasswordLoginMitra = new cPasswordField(65, 213, 320, true);
-    private cErrorLabel errorPasswordLoginMitra = new cErrorLabel("Password kosong/salah!", 0, 248, 450, true);
+    private cErrorLabel errorPasswordLoginMitra = new cErrorLabel("Password kosong!", 0, 248, 450, true);
     private cBlueButton btnLoginLoginMitra = new cBlueButton("Login", 65, 282, 320);
     private cStartLink toDaftarMitraLoginMitra = new cStartLink("Belum punya akun mitra?", 322);
     private cStartLink toDaftarCustomerLoginMitra = new cStartLink("Daftar sebagai customer", 342);
@@ -49,13 +55,13 @@ public class StartView extends cStartFrame {
     // komponen di halaman daftar mitra
     private cFormLabel labelNamaDaftarMitra = new cFormLabel("Nama", 0, 84, 450, true);
     private cTextField txtNamaDaftarMitra = new cTextField(65, 114, 320, true);
-    private cErrorLabel errorNamaDaftarMitra = new cErrorLabel("Nama kosong/salah!", 0, 149, 450, true);
+    private cErrorLabel errorNamaDaftarMitra = new cErrorLabel("Nama kosong!", 0, 149, 450, true);
     private cFormLabel labelEmailDaftarMitra = new cFormLabel("Email", 0, 183, 450, true);
     private cTextField txtEmailDaftarMitra = new cTextField(65, 213, 320, true);
-    private cErrorLabel errorEmailDaftarMitra = new cErrorLabel("Email kosong/salah!", 0, 248, 450, true);
+    private cErrorLabel errorEmailDaftarMitra = new cErrorLabel("Email kosong!", 0, 248, 450, true);
     private cFormLabel labelPasswordDaftarMitra = new cFormLabel("Password", 0, 282, 450, true);
     private cPasswordField txtPasswordDaftarMitra = new cPasswordField(65, 312, 320, true);
-    private cErrorLabel errorPasswordDaftarMitra = new cErrorLabel("Password kosong/salah!", 0, 347, 450, true);
+    private cErrorLabel errorPasswordDaftarMitra = new cErrorLabel("Password kosong!", 0, 347, 450, true);
     private cBlueButton btnDaftarDaftarMitra = new cBlueButton("Daftar", 65, 381, 320);
     private cStartLink toLoginMitraDaftarMitra = new cStartLink("Sudah punya akun mitra?", 421);
     private cStartLink toDaftarCustomerDaftarMitra = new cStartLink("Daftar sebagai customer", 441);
@@ -65,10 +71,10 @@ public class StartView extends cStartFrame {
     // komponen di halaman login admin
     private cFormLabel labelUsernameLoginAdmin = new cFormLabel("Username", 0, 84, 450, true);
     private cTextField txtUsernameLoginAdmin = new cTextField(65, 114, 320, true);
-    private cErrorLabel errorUsernameLoginAdmin = new cErrorLabel("Username kosong/salah!", 0, 149, 450, true);
+    private cErrorLabel errorUsernameLoginAdmin = new cErrorLabel("Username kosong!", 0, 149, 450, true);
     private cFormLabel labelPasswordLoginAdmin = new cFormLabel("Password", 0, 183, 450, true);
     private cPasswordField txtPasswordLoginAdmin = new cPasswordField(65, 213, 320, true);
-    private cErrorLabel errorPasswordLoginAdmin = new cErrorLabel("Password kosong/salah!", 0, 248, 450, true);
+    private cErrorLabel errorPasswordLoginAdmin = new cErrorLabel("Password kosong!", 0, 248, 450, true);
     private cBlueButton btnLoginLoginAdmin = new cBlueButton("Login", 65, 282, 320);
     private cStartLink toDaftarMitraLoginAdmin = new cStartLink("Belum punya akun mitra?", 322);
     private cStartLink toLoginMitraLoginAdmin = new cStartLink("Sudah punya akun mitra?", 342);
@@ -77,19 +83,163 @@ public class StartView extends cStartFrame {
 
     public StartView(){
         super();
+
+        // link di frame login customer
+        toLoginMitraLoginCustomer.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginMitra();
+            }
+        });
+        toDaftarMitraLoginCustomer.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showDaftarMitra();
+            }
+        });
+        toDaftarCustomerLoginCustomer.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showDaftarCustomer();
+            }
+        });
+        toLoginAdminLoginCustomer.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginAdmin();
+            }
+        });
+        
+        // link di frame daftar customer
+        toLoginMitraDaftarCustomer.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginMitra();
+            }
+        });
+        toDaftarMitraDaftarCustomer.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showDaftarMitra();
+            }
+        });
+        toLoginCustomerDaftarCustomer.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginCustomer();
+            }
+        });
+        toLoginAdminDaftarCustomer.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginAdmin();
+            }
+        });
+        
+        // link di frame login mitra
+        toDaftarMitraLoginMitra.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showDaftarMitra();
+            }
+        });
+        toDaftarCustomerLoginMitra.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showDaftarCustomer();
+            }
+        });
+        toLoginCustomerLoginMitra.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginCustomer();
+            }
+        });
+        toLoginAdminLoginMitra.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginAdmin();
+            }
+        });
+        
+        // link di frame daftar mitra
+        toLoginMitraDaftarMitra.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginMitra();
+            }
+        });
+        toDaftarCustomerDaftarMitra.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showDaftarCustomer();
+            }
+        });
+        toLoginCustomerDaftarMitra.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginCustomer();
+            }
+        });
+        toLoginAdminDaftarMitra.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginAdmin();
+            }
+        });
+        
+        // link di frame login admin
+        toDaftarMitraLoginAdmin.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showDaftarMitra();
+            }
+        });
+        toLoginMitraLoginAdmin.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginMitra();
+            }
+        });
+        toDaftarCustomerLoginAdmin.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showDaftarCustomer();
+            }
+        });
+        toLoginCustomerLoginAdmin.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                Controller.showLoginCustomer();
+            }
+        });
     }
 
     public void initsLoginCustomer(){
+        if(btnLoginLoginCustomer.getActionListeners().length == 0){
+            btnLoginLoginCustomer.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae){
+                    if(txtNoHpLoginCustomer.getText().equalsIgnoreCase("") || String.valueOf(txtPasswordLoginCustomer.getPassword()).equalsIgnoreCase("")){
+                        Controller.showLoginCustomer();
+                        if(txtNoHpLoginCustomer.getText().equalsIgnoreCase("")){
+                            cardStart.add(errorNoHpLoginCustomer);
+                        }
+                        if(String.valueOf(txtPasswordLoginCustomer.getPassword()).equalsIgnoreCase("")){
+                            cardStart.add(errorPasswordLoginCustomer);
+                        }
+                    }
+                }
+            });
+        }
         this.setTitle("Login Customer");
         cardStart.removeAll();
         titleStart.setText("Login Customer");
         cardStart.add(titleStart);
         cardStart.add(labelNoHpLoginCustomer);
         cardStart.add(txtNoHpLoginCustomer);
-        // cardStart.add(errorNoHpLoginCustomer);
         cardStart.add(labelPasswordLoginCustomer);
         cardStart.add(txtPasswordLoginCustomer);
-        // cardStart.add(errorPasswordLoginCustomer);
         cardStart.add(btnLoginLoginCustomer);
         cardStart.add(toLoginMitraLoginCustomer);
         cardStart.add(toDaftarMitraLoginCustomer);
@@ -98,19 +248,35 @@ public class StartView extends cStartFrame {
     }
 
     public void initsDaftarCustomer(){
+        if(btnDaftarDaftarCustomer.getActionListeners().length == 0){
+            btnDaftarDaftarCustomer.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae){
+                    if(txtNamaDaftarCustomer.getText().equalsIgnoreCase("") || txtNoHpDaftarCustomer.getText().equalsIgnoreCase("") || String.valueOf(txtPasswordDaftarCustomer.getPassword()).equalsIgnoreCase("")){
+                        Controller.showDaftarCustomer();
+                        if(txtNamaDaftarCustomer.getText().equalsIgnoreCase("")){
+                            cardStart.add(errorNamaDaftarCustomer);
+                        }
+                        if(txtNoHpDaftarCustomer.getText().equalsIgnoreCase("")){
+                            cardStart.add(errorNoHpDaftarCustomer);
+                        }
+                        if(String.valueOf(txtPasswordDaftarCustomer.getPassword()).equalsIgnoreCase("")){
+                            cardStart.add(errorPasswordDaftarCustomer);
+                        }
+                    }
+                }
+            });
+        }
         this.setTitle("Daftar Customer");
         cardStart.removeAll();
         titleStart.setText("Daftar Customer");
         cardStart.add(titleStart);
         cardStart.add(labelNamaDaftarCustomer);
         cardStart.add(txtNamaDaftarCustomer);
-        // cardStart.add(errorNamaDaftarCustomer);
         cardStart.add(labelNoHpDaftarCustomer);
         cardStart.add(txtNoHpDaftarCustomer);
-        // cardStart.add(errorNoHpDaftarCustomer);
         cardStart.add(labelPasswordDaftarCustomer);
         cardStart.add(txtPasswordDaftarCustomer);
-        // cardStart.add(errorPasswordDaftarCustomer);
         cardStart.add(btnDaftarDaftarCustomer);
         cardStart.add(toLoginMitraDaftarCustomer);
         cardStart.add(toDaftarMitraDaftarCustomer);
@@ -119,16 +285,30 @@ public class StartView extends cStartFrame {
     }
 
     public void initsLoginMitra(){
+        if(btnLoginLoginMitra.getActionListeners().length == 0){
+            btnLoginLoginMitra.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae){
+                    if(txtEmailLoginMitra.getText().equalsIgnoreCase("") || String.valueOf(txtPasswordLoginMitra.getPassword()).equalsIgnoreCase("")){
+                        Controller.showLoginMitra();
+                        if(txtEmailLoginMitra.getText().equalsIgnoreCase("")){
+                            cardStart.add(errorEmailLoginMitra);
+                        }
+                        if(String.valueOf(txtPasswordLoginMitra.getPassword()).equalsIgnoreCase("")){
+                            cardStart.add(errorPasswordLoginMitra);
+                        }
+                    }
+                }
+            });
+        }
         this.setTitle("Login Mitra");
         cardStart.removeAll();
         titleStart.setText("Login Mitra");
         cardStart.add(titleStart);
         cardStart.add(labelEmailLoginMitra);
         cardStart.add(txtEmailLoginMitra);
-        // cardStart.add(errorEmailLoginMitra);
         cardStart.add(labelPasswordLoginMitra);
         cardStart.add(txtPasswordLoginMitra);
-        // cardStart.add(errorPasswordLoginMitra);
         cardStart.add(btnLoginLoginMitra);
         cardStart.add(toDaftarMitraLoginMitra);
         cardStart.add(toDaftarCustomerLoginMitra);
@@ -137,19 +317,35 @@ public class StartView extends cStartFrame {
     }
 
     public void initsDaftarMitra(){
+        if(btnDaftarDaftarMitra.getActionListeners().length == 0){
+            btnDaftarDaftarMitra.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae){
+                    if(txtNamaDaftarMitra.getText().equalsIgnoreCase("") || txtEmailDaftarMitra.getText().equalsIgnoreCase("") || String.valueOf(txtPasswordDaftarMitra.getPassword()).equalsIgnoreCase("")){
+                        Controller.showDaftarMitra();
+                        if(txtNamaDaftarMitra.getText().equalsIgnoreCase("")){
+                            cardStart.add(errorNamaDaftarMitra);
+                        }
+                        if(txtEmailDaftarMitra.getText().equalsIgnoreCase("")){
+                            cardStart.add(errorEmailDaftarMitra);
+                        }
+                        if(String.valueOf(txtPasswordDaftarMitra.getPassword()).equalsIgnoreCase("")){
+                            cardStart.add(errorPasswordDaftarMitra);
+                        }
+                    }
+                }
+            });
+        }
         this.setTitle("Daftar Mitra");
         cardStart.removeAll();
         titleStart.setText("Daftar Mitra");
         cardStart.add(titleStart);
         cardStart.add(labelNamaDaftarMitra);
         cardStart.add(txtNamaDaftarMitra);
-        // cardStart.add(errorNamaDaftarMitra);
         cardStart.add(labelEmailDaftarMitra);
         cardStart.add(txtEmailDaftarMitra);
-        // cardStart.add(errorEmailDaftarMitra);
         cardStart.add(labelPasswordDaftarMitra);
         cardStart.add(txtPasswordDaftarMitra);
-        // cardStart.add(errorPasswordDaftarMitra);
         cardStart.add(btnDaftarDaftarMitra);
         cardStart.add(toLoginMitraDaftarMitra);
         cardStart.add(toDaftarCustomerDaftarMitra);
@@ -158,16 +354,30 @@ public class StartView extends cStartFrame {
     }
 
     public void initsLoginAdmin(){
+        if(btnLoginLoginAdmin.getActionListeners().length == 0){
+            btnLoginLoginAdmin.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae){
+                    if(txtUsernameLoginAdmin.getText().equalsIgnoreCase("") || String.valueOf(txtPasswordLoginAdmin.getPassword()).equalsIgnoreCase("")){
+                        Controller.showLoginAdmin();
+                        if(txtUsernameLoginAdmin.getText().equalsIgnoreCase("")){
+                            cardStart.add(errorUsernameLoginAdmin);
+                        }
+                        if(String.valueOf(txtPasswordLoginAdmin.getPassword()).equalsIgnoreCase("")){
+                            cardStart.add(errorPasswordLoginAdmin);
+                        }
+                    }
+                }
+            });
+        }
         this.setTitle("Login Admin");
         cardStart.removeAll();
         titleStart.setText("Login Admin");
         cardStart.add(titleStart);
         cardStart.add(labelUsernameLoginAdmin);
         cardStart.add(txtUsernameLoginAdmin);
-        // cardStart.add(errorUsernameLoginAdmin);
         cardStart.add(labelPasswordLoginAdmin);
         cardStart.add(txtPasswordLoginAdmin);
-        // cardStart.add(errorPasswordLoginAdmin);
         cardStart.add(btnLoginLoginAdmin);
         cardStart.add(toDaftarMitraLoginAdmin);
         cardStart.add(toLoginMitraLoginAdmin);
