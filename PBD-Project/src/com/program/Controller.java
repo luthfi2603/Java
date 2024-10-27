@@ -30,7 +30,9 @@ public class Controller {
     }
     
     public static void showLoginAdmin(){
-        
+        frameLoginAndRegister.setVisible(false);
+        frameLoginAndRegister.initsLoginAdmin();
+        frameLoginAndRegister.setVisible(true);
     }
     
     public static void showDashboardCustomer(Integer id){

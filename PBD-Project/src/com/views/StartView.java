@@ -59,8 +59,21 @@ public class StartView extends cStartFrame {
     private cBlueButton btnDaftarDaftarMitra = new cBlueButton("Daftar", 65, 381, 320);
     private cStartLink toLoginMitraDaftarMitra = new cStartLink("Sudah punya akun mitra?", 421);
     private cStartLink toDaftarCustomerDaftarMitra = new cStartLink("Daftar sebagai customer", 441);
-    private cStartLink toLoginCustomerDaftarMitra = new cStartLink("Sudah punya akun Customer?", 461);
+    private cStartLink toLoginCustomerDaftarMitra = new cStartLink("Sudah punya akun customer?", 461);
     private cStartLink toLoginAdminDaftarMitra = new cStartLink("Login admin", 481);
+
+    // komponen di halaman login admin
+    private cFormLabel labelUsernameLoginAdmin = new cFormLabel("Username", 0, 84, 450, true);
+    private cTextField txtUsernameLoginAdmin = new cTextField(65, 114, 320, true);
+    private cErrorLabel errorUsernameLoginAdmin = new cErrorLabel("Username kosong/salah!", 0, 149, 450, true);
+    private cFormLabel labelPasswordLoginAdmin = new cFormLabel("Password", 0, 183, 450, true);
+    private cPasswordField txtPasswordLoginAdmin = new cPasswordField(65, 213, 320, true);
+    private cErrorLabel errorPasswordLoginAdmin = new cErrorLabel("Password kosong/salah!", 0, 248, 450, true);
+    private cBlueButton btnLoginLoginAdmin = new cBlueButton("Login", 65, 282, 320);
+    private cStartLink toDaftarMitraLoginAdmin = new cStartLink("Belum punya akun mitra?", 322);
+    private cStartLink toLoginMitraLoginAdmin = new cStartLink("Sudah punya akun mitra?", 342);
+    private cStartLink toDaftarCustomerLoginAdmin = new cStartLink("Daftar sebagai customer", 362);
+    private cStartLink toLoginCustomerLoginAdmin = new cStartLink("Sudah punya akun customer?", 382);
 
     public StartView(){
         super();
@@ -142,5 +155,23 @@ public class StartView extends cStartFrame {
         cardStart.add(toDaftarCustomerDaftarMitra);
         cardStart.add(toLoginCustomerDaftarMitra);
         cardStart.add(toLoginAdminDaftarMitra);
+    }
+
+    public void initsLoginAdmin(){
+        this.setTitle("Login Admin");
+        cardStart.removeAll();
+        titleStart.setText("Login Admin");
+        cardStart.add(titleStart);
+        cardStart.add(labelUsernameLoginAdmin);
+        cardStart.add(txtUsernameLoginAdmin);
+        // cardStart.add(errorUsernameLoginAdmin);
+        cardStart.add(labelPasswordLoginAdmin);
+        cardStart.add(txtPasswordLoginAdmin);
+        // cardStart.add(errorPasswordLoginAdmin);
+        cardStart.add(btnLoginLoginAdmin);
+        cardStart.add(toDaftarMitraLoginAdmin);
+        cardStart.add(toLoginMitraLoginAdmin);
+        cardStart.add(toDaftarCustomerLoginAdmin);
+        cardStart.add(toLoginCustomerLoginAdmin);
     }
 }
