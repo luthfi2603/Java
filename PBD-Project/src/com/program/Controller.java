@@ -1,6 +1,6 @@
 package com.program;
 
-import com.views.StartView;
+import com.views.*;
 
 public class Controller {
     private static StartView frameLoginAndRegister = new StartView();
@@ -36,7 +36,7 @@ public class Controller {
     }
     
     public static void showDashboardCustomer(Integer id){
-        
+        DashboardCustomerView dashboardCustomer = new DashboardCustomerView(id);
     }
     
     public static void showDashboardMitra(Integer id){
