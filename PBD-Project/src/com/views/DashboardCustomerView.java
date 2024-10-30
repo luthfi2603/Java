@@ -2,6 +2,7 @@ package com.views;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 
 import com.partials.*;
 import com.program.Controller;
@@ -16,10 +17,10 @@ public class DashboardCustomerView extends cDashboardFrame {
     private cSidebarMenu menuBeliPulsa = new cSidebarMenu("Beli Pulsa", 70 + 50);
     private cSidebarMenu menuLogout = new cSidebarMenu("Logout", 70 + 50 + 50);
 
-    // komopnen di halaman beranda
+    // komponen di halaman beranda
     private cInfoLabel labelBeranda = new cInfoLabel("Label Informasi Beranda", 25, 20);
     
-    // komopnen di halaman beli pulsa
+    // komponen di halaman beli pulsa
     private cInfoLabel labelBeliPulsa = new cInfoLabel("Label Informasi Beli Pulsa", 25, 20);
 
     // method untuk menonaktifkan semua sidebar
@@ -41,7 +42,7 @@ public class DashboardCustomerView extends cDashboardFrame {
         }
     }
 
-    // method 
+    // method untuk menghilangkan semua komponen yang ada pada halaman sebelumnya
     private void refreshContent(){
         try {
             content.removeAll();
@@ -74,9 +75,15 @@ public class DashboardCustomerView extends cDashboardFrame {
         menuLogout.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent me){
-                idUser = null;
+                Object[] options = {"Iya", "Batal"};
+                int konfirmasi = JOptionPane.showOptionDialog(null, "Yakin ingin logout?", "Logout", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-                Controller.showLoginCustomer();
+                if(konfirmasi == 0){
+                    idUser = null;
+                    idSelected = null;
+    
+                    Controller.showLoginCustomer();
+                }
             }
         });
 

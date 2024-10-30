@@ -23,9 +23,9 @@ public class cExitLink extends JLabel {
             }
             public void mouseClicked(java.awt.event.MouseEvent e){
                 Object[] options = {"Iya", "Batal"};
-                int Konfirmasi = JOptionPane.showOptionDialog(null, "Yakin ingin keluar aplikasi?", "Konfirmasi Keluar", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                int konfirmasi = JOptionPane.showOptionDialog(null, "Yakin ingin keluar aplikasi?", "Konfirmasi Keluar", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-                if(Konfirmasi == 0){
+                if(konfirmasi == 0){
                     System.exit(0);
                 }
             }

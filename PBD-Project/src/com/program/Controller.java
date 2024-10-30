@@ -37,10 +37,12 @@ public class Controller {
     
     public static void showDashboardCustomer(Integer id){
         DashboardCustomerView dashboardCustomer = new DashboardCustomerView(id);
+        dashboardCustomer.setVisible(true);
     }
     
     public static void showDashboardMitra(Integer id){
-        
+        DashboardMitraView dashboardMitra = new DashboardMitraView(id);
+        dashboardMitra.setVisible(true);
     }
     
     public static void showDashboardAdmin(boolean statusLogin){
