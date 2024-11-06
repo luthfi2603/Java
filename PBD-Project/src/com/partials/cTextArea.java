@@ -18,4 +18,9 @@ public class cTextArea extends JTextArea {
             setEditable(false);
         }
     }
+
+    public cTextArea(String text, int x, int y, boolean editable){
+        this(editable);
+        setBounds(x, y, 360, 200);
+    }
 }
