@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.partials.*;
 import com.program.Controller;
+import com.program.Model;
 import com.templates.cDashboardFrame;
 
 public class DashboardAdminView extends cDashboardFrame {
@@ -29,23 +30,23 @@ public class DashboardAdminView extends cDashboardFrame {
 
     // komponen di halaman beranda
     private cInfoLabel labelJmlDataMitraBeranda = new cInfoLabel("Jumlah Data Mitra Terverifikasi", 25, 20);
-    private cBigFont valueJmlDataMitraBeranda = new cBigFont("1.729", 25, 60);
+    private cBigFont valueJmlDataMitraBeranda = new cBigFont("0", 25, 60);
     private cInfoLabel labelJmlDataCustomerBeranda = new cInfoLabel("Jumlah Data Customer Aktif", 25, 150);
-    private cBigFont valueJmlDataCustomerBeranda = new cBigFont("57", 25, 190);
+    private cBigFont valueJmlDataCustomerBeranda = new cBigFont("0", 25, 190);
     private cInfoLabel labelJmlTransaksiPulsaBeranda = new cInfoLabel("Jumlah Transaksi Pulsa Berhasil", 25, 280);
-    private cBigFont valueJmlTransaksiPulsaBeranda = new cBigFont("31", 25, 320);
+    private cBigFont valueJmlTransaksiPulsaBeranda = new cBigFont("0", 25, 320);
     private cInfoLabel labelJmlTransaksiPaketBeranda = new cInfoLabel("Jumlah Transaksi Paket Berhasil", 495, 20);
-    private cBigFont valueJmlTransaksiPaketBeranda = new cBigFont("89", 495, 60);
+    private cBigFont valueJmlTransaksiPaketBeranda = new cBigFont("0", 495, 60);
     private cInfoLabel labelJmlCalonMitraBeranda = new cInfoLabel("Jumlah Data Calon Mitra", 495, 150);
-    private cBigFont valueJmlCalonMitraBeranda = new cBigFont("27", 495, 190);
+    private cBigFont valueJmlCalonMitraBeranda = new cBigFont("0", 495, 190);
     private cInfoLabel labelJmlRequestSaldoBeranda = new cInfoLabel("Jumlah Request Saldo Pending", 495, 280);
-    private cBigFont valueJmlRequestSaldoBeranda = new cBigFont("7", 495, 320);
+    private cBigFont valueJmlRequestSaldoBeranda = new cBigFont("0", 495, 320);
 
     // komponen di halaman data mitra
     private cInfoLabel labelDataMitra = new cInfoLabel("Data Mitra Terverifikasi", 25, 20);
     private cFormLabel labelCariDataMitra = new cFormLabel("Cari", 25, 75, 55, false);
     private cTextField txtCariDataMitra = new cTextField(83, 70, 350, false);
-    private DefaultTableModel dmDataMitra;
+    // private DefaultTableModel dmDataMitra;
     private cTable tblDataDataMitra;
     private cScrollPane spDataDataMitra;
     private cRedButton btnHapusDataMitra = new cRedButton("Hapus", 25, 446, 110);
@@ -300,6 +301,9 @@ public class DashboardAdminView extends cDashboardFrame {
         refreshContent();
         menuBeranda.setSidebarAktif();
         menuTitle.setText("Beranda");
+
+        valueJmlDataMitraBeranda.setText(String.valueOf(Model.getCountVerifiedMitra()));
+
         content.add(labelJmlDataMitraBeranda);
         content.add(valueJmlDataMitraBeranda);
         content.add(labelJmlDataCustomerBeranda);
@@ -323,7 +327,7 @@ public class DashboardAdminView extends cDashboardFrame {
         refreshContent();
         menuDataMitra.setSidebarAktif();
         menuTitle.setText("Data Mitra");
-        String[] dataUserHeader = {"Header 1", "Header 2", "Header 3"};
+        /* String[] dataUserHeader = {"Header 1", "Header 2", "Header 3"};
         String[][] dataUser = {
             {"Row1 Col1", "Row1 Col2", "Row1 Col3"},
             {"Row2 Col1", "Row2 Col2", "Row2 Col3"},
@@ -331,8 +335,17 @@ public class DashboardAdminView extends cDashboardFrame {
             {"Row4 Col1", "Row4 Col2", "Row4 Col3"},
             {"Row5 Col1", "Row5 Col2", "Row5 Col3"}
         };
-        dmDataMitra = new DefaultTableModel(dataUser, dataUserHeader);
-        tblDataDataMitra = new cTable(dmDataMitra);
+        dmDataMitra = new DefaultTableModel(dataUser, dataUserHeader); */
+        tblDataDataMitra = new cTable(Model.getAllDataSaldoMitra());
+
+        tblDataDataMitra.getColumnModel().getColumn(0).setWidth(0);
+        tblDataDataMitra.getColumnModel().getColumn(0).setMinWidth(0);
+        tblDataDataMitra.getColumnModel().getColumn(0).setMaxWidth(0);
+        
+        tblDataDataMitra.getColumnModel().getColumn(1).setWidth(0);
+        tblDataDataMitra.getColumnModel().getColumn(1).setMinWidth(0);
+        tblDataDataMitra.getColumnModel().getColumn(1).setMaxWidth(0);
+
         spDataDataMitra = new cScrollPane(tblDataDataMitra, 25, 120, 555, 310);
         content.add(labelDataMitra);
         content.add(labelCariDataMitra);
