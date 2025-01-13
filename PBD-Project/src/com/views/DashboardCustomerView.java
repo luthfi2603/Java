@@ -50,7 +50,7 @@ public class DashboardCustomerView extends cDashboardFrame {
     private cTable dataPaket;
     private cScrollPane spDataPaket;
     private cBlueButton btnBeliPaket = new cBlueButton("Beli Paket", 25, 390, 155);
-    private cInfoLabel labelDeskripsiPaket = new cInfoLabel("DeskripsiPaket", 473, 190);
+    private cInfoLabel labelDeskripsiPaket = new cInfoLabel("Deskripsi Paket", 473, 190);
     private cTextArea valueDeskripsiPaket = new cTextArea("", 473, 231, false);
 
     // komponen di halaman histori beli pulsa
