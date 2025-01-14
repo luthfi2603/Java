@@ -75,7 +75,7 @@ public class DashboardMitraView extends cDashboardFrame {
 
             menuLogout.setSidebarNonAktif();
         } catch (Exception e) {
-            // TODO: handle exception
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -84,7 +84,7 @@ public class DashboardMitraView extends cDashboardFrame {
         try {
             content.removeAll();
         } catch (Exception e) {
-            // TODO: handle exception
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

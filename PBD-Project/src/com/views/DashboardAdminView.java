@@ -6,12 +6,31 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
-// import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableModel;
 
 import com.partials.*;
 import com.program.Controller;
 import com.program.Model;
 import com.templates.cDashboardFrame;
+
+class Filter {
+    static String filter = "semua";
+    static String keyword = "";
+  
+    static DefaultTableModel search() {
+        DefaultTableModel tm = new DefaultTableModel();
+    
+        if (filter.equalsIgnoreCase("semua")) {
+            tm = Model.getSearchAllPaket(keyword);
+        } else if (filter.equalsIgnoreCase("aktif")) {
+            tm = Model.getSearchPaketAktif(keyword);
+        } else if (filter.equalsIgnoreCase("tidak aktif")) {
+            tm = Model.getSearchPaketNonAktif(keyword);
+        }
+    
+        return tm;
+    }
+}
 
 public class DashboardAdminView extends cDashboardFrame {
     boolean statusLogin = false;
@@ -197,7 +216,7 @@ public class DashboardAdminView extends cDashboardFrame {
 
             menuLogout.setSidebarNonAktif();
         } catch (Exception e) {
-            // TODO: handle exception
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -206,7 +225,7 @@ public class DashboardAdminView extends cDashboardFrame {
         try {
             content.removeAll();
         } catch (Exception e) {
-            // TODO: handle exception
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -324,7 +343,7 @@ public class DashboardAdminView extends cDashboardFrame {
         setVisible(true);
     }
   
-    private void initsDataMitra(){
+    private void initsDataMitra() {
         idSelected = null;
         resetSidebar();
         menuDataMitra.setBackground(cColors.BLUE);
@@ -352,6 +371,24 @@ public class DashboardAdminView extends cDashboardFrame {
         tblDataDataMitra.getColumnModel().getColumn(1).setMaxWidth(0);
 
         spDataDataMitra = new cScrollPane(tblDataDataMitra, 25, 120, 555, 310);
+
+        txtCariDataMitra.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String keyword = txtCariDataMitra.getText();
+                
+                tblDataDataMitra.setModel(Model.getSearchDataSaldoMitra(keyword));
+
+                tblDataDataMitra.getColumnModel().getColumn(0).setWidth(0);
+                tblDataDataMitra.getColumnModel().getColumn(0).setMinWidth(0);
+                tblDataDataMitra.getColumnModel().getColumn(0).setMaxWidth(0);
+                
+                tblDataDataMitra.getColumnModel().getColumn(1).setWidth(0);
+                tblDataDataMitra.getColumnModel().getColumn(1).setMinWidth(0);
+                tblDataDataMitra.getColumnModel().getColumn(1).setMaxWidth(0);
+            }
+        });
+
         content.add(labelDataMitra);
         content.add(labelCariDataMitra);
         content.add(txtCariDataMitra);
@@ -360,7 +397,7 @@ public class DashboardAdminView extends cDashboardFrame {
         setVisible(true);
     }
   
-    private void initsDataCustomer(){
+    private void initsDataCustomer() {
         idSelected = null;
         resetSidebar();
         menuDataCustomer.setBackground(cColors.BLUE);
@@ -388,6 +425,24 @@ public class DashboardAdminView extends cDashboardFrame {
         tblDataDataCustomer.getColumnModel().getColumn(1).setMaxWidth(0);
     
         spDataDataCustomer = new cScrollPane(tblDataDataCustomer, 25, 120, 925, 310);
+
+        txtCariDataCustomer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String keyword = txtCariDataCustomer.getText();
+                
+                tblDataDataCustomer.setModel(Model.getSearchPulsaKuotaCustomer(keyword));
+
+                tblDataDataCustomer.getColumnModel().getColumn(0).setWidth(0);
+                tblDataDataCustomer.getColumnModel().getColumn(0).setMinWidth(0);
+                tblDataDataCustomer.getColumnModel().getColumn(0).setMaxWidth(0);
+                
+                tblDataDataCustomer.getColumnModel().getColumn(1).setWidth(0);
+                tblDataDataCustomer.getColumnModel().getColumn(1).setMinWidth(0);
+                tblDataDataCustomer.getColumnModel().getColumn(1).setMaxWidth(0);
+            }
+        });
+
         content.add(labelDataCustomer);
         content.add(labelCariDataCustomer);
         content.add(txtCariDataCustomer);
@@ -396,7 +451,7 @@ public class DashboardAdminView extends cDashboardFrame {
         setVisible(true);
     }
   
-    private void initsDataPaket(){
+    private void initsDataPaket() {
         idSelected = null;
         resetSidebar();
         menuDataPaket.setBackground(cColors.BLUE);
@@ -440,7 +495,8 @@ public class DashboardAdminView extends cDashboardFrame {
         rdSemuaDataPaket.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                tblDataDataPaket.setModel(Model.getAllPaket());
+                Filter.filter = "semua";
+                tblDataDataPaket.setModel(Filter.search());
                 tblDataDataPaket.getColumnModel().getColumn(0).setWidth(0);
                 tblDataDataPaket.getColumnModel().getColumn(0).setMinWidth(0);
                 tblDataDataPaket.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -451,7 +507,8 @@ public class DashboardAdminView extends cDashboardFrame {
         rdAktifDataPaket.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                tblDataDataPaket.setModel(Model.getPaketAktif());
+                Filter.filter = "aktif";
+                tblDataDataPaket.setModel(Filter.search());
                 tblDataDataPaket.getColumnModel().getColumn(0).setWidth(0);
                 tblDataDataPaket.getColumnModel().getColumn(0).setMinWidth(0);
                 tblDataDataPaket.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -462,11 +519,25 @@ public class DashboardAdminView extends cDashboardFrame {
         rdTidakAktifDataPaket.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                tblDataDataPaket.setModel(Model.getPaketNonAktif());
+                Filter.filter = "tidak aktif";
+                tblDataDataPaket.setModel(Filter.search());
                 tblDataDataPaket.getColumnModel().getColumn(0).setWidth(0);
                 tblDataDataPaket.getColumnModel().getColumn(0).setMinWidth(0);
                 tblDataDataPaket.getColumnModel().getColumn(0).setMaxWidth(0);
                 valueDeskripsiPaketDataPaket.setText(null);
+            }
+        });
+
+        txtCariDataPaket.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Filter.keyword = txtCariDataPaket.getText();
+                
+                tblDataDataPaket.setModel(Filter.search());
+
+                tblDataDataPaket.getColumnModel().getColumn(0).setWidth(0);
+                tblDataDataPaket.getColumnModel().getColumn(0).setMinWidth(0);
+                tblDataDataPaket.getColumnModel().getColumn(0).setMaxWidth(0);
             }
         });
     
@@ -483,7 +554,7 @@ public class DashboardAdminView extends cDashboardFrame {
                 initsUbahPaket();
             }
         });
-    
+
         content.add(labelDataPaket);
         content.add(labelCariDataPaket);
         content.add(txtCariDataPaket);
@@ -508,11 +579,10 @@ public class DashboardAdminView extends cDashboardFrame {
         menuDataPaket.setSidebarAktif();
         menuTitle.setText("Tambah Data Paket");
 
-        btnBatalTambahDataPaket.addActionListener(new ActionListener(){
+        btnBatalTambahDataPaket.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent ae)
-            {
-            initsDataPaket();
+            public void actionPerformed(ActionEvent ae) {
+                initsDataPaket();
             }
         });
         
@@ -534,39 +604,39 @@ public class DashboardAdminView extends cDashboardFrame {
         content.add(errorDeskripsiPaketTambahDataPaket);
         setVisible(true);
     }
+
     private void initsUbahPaket(){
-      // setVisible(false);
-      idSelected = null;
-      resetSidebar();
-      menuDataPaket.setBackground(cColors.BLUE);
-      menuDataPaket.setForeground(cColors.WHITE);
-      refreshContent();
-      menuDataPaket.setSidebarAktif();
-      menuTitle.setText("Ubah Data Paket");
-      btnBatalUbahDataPaket.addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent ae)
-        {
-          initsDataPaket();
-        }
-      });
-      content.add(labelUbahDataPaket);
-      content.add(labelNamaPaketUbahDataPaket);
-      content.add(txtNamaPaketUbahDataPaket);
-      content.add(errorNamaPaketUbahDataPaket);
-      content.add(labelKuotaPaketUbahDataPaket);
-      content.add(txtKuotaPaketUbahDataPaket);
-      content.add(errorKuotaPaketUbahDataPaket);
-      content.add(labelHargaPaketUbahDataPaket);
-      content.add(txtHargaPaketUbahDataPaket);
-      content.add(errorHargaPaketUbahDataPaket);
-      content.add(chAktifUbahDataPaket);
-      content.add(btnUbahPaketUbahDataPaket);
-      content.add(btnBatalUbahDataPaket);
-      content.add(labelDeskripsiPaketUbahDataPaket);
-      content.add(spTxtDeskripsiPaketUbahDataPaket);
-      content.add(errorDeskripsiPaketUbahDataPaket);
-      setVisible(true);
+        // setVisible(false);
+        idSelected = null;
+        resetSidebar();
+        menuDataPaket.setBackground(cColors.BLUE);
+        menuDataPaket.setForeground(cColors.WHITE);
+        refreshContent();
+        menuDataPaket.setSidebarAktif();
+        menuTitle.setText("Ubah Data Paket");
+        btnBatalUbahDataPaket.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                initsDataPaket();
+            }
+        });
+        content.add(labelUbahDataPaket);
+        content.add(labelNamaPaketUbahDataPaket);
+        content.add(txtNamaPaketUbahDataPaket);
+        content.add(errorNamaPaketUbahDataPaket);
+        content.add(labelKuotaPaketUbahDataPaket);
+        content.add(txtKuotaPaketUbahDataPaket);
+        content.add(errorKuotaPaketUbahDataPaket);
+        content.add(labelHargaPaketUbahDataPaket);
+        content.add(txtHargaPaketUbahDataPaket);
+        content.add(errorHargaPaketUbahDataPaket);
+        content.add(chAktifUbahDataPaket);
+        content.add(btnUbahPaketUbahDataPaket);
+        content.add(btnBatalUbahDataPaket);
+        content.add(labelDeskripsiPaketUbahDataPaket);
+        content.add(spTxtDeskripsiPaketUbahDataPaket);
+        content.add(errorDeskripsiPaketUbahDataPaket);
+        setVisible(true);
     }
   
     private void initsRequestSaldo() {
@@ -593,6 +663,19 @@ public class DashboardAdminView extends cDashboardFrame {
         tblDataRequestSaldo.getColumnModel().getColumn(0).setMaxWidth(0);
 
         spDataRequestSaldo = new cScrollPane(tblDataRequestSaldo, 25, 120, 555, 310);
+
+        txtCariRequestSaldo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String keyword = txtCariRequestSaldo.getText();
+                
+                tblDataRequestSaldo.setModel(Model.getSearchPendingTransaksiSaldo(keyword));
+
+                tblDataRequestSaldo.getColumnModel().getColumn(0).setWidth(0);
+                tblDataRequestSaldo.getColumnModel().getColumn(0).setMinWidth(0);
+                tblDataRequestSaldo.getColumnModel().getColumn(0).setMaxWidth(0);
+            }
+        });
     
         btnLihatBerhasilRequestSaldo.addActionListener(new ActionListener() {
             @Override
@@ -635,12 +718,24 @@ public class DashboardAdminView extends cDashboardFrame {
         tblDataRequestSaldoDone.getColumnModel().getColumn(0).setMaxWidth(0);
 
         spDataRequestSaldoDone = new cScrollPane(tblDataRequestSaldoDone, 25, 120, 555, 310);
-    
-        btnLihatPendingRequestSaldoDone.addActionListener(new ActionListener(){
+
+        txtCariRequestSaldoDone.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent ae)
-            {
-            initsRequestSaldo();
+            public void actionPerformed(ActionEvent ae) {
+                String keyword = txtCariRequestSaldoDone.getText();
+                
+                tblDataRequestSaldoDone.setModel(Model.getSearchDoneTransaksiSaldo(keyword));
+
+                tblDataRequestSaldoDone.getColumnModel().getColumn(0).setWidth(0);
+                tblDataRequestSaldoDone.getColumnModel().getColumn(0).setMinWidth(0);
+                tblDataRequestSaldoDone.getColumnModel().getColumn(0).setMaxWidth(0);
+            }
+        });
+    
+        btnLihatPendingRequestSaldoDone.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                initsRequestSaldo();
             }
         });
     
@@ -676,6 +771,20 @@ public class DashboardAdminView extends cDashboardFrame {
         tblDataCalonMitra.getColumnModel().getColumn(0).setMaxWidth(0);
 
         spDataCalonMitra = new cScrollPane(tblDataCalonMitra, 25, 120, 555, 310);
+
+        txtCariCalonMitra.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String keyword = txtCariCalonMitra.getText();
+                
+                tblDataCalonMitra.setModel(Model.getSearchNotVerifiedMitra(keyword));
+
+                tblDataCalonMitra.getColumnModel().getColumn(0).setWidth(0);
+                tblDataCalonMitra.getColumnModel().getColumn(0).setMinWidth(0);
+                tblDataCalonMitra.getColumnModel().getColumn(0).setMaxWidth(0);
+            }
+        });
+
         content.add(labelCalonMitra);
         content.add(labelCariCalonMitra);
         content.add(txtCariCalonMitra);
@@ -708,6 +817,20 @@ public class DashboardAdminView extends cDashboardFrame {
         tblDataTransaksiPulsa.getColumnModel().getColumn(0).setMaxWidth(0);
 
         spDataTransaksiPulsa = new cScrollPane(tblDataTransaksiPulsa, 25, 120, 930, 310);
+
+        txtCariTransaksiPulsa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String keyword = txtCariTransaksiPulsa.getText();
+                
+                tblDataTransaksiPulsa.setModel(Model.getSearchTransaksiPulsa(keyword));
+
+                tblDataTransaksiPulsa.getColumnModel().getColumn(0).setWidth(0);
+                tblDataTransaksiPulsa.getColumnModel().getColumn(0).setMinWidth(0);
+                tblDataTransaksiPulsa.getColumnModel().getColumn(0).setMaxWidth(0);
+            }
+        });
+
         content.add(labelTransaksiPulsa);
         content.add(labelCariTransaksiPulsa);
         content.add(txtCariTransaksiPulsa);
@@ -739,6 +862,20 @@ public class DashboardAdminView extends cDashboardFrame {
         tblDataTransaksiPaket.getColumnModel().getColumn(0).setMaxWidth(0);
 
         spDataTransaksiPaket = new cScrollPane(tblDataTransaksiPaket, 25, 120, 930, 310);
+
+        txtCariTransaksiPaket.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String keyword = txtCariTransaksiPaket.getText();
+                
+                tblDataTransaksiPaket.setModel(Model.getSearchTransaksiPaket(keyword));
+
+                tblDataTransaksiPaket.getColumnModel().getColumn(0).setWidth(0);
+                tblDataTransaksiPaket.getColumnModel().getColumn(0).setMinWidth(0);
+                tblDataTransaksiPaket.getColumnModel().getColumn(0).setMaxWidth(0);
+            }
+        });
+
         content.add(labelTransaksiPaket);
         content.add(labelCariTransaksiPaket);
         content.add(txtCariTransaksiPaket);

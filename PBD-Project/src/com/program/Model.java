@@ -462,4 +462,275 @@ public class Model {
 
         return rowData;
     }
+
+    // semua method untuk logika search
+    public static DefaultTableModel getSearchDataSaldoMitra(String keyword) {
+        connect();
+
+        String[] dataHeader = {"ID Saldo Mitra", "ID Mitra", "Nama Mitra", "Email Mitra", "Saldo Mitra"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_saldo_mitra WHERE nama_mitra LIKE '%" + keyword + "%' OR email_mitra LIKE '%" + keyword + "%' OR saldo_mitra LIKE '%" + keyword + "%'";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("id_saldo_mitra"), result.getInt("id_mitra"), result.getString("nama_mitra"), result.getString("email_mitra"), result.getInt("saldo_mitra")};
+
+                tm.addRow(rowData);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getSearchPulsaKuotaCustomer(String keyword) {
+        connect();
+
+        String[] dataHeader = {"ID Pulsa Kuota", "ID Customer", "Nama Customer", "No. Hp", "Pulsa", "Kuota"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_pulsa_kuota_customer WHERE nama_customer LIKE '%" + keyword + "%' OR nomor_hp_customer LIKE '%" + keyword + "%' OR pulsa_customer LIKE '%" + keyword + "%' OR kuota_customer LIKE '%" + keyword + "%'";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("id_pulsa_kuota_customer"), result.getInt("id_customer"), result.getString("nama_customer"), result.getString("nomor_hp_customer"), result.getInt("pulsa_customer"), result.getInt("kuota_customer") + " GB"};
+
+                tm.addRow(rowData);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getSearchPendingTransaksiSaldo(String keyword) {
+        connect();
+
+        String[] dataHeader = {"ID Transaksi Saldo", "Nama Mitra", "Jumlah Saldo", "Waktu", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_pending_transaksi_saldo WHERE nama_mitra LIKE '%" + keyword + "%' OR jumlah_saldo LIKE '%" + keyword + "%' OR waktu_transaksi LIKE '%" + keyword + "%' ORDER BY waktu_transaksi DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("id_transaksi_saldo"), result.getString("nama_mitra"), result.getInt("jumlah_saldo"), result.getString("waktu_transaksi"), result.getString("status_transaksi")};
+
+                tm.addRow(rowData);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getSearchDoneTransaksiSaldo(String keyword) {
+        connect();
+
+        String[] dataHeader = {"ID Transaksi Saldo", "Nama Mitra", "Jumlah Saldo", "Waktu", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_done_transaksi_saldo WHERE nama_mitra LIKE '%" + keyword + "%' OR jumlah_saldo LIKE '%" + keyword + "%' OR waktu_transaksi LIKE '%" + keyword + "%' ORDER BY waktu_transaksi DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("id_transaksi_saldo"), result.getString("nama_mitra"), result.getInt("jumlah_saldo"), result.getString("waktu_transaksi"), result.getString("status_transaksi")};
+
+                tm.addRow(rowData);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getSearchNotVerifiedMitra(String keyword) {
+        connect();
+
+        String[] dataHeader = {"ID Mitra", "Nama", "Email"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_mitra_nonverifikasi WHERE nama_mitra LIKE '%" + keyword + "%' OR email_mitra LIKE '%" + keyword + "%'";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = { result.getInt("id_mitra"), result.getString("nama_mitra"), result.getString("email_mitra") };
+
+                tm.addRow(rowData);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getSearchTransaksiPulsa(String keyword) {
+        connect();
+
+        String[] dataHeader = {"ID Transaksi Pulsa", "Customer", "No HP", "Pulsa", "Mitra", "Waktu", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_all_transaksi_pulsa WHERE nama_customer LIKE '%" + keyword + "%' OR nomor_hp_customer LIKE '%" + keyword + "%' OR jumlah_pulsa LIKE '%" + keyword + "%' OR nama_mitra LIKE '%" + keyword + "%' OR waktu_transaksi LIKE '%" + keyword + "%' OR status_transaksi LIKE '%" + keyword + "%' ORDER BY waktu_transaksi DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("id_transaksi_pulsa"), result.getString("nama_customer"), result.getString("nomor_hp_customer"), result.getInt("jumlah_pulsa"), result.getString("nama_mitra"), result.getString("waktu_transaksi"), result.getString("status_transaksi")};
+
+                tm.addRow(rowData);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getSearchTransaksiPaket(String keyword) {
+        connect();
+
+        String[] dataHeader = {"ID Transaksi Paket", "Customer", "No HP", "Paket", "Kuota", "Harga", "Waktu", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_all_transaksi_paket WHERE nama_customer LIKE '%" + keyword + "%' OR nomor_hp_customer LIKE '%" + keyword + "%' OR nama_paket LIKE '%" + keyword + "%' OR kuota LIKE '%" + keyword + "%' OR harga_paket LIKE '%" + keyword + "%' OR waktu_transaksi LIKE '%" + keyword + "%' OR status_transaksi LIKE '%" + keyword + "%' ORDER BY waktu_transaksi DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("id_transaksi_paket"), result.getString("nama_customer"), result.getString("nomor_hp_customer"), result.getString("nama_paket"), result.getInt("kuota") + " GB", "Rp" + result.getInt("harga_paket"), result.getString("waktu_transaksi"), result.getString("status_transaksi")};
+
+                tm.addRow(rowData);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getSearchAllPaket(String keyword) {
+        connect();
+
+        String[] dataHeader = {"ID Paket", "Nama Paket", "Kuota", "Harga", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM paket WHERE nama_paket LIKE '%" + keyword + "%' OR kuota LIKE '%" + keyword + "%' OR harga_paket LIKE '%" + keyword + "%' ORDER BY id_paket DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("id_paket"), result.getString("nama_paket"), result.getInt("kuota") + " GB", "Rp" + result.getInt("harga_paket"), (result.getString("status_aktif").toString().equalsIgnoreCase("1")) ? "Aktif" : "Tidak Aktif"};
+
+                tm.addRow(rowData);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getSearchPaketAktif(String keyword) {
+        connect();
+
+        String[] dataHeader = {"ID Paket", "Nama Paket", "Kuota", "Harga", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_paket_aktif WHERE nama_paket LIKE '%" + keyword + "%' OR kuota LIKE '%" + keyword + "%' OR harga_paket LIKE '%" + keyword + "%' ORDER BY id_paket DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("id_paket"), result.getString("nama_paket"), result.getInt("kuota") + " GB", "Rp" + result.getInt("harga_paket"), "Aktif"};
+
+                tm.addRow(rowData);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getSearchPaketNonAktif(String keyword) {
+        connect();
+
+        String[] dataHeader = {"ID Paket", "Nama Paket", "Kuota", "Harga", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_paket_nonaktif WHERE nama_paket LIKE '%" + keyword + "%' OR kuota LIKE '%" + keyword + "%' OR harga_paket LIKE '%" + keyword + "%' ORDER BY id_paket DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("id_paket"), result.getString("nama_paket"), result.getInt("kuota") + " GB", "Rp" + result.getInt("harga_paket"), "Tidak Aktif"};
+
+                tm.addRow(rowData);
+            }
+
+            connection.close();
+            statement.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
 }

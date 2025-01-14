@@ -1,6 +1,7 @@
 package com.partials;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class cSidebarMenu extends JLabel {
     public java.awt.event.MouseAdapter sidebarAktif = new java.awt.event.MouseAdapter(){
@@ -53,7 +54,7 @@ public class cSidebarMenu extends JLabel {
             removeMouseListener(sidebarNonAktif);
             addMouseListener(sidebarAktif);
         } catch (Exception e) {
-            // TODO: handle exception
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -62,7 +63,7 @@ public class cSidebarMenu extends JLabel {
             removeMouseListener(sidebarAktif);
             addMouseListener(sidebarNonAktif);
         } catch (Exception e) {
-            // TODO: handle exception
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
