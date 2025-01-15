@@ -541,12 +541,14 @@ public class DashboardAdminView extends cDashboardFrame {
             }
         });
     
-        btnTambahDataPaket.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                initsTambahPaket();
-            }
-        });
+        if (btnTambahDataPaket.getActionListeners().length == 0) {
+            btnTambahDataPaket.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    initsTambahPaket();
+                }
+            });
+        }
     
         btnUbahDataPaket.addActionListener(new ActionListener() {
             @Override
@@ -569,7 +571,7 @@ public class DashboardAdminView extends cDashboardFrame {
         setVisible(true);
     }
   
-    private void initsTambahPaket(){
+    private void initsTambahPaket() {
         // setVisible(false);
         idSelected = null;
         resetSidebar();
@@ -579,29 +581,74 @@ public class DashboardAdminView extends cDashboardFrame {
         menuDataPaket.setSidebarAktif();
         menuTitle.setText("Tambah Data Paket");
 
-        btnBatalTambahDataPaket.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                initsDataPaket();
-            }
-        });
+        txtNamaPaketTambahDataPaket.setText(null);
+        txtKuotaPaketTambahDataPaket.setText(null);
+        txtHargaPaketTambahDataPaket.setText(null);
+        txtDeskripsiPaketTambahDataPaket.setText(null);
+        chAktifTambahDataPaket.setSelected(false);
+
+        if (btnBatalTambahDataPaket.getActionListeners().length == 0) {
+            btnBatalTambahDataPaket.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    initsDataPaket();
+                }
+            });
+        }
+        
+        if (btnTambahPaketTambahDataPaket.getActionListeners().length == 0) {
+            btnTambahPaketTambahDataPaket.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    if (txtNamaPaketTambahDataPaket.getText().trim().isEmpty() || txtKuotaPaketTambahDataPaket.getText().trim().isEmpty() || txtHargaPaketTambahDataPaket.getText().trim().isEmpty() || txtDeskripsiPaketTambahDataPaket.getText().trim().isEmpty()) {
+                        // DashboardAdminView.this.setVisible(false);
+
+                        if (txtNamaPaketTambahDataPaket.getText().trim().isEmpty()) content.add(errorNamaPaketTambahDataPaket);
+                        else content.remove(errorNamaPaketTambahDataPaket);
+                        
+                        if (txtKuotaPaketTambahDataPaket.getText().trim().isEmpty()) content.add(errorKuotaPaketTambahDataPaket);
+                        else content.remove(errorKuotaPaketTambahDataPaket);
+
+                        if (txtHargaPaketTambahDataPaket.getText().trim().isEmpty()) content.add(errorHargaPaketTambahDataPaket);
+                        else content.remove(errorHargaPaketTambahDataPaket);
+
+                        if (txtDeskripsiPaketTambahDataPaket.getText().trim().isEmpty()) content.add(errorDeskripsiPaketTambahDataPaket);
+                        else content.remove(errorDeskripsiPaketTambahDataPaket);
+
+                        // DashboardAdminView.this.setVisible(true);
+                        content.revalidate();
+                        content.repaint();
+                    } else {
+                        String nama = txtNamaPaketTambahDataPaket.getText();
+                        int harga = Integer.parseInt(txtHargaPaketTambahDataPaket.getText());
+                        int kuota = Integer.parseInt(txtKuotaPaketTambahDataPaket.getText());
+                        String deskripsi = txtDeskripsiPaketTambahDataPaket.getText();
+                        String statusAktif = chAktifTambahDataPaket.isSelected() ? chAktifTambahDataPaket.getActionCommand() : "0";
+
+                        if (Model.tambahDataPaket(nama, deskripsi, kuota, harga, statusAktif)) {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Tambah data paket berhasil", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                            initsDataPaket();
+                        } else {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Tambah data paket gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            });
+        }
         
         content.add(labelTambahDataPaket);
         content.add(labelNamaPaketTambahDataPaket);
         content.add(txtNamaPaketTambahDataPaket);
-        content.add(errorNamaPaketTambahDataPaket);
         content.add(labelKuotaPaketTambahDataPaket);
         content.add(txtKuotaPaketTambahDataPaket);
-        content.add(errorKuotaPaketTambahDataPaket);
         content.add(labelHargaPaketTambahDataPaket);
         content.add(txtHargaPaketTambahDataPaket);
-        content.add(errorHargaPaketTambahDataPaket);
         content.add(chAktifTambahDataPaket);
         content.add(btnTambahPaketTambahDataPaket);
         content.add(btnBatalTambahDataPaket);
         content.add(labelDeskripsiPaketTambahDataPaket);
         content.add(spTxtDeskripsiPaketTambahDataPaket);
-        content.add(errorDeskripsiPaketTambahDataPaket);
         setVisible(true);
     }
 

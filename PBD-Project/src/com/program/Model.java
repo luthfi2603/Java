@@ -44,8 +44,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -67,8 +67,8 @@ public class Model {
             result.next();
             count = result.getInt(1);
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -90,8 +90,8 @@ public class Model {
             result.next();
             count = result.getInt(1);
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -113,8 +113,8 @@ public class Model {
             result.next();
             count = result.getInt(1);
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -136,8 +136,8 @@ public class Model {
             result.next();
             count = result.getInt(1);
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -159,8 +159,8 @@ public class Model {
             result.next();
             count = result.getInt(1);
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -182,8 +182,8 @@ public class Model {
             result.next();
             count = result.getInt(1);
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -209,8 +209,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -236,8 +236,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -263,8 +263,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -290,8 +290,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -317,8 +317,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -344,8 +344,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -371,8 +371,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -398,8 +398,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -425,8 +425,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -454,8 +454,8 @@ public class Model {
             rowData[5] = result.getString("status_aktif");
             
             // close statement dan connection
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -482,8 +482,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -509,8 +509,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -536,8 +536,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -563,8 +563,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -590,8 +590,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -617,8 +617,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -644,8 +644,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -671,8 +671,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -698,8 +698,8 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -725,12 +725,35 @@ public class Model {
                 tm.addRow(rowData);
             }
 
-            connection.close();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         return tm;
+    }
+
+    public static boolean tambahDataPaket(String namaPaket, String deskripsiPaket, int kuota, int hargaPaket, String statusAktif) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "INSERT paket VALUES (" + null + ", '" + namaPaket + "', '" + deskripsiPaket + "', " + hargaPaket + ", " + kuota + ", '" + statusAktif + "')";
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
     }
 }
