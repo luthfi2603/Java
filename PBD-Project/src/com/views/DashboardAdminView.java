@@ -99,39 +99,39 @@ public class DashboardAdminView extends cDashboardFrame {
     private cInfoLabel labelTambahDataPaket = new cInfoLabel("Isi form data paket dengan lengkap", 25, 20);
     private cFormLabel labelNamaPaketTambahDataPaket = new cFormLabel("Nama Paket", 25, 65, 550, false);
     private cTextField txtNamaPaketTambahDataPaket = new cTextField(25, 90, 550, false);
-    private cErrorLabel errorNamaPaketTambahDataPaket = new cErrorLabel("nama paket tidak boleh kosong!", 25, 125, 550, false);
+    private cErrorLabel errorNamaPaketTambahDataPaket = new cErrorLabel("Nama paket tidak boleh kosong!", 25, 125, 550, false);
     private cFormLabel labelKuotaPaketTambahDataPaket = new cFormLabel("Kuota Paket", 25, 150, 550, false);
     private cTextField txtKuotaPaketTambahDataPaket = new cTextField(25, 175, 550, false);
-    private cErrorLabel errorKuotaPaketTambahDataPaket = new cErrorLabel("kuota paket tidak boleh kosong!", 25, 210, 550, false);
+    private cErrorLabel errorKuotaPaketTambahDataPaket = new cErrorLabel("Kuota paket tidak boleh kosong!", 25, 210, 550, false);
     private cFormLabel labelHargaPaketTambahDataPaket = new cFormLabel("Harga Paket", 25, 235, 550, false);
     private cTextField txtHargaPaketTambahDataPaket = new cTextField(25, 260, 550, false);
-    private cErrorLabel errorHargaPaketTambahDataPaket = new cErrorLabel("harga paket tidak boleh kosong!", 25, 295, 550, false);
+    private cErrorLabel errorHargaPaketTambahDataPaket = new cErrorLabel("Harga paket tidak boleh kosong!", 25, 295, 550, false);
     private cCheckBox chAktifTambahDataPaket = new cCheckBox("Aktifkan", "1", 25, 316, 100);
     private cBlueButton btnTambahPaketTambahDataPaket = new cBlueButton("Tambah", 25, 348, 110);
     private cRedButton btnBatalTambahDataPaket = new cRedButton("Batal", 155, 348, 110);
     private cFormLabel labelDeskripsiPaketTambahDataPaket = new cFormLabel("Deskripsi Paket", 595, 65, 370, false);
     private cTextArea txtDeskripsiPaketTambahDataPaket = new cTextArea(true);
     private cScrollPane spTxtDeskripsiPaketTambahDataPaket = new cScrollPane(txtDeskripsiPaketTambahDataPaket, 595, 90, 370, 205);
-    private cErrorLabel errorDeskripsiPaketTambahDataPaket = new cErrorLabel("deskripsi paket tidak boleh kosong!", 595, 295, 370, false);
+    private cErrorLabel errorDeskripsiPaketTambahDataPaket = new cErrorLabel("Deskripsi paket tidak boleh kosong!", 595, 295, 370, false);
 
     // komponen di halaman ubah data paket
     private cInfoLabel labelUbahDataPaket = new cInfoLabel("Isi form data paket dengan lengkap", 25, 20);
     private cFormLabel labelNamaPaketUbahDataPaket = new cFormLabel("Nama Paket", 25, 65, 550, false);
     private cTextField txtNamaPaketUbahDataPaket = new cTextField(25, 90, 550, false);
-    private cErrorLabel errorNamaPaketUbahDataPaket = new cErrorLabel("nama paket tidak boleh kosong!", 25, 125, 550, false);
+    private cErrorLabel errorNamaPaketUbahDataPaket = new cErrorLabel("Nama paket tidak boleh kosong!", 25, 125, 550, false);
     private cFormLabel labelKuotaPaketUbahDataPaket = new cFormLabel("Kuota Paket", 25, 150, 550, false);
     private cTextField txtKuotaPaketUbahDataPaket = new cTextField(25, 175, 550, false);
-    private cErrorLabel errorKuotaPaketUbahDataPaket = new cErrorLabel("kuota paket tidak boleh kosong!", 25, 210, 550, false);
+    private cErrorLabel errorKuotaPaketUbahDataPaket = new cErrorLabel("Kuota paket tidak boleh kosong!", 25, 210, 550, false);
     private cFormLabel labelHargaPaketUbahDataPaket = new cFormLabel("Harga Paket", 25, 235, 550, false);
     private cTextField txtHargaPaketUbahDataPaket = new cTextField(25, 260, 550, false);
-    private cErrorLabel errorHargaPaketUbahDataPaket = new cErrorLabel("harga paket tidak boleh kosong!", 25, 295, 550, false);
+    private cErrorLabel errorHargaPaketUbahDataPaket = new cErrorLabel("Harga paket tidak boleh kosong!", 25, 295, 550, false);
     private cCheckBox chAktifUbahDataPaket = new cCheckBox("Aktifkan", "1", 25, 316, 100);
     private cBlueButton btnUbahPaketUbahDataPaket = new cBlueButton("Ubah", 25, 348, 110);
     private cRedButton btnBatalUbahDataPaket = new cRedButton("Batal", 155, 348, 110);
     private cFormLabel labelDeskripsiPaketUbahDataPaket = new cFormLabel("Deskripsi Paket", 595, 65, 370, false);
     private cTextArea txtDeskripsiPaketUbahDataPaket = new cTextArea(true);
     private cScrollPane spTxtDeskripsiPaketUbahDataPaket = new cScrollPane(txtDeskripsiPaketUbahDataPaket, 595, 90, 370, 205);
-    private cErrorLabel errorDeskripsiPaketUbahDataPaket = new cErrorLabel("deskripsi paket tidak boleh kosong!", 595, 295, 370, false);
+    private cErrorLabel errorDeskripsiPaketUbahDataPaket = new cErrorLabel("Deskripsi paket tidak boleh kosong!", 595, 295, 370, false);
     
     // komponen di halaman request saldo
     private cInfoLabel labelRequestSaldo = new cInfoLabel("Data Request Request Saldo Pending", 25, 20);
@@ -459,6 +459,10 @@ public class DashboardAdminView extends cDashboardFrame {
         refreshContent();
         menuDataPaket.setSidebarAktif();
         menuTitle.setText("Data Paket");
+
+        valueDeskripsiPaketDataPaket.setText(null);
+        txtCariDataPaket.setText(null);
+
         /* String[] dataUserHeader = {"Header 1", "Header 2", "Header 3"};
         String[][] dataUser = {
             {"Row1 Col1", "Row1 Col2", "Row1 Col3"},
@@ -550,12 +554,22 @@ public class DashboardAdminView extends cDashboardFrame {
             });
         }
     
-        btnUbahDataPaket.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                initsUbahPaket();
-            }
-        });
+        if (btnUbahDataPaket.getActionListeners().length == 0) {
+            btnUbahDataPaket.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    int selectedIndex = tblDataDataPaket.getSelectedRow();
+
+                    if (selectedIndex == -1) {
+                        JOptionPane.showMessageDialog(DashboardAdminView.this, "Silahkan pilih paket terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        int idPaket = Integer.parseInt(tblDataDataPaket.getValueAt(selectedIndex, 0).toString());
+
+                        initsUbahPaket(idPaket);
+                    }
+                }
+            });
+        }
 
         content.add(labelDataPaket);
         content.add(labelCariDataPaket);
@@ -652,7 +666,7 @@ public class DashboardAdminView extends cDashboardFrame {
         setVisible(true);
     }
 
-    private void initsUbahPaket(){
+    private void initsUbahPaket(int idPaket) {
         // setVisible(false);
         idSelected = null;
         resetSidebar();
@@ -661,28 +675,80 @@ public class DashboardAdminView extends cDashboardFrame {
         refreshContent();
         menuDataPaket.setSidebarAktif();
         menuTitle.setText("Ubah Data Paket");
-        btnBatalUbahDataPaket.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                initsDataPaket();
-            }
-        });
+
+        Object[] detailPaket = Model.getDetailPaket(idPaket);
+
+        txtNamaPaketUbahDataPaket.setText(detailPaket[1].toString());
+        txtKuotaPaketUbahDataPaket.setText(detailPaket[3].toString());
+        txtHargaPaketUbahDataPaket.setText(detailPaket[4].toString());
+        txtDeskripsiPaketUbahDataPaket.setText(detailPaket[2].toString());
+        if (detailPaket[5].toString().equalsIgnoreCase("1"))
+            chAktifUbahDataPaket.setSelected(true);
+        else
+            chAktifUbahDataPaket.setSelected(false);
+
+        if (btnBatalUbahDataPaket.getActionListeners().length == 0) {
+            btnBatalUbahDataPaket.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    initsDataPaket();
+                }
+            });
+        }
+
+        if (btnUbahPaketUbahDataPaket.getActionListeners().length == 0) {
+            btnUbahPaketUbahDataPaket.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    if (txtNamaPaketUbahDataPaket.getText().trim().isEmpty() || txtKuotaPaketUbahDataPaket.getText().trim().isEmpty() || txtHargaPaketUbahDataPaket.getText().trim().isEmpty() || txtDeskripsiPaketUbahDataPaket.getText().trim().isEmpty()) {
+                        // DashboardAdminView.this.setVisible(false);
+
+                        if (txtNamaPaketUbahDataPaket.getText().trim().isEmpty()) content.add(errorNamaPaketUbahDataPaket);
+                        else content.remove(errorNamaPaketUbahDataPaket);
+                        
+                        if (txtKuotaPaketUbahDataPaket.getText().trim().isEmpty()) content.add(errorKuotaPaketUbahDataPaket);
+                        else content.remove(errorKuotaPaketUbahDataPaket);
+
+                        if (txtHargaPaketUbahDataPaket.getText().trim().isEmpty()) content.add(errorHargaPaketUbahDataPaket);
+                        else content.remove(errorHargaPaketUbahDataPaket);
+
+                        if (txtDeskripsiPaketUbahDataPaket.getText().trim().isEmpty()) content.add(errorDeskripsiPaketUbahDataPaket);
+                        else content.remove(errorDeskripsiPaketUbahDataPaket);
+
+                        // DashboardAdminView.this.setVisible(true);
+                        content.revalidate();
+                        content.repaint();
+                    } else {
+                        String nama = txtNamaPaketUbahDataPaket.getText();
+                        int harga = Integer.parseInt(txtHargaPaketUbahDataPaket.getText());
+                        int kuota = Integer.parseInt(txtKuotaPaketUbahDataPaket.getText());
+                        String deskripsi = txtDeskripsiPaketUbahDataPaket.getText();
+                        String statusAktif = chAktifUbahDataPaket.isSelected() ? chAktifUbahDataPaket.getActionCommand() : "0";
+
+                        if (Model.ubahDataPaket(idPaket, nama, deskripsi, kuota, harga, statusAktif)) {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Ubah data paket berhasil", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                            initsDataPaket();
+                        } else {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Ubah data paket gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            });
+        }
+        
         content.add(labelUbahDataPaket);
         content.add(labelNamaPaketUbahDataPaket);
         content.add(txtNamaPaketUbahDataPaket);
-        content.add(errorNamaPaketUbahDataPaket);
         content.add(labelKuotaPaketUbahDataPaket);
         content.add(txtKuotaPaketUbahDataPaket);
-        content.add(errorKuotaPaketUbahDataPaket);
         content.add(labelHargaPaketUbahDataPaket);
         content.add(txtHargaPaketUbahDataPaket);
-        content.add(errorHargaPaketUbahDataPaket);
         content.add(chAktifUbahDataPaket);
         content.add(btnUbahPaketUbahDataPaket);
         content.add(btnBatalUbahDataPaket);
         content.add(labelDeskripsiPaketUbahDataPaket);
         content.add(spTxtDeskripsiPaketUbahDataPaket);
-        content.add(errorDeskripsiPaketUbahDataPaket);
         setVisible(true);
     }
   

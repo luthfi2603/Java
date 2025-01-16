@@ -434,7 +434,7 @@ public class Model {
         return tm;
     }
 
-    public static Object[] getDetailPaket( int idPaket ) {
+    public static Object[] getDetailPaket(int idPaket) {
         connect();
 
         Object[] rowData = new Object[6];
@@ -743,6 +743,29 @@ public class Model {
             statement = connection.createStatement();
 
             String query = "INSERT paket VALUES (" + null + ", '" + namaPaket + "', '" + deskripsiPaket + "', " + hargaPaket + ", " + kuota + ", '" + statusAktif + "')";
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean ubahDataPaket(int idPaket, String namaPaket, String deskripsiPaket, int kuota, int hargaPaket, String statusAktif) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "UPDATE paket SET nama_paket = '" + namaPaket + "', deskripsi_paket = '" + deskripsiPaket + "', harga_paket = " + hargaPaket + ", kuota = " + kuota + ", status_aktif = '" + statusAktif + "' WHERE id_paket = " + idPaket;
 
             if (statement.executeUpdate(query) > 0) {
                 resultState = true;
