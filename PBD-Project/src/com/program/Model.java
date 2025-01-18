@@ -779,4 +779,181 @@ public class Model {
 
         return resultState;
     }
+
+    public static Object[] getDetailMitra(int idMitra) {
+        connect();
+
+        Object[] rowData = new Object[6];
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_all_mitra WHERE id_mitra = " + idMitra;
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            rowData[0] = result.getInt("id_mitra");
+            rowData[1] = result.getString("nama_mitra");
+            rowData[2] = result.getString("email_mitra");
+            
+            // close statement dan connection
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return rowData;
+    }
+
+    public static int getDetailSaldoMitra(int idMitra) {
+        connect();
+
+        int saldo = 0;
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT saldo_mitra FROM view_saldo_mitra WHERE id_mitra = " + idMitra;
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            saldo = result.getInt("saldo_mitra");
+            
+            // close statement dan connection
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return saldo;
+    }
+
+    public static int getCountDoneTransaksiPulsaMitra(int idMitra) {
+        connect();
+
+        int count = 0;
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT COUNT(*) FROM view_done_transaksi_pulsa WHERE id_mitra = " + idMitra;
+
+            result = statement.executeQuery(query);
+
+            result.next();
+            count = result.getInt(1);
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return count;
+    }
+
+    public static int getCountPendingTransaksiPulsa() {
+        connect();
+
+        int count = 0;
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT COUNT(*) FROM view_pending_transaksi_pulsa";
+
+            result = statement.executeQuery(query);
+
+            result.next();
+            count = result.getInt(1);
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return count;
+    }
+
+    public static DefaultTableModel getAllTransaksiSaldoByMitra(int idMitra) {
+        connect();
+
+        String[] dataHeader = {"Jumlah Saldo", "Waktu", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_all_transaksi_saldo WHERE id_mitra = " + idMitra + " ORDER BY waktu_transaksi DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("jumlah_saldo"), result.getString("waktu_transaksi"), result.getString("status_transaksi")};
+
+                tm.addRow(rowData);
+            }
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getPendingTransaksiPulsa() {
+        connect();
+
+        String[] dataHeader = {"ID Transaksi Pulsa", "ID Customer", "Nama Customer", "No HP", "Jumlah Pulsa", "Waktu", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_pending_transaksi_pulsa ORDER BY waktu_transaksi DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("id_transaksi_pulsa"), result.getInt("id_customer"), result.getString("nama_customer"), result.getString("nomor_hp_customer"), result.getInt("jumlah_pulsa"), result.getString("waktu_transaksi"), result.getString("status_transaksi")};
+
+                tm.addRow(rowData);
+            }
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getDoneTransaksiPulsaByMitra(int idMitra) {
+        connect();
+
+        String[] dataHeader = {"Nama Customer", "No HP", "Jumlah Pulsa", "Waktu"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_done_transaksi_pulsa WHERE id_mitra = " + idMitra + " ORDER BY waktu_transaksi DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getString("nama_customer"), result.getString("nomor_hp_customer"), result.getInt("jumlah_pulsa"),result.getString("waktu_transaksi")};
+
+                tm.addRow(rowData);
+            }
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
 }
