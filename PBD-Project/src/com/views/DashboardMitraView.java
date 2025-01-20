@@ -139,11 +139,19 @@ public class DashboardMitraView extends cDashboardFrame {
             }
         });
 
-        sidebar.add(menuBeranda);
-        sidebar.add(menuInfoSaldo);
-        sidebar.add(menuRequestPulsa);
-        sidebar.add(menuTransaksiSaya);
-        sidebar.add(menuLogout);
+        // cek status verifikasi mitra yang login
+        if (Model.getDetailMitra(idMitra)[3].toString().equalsIgnoreCase("1")) {
+            sidebar.add(menuBeranda);
+            sidebar.add(menuInfoSaldo);
+            sidebar.add(menuRequestPulsa);
+            sidebar.add(menuTransaksiSaya);
+            sidebar.add(menuLogout);
+        } else {
+            sidebar.add(menuBeranda);
+
+            menuLogout.setLocation(0, menuBeranda.getLocation().y + 50);
+            sidebar.add(menuLogout);
+        }
 
         initsBeranda();
     }
@@ -157,16 +165,23 @@ public class DashboardMitraView extends cDashboardFrame {
         menuBeranda.setSidebarAktif();
         menuTitle.setText("Beranda");
 
-        valueSisaSaldoBeranda.setText(String.valueOf(Model.getDetailSaldoMitra(idMitra)));
-        valuePelayananBeranda.setText(String.valueOf(Model.getCountDoneTransaksiPulsaMitra(idMitra)));
-        valueRequestPulsaBeranda.setText(String.valueOf(Model.getCountPendingTransaksiPulsa()));
+        // cek status verifikasi mitra yang login
+        if (Model.getDetailMitra(idMitra)[3].toString().equalsIgnoreCase("1")) {
+            valueSisaSaldoBeranda.setText(String.valueOf(Model.getDetailSaldoMitra(idMitra)));
+            valuePelayananBeranda.setText(String.valueOf(Model.getCountDoneTransaksiPulsaMitra(idMitra)));
+            valueRequestPulsaBeranda.setText(String.valueOf(Model.getCountPendingTransaksiPulsa()));
+    
+            content.add(valueSisaSaldoBeranda);
+            content.add(labelPelayananBeranda);
+            content.add(valuePelayananBeranda);
+            content.add(labelRequestPulsaBeranda);
+            content.add(valueRequestPulsaBeranda);
+        } else {
+            labelSisaSaldoBeranda.setText("Anda belum terverifikasi! Silahkan tunggu respon dari admin.");
+            labelSisaSaldoBeranda.setSize(labelSisaSaldoBeranda.getWidth() + 300, labelSisaSaldoBeranda.getHeight());
+        }
 
         content.add(labelSisaSaldoBeranda);
-        content.add(valueSisaSaldoBeranda);
-        content.add(labelPelayananBeranda);
-        content.add(valuePelayananBeranda);
-        content.add(labelRequestPulsaBeranda);
-        content.add(valueRequestPulsaBeranda);
         setVisible(true);
     }
     

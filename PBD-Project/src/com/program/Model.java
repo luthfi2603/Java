@@ -783,7 +783,7 @@ public class Model {
     public static Object[] getDetailMitra(int idMitra) {
         connect();
 
-        Object[] rowData = new Object[6];
+        Object[] rowData = new Object[4];
 
         try {
             statement = connection.createStatement();
@@ -795,6 +795,7 @@ public class Model {
             rowData[0] = result.getInt("id_mitra");
             rowData[1] = result.getString("nama_mitra");
             rowData[2] = result.getString("email_mitra");
+            rowData[3] = result.getString("status_verifikasi");
             
             // close statement dan connection
             statement.close();
