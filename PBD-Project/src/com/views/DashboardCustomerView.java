@@ -5,10 +5,11 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+// import javax.swing.table.DefaultTableModel;
 
 import com.partials.*;
 import com.program.Controller;
+import com.program.Model;
 import com.templates.cDashboardFrame;
 
 public class DashboardCustomerView extends cDashboardFrame {
@@ -26,13 +27,13 @@ public class DashboardCustomerView extends cDashboardFrame {
 
     // komponen di halaman beranda
     private cInfoLabel labelSisaPulsaBeranda = new cInfoLabel("Sisa Pulsa Anda", 25, 20);
-    private cBigFont valueSisaPulsaBeranda = new cBigFont("55.000", 25, 60);
+    private cBigFont valueSisaPulsaBeranda = new cBigFont("0", 25, 60);
     private cInfoLabel labelSisaKuotaBeranda = new cInfoLabel("Sisa Kuota Anda", 25, 150);
-    private cBigFont valueSisaKuotaBeranda = new cBigFont("11GB", 25, 190);
+    private cBigFont valueSisaKuotaBeranda = new cBigFont("0 GB", 25, 190);
 
     // komponen di halaman beli pulsa
     private cInfoLabel labelSisaPulsaBeliPulsa = new cInfoLabel("Sisa Pulsa Anda", 25, 20);
-    private cBigFont valueSisaPulsaBeliPulsa = new cBigFont("55.000", 25, 60);
+    private cBigFont valueSisaPulsaBeliPulsa = new cBigFont("0", 25, 60);
     private cInfoLabel labelPilihanBeliPulsa = new cInfoLabel("Pilihan Beli Pulsa", 25, 150);
     private cRadioButton rd5k = new cRadioButton("5K", "5000", 25, 190, 72);
     private cRadioButton rd10k = new cRadioButton("10K", "10000", 102, 190, 72);
@@ -44,9 +45,9 @@ public class DashboardCustomerView extends cDashboardFrame {
 
     // komponen di halaman beli paket
     private cInfoLabel labelSisaKuotaBeliPaket = new cInfoLabel("Sisa Kuota Anda", 25, 20);
-    private cBigFont valueSisaKuotaBeliPaket = new cBigFont("11GB", 25, 60);
+    private cBigFont valueSisaKuotaBeliPaket = new cBigFont("0 GB", 25, 60);
     private cInfoLabel labelPilihanBeliPaket = new cInfoLabel("Pilihan Beli Paket Kuota", 25, 150);
-    private DefaultTableModel dmPaket;
+    // private DefaultTableModel dmPaket;
     private cTable dataPaket;
     private cScrollPane spDataPaket;
     private cBlueButton btnBeliPaket = new cBlueButton("Beli Paket", 25, 390, 155);
@@ -55,13 +56,13 @@ public class DashboardCustomerView extends cDashboardFrame {
 
     // komponen di halaman histori beli pulsa
     private cInfoLabel labelHistoryPulsa = new cInfoLabel("Semua Pembelian Pulsa Saya", 25, 20);
-    private DefaultTableModel dmHistoryPulsa;
+    // private DefaultTableModel dmHistoryPulsa;
     private cTable tblDataHistoryPulsa;
     private cScrollPane spDataHistoryPulsa;
 
     // komponen di halaman histori beli paket
     private cInfoLabel labelHistoryPaket = new cInfoLabel("Semua Pembelian Paket Saya", 25, 20);
-    private DefaultTableModel dmHistoryPaket;
+    // private DefaultTableModel dmHistoryPaket;
     private cTable tblDataHistoryPaket;
     private cScrollPane spDataHistoryPaket;
     
@@ -121,12 +122,12 @@ public class DashboardCustomerView extends cDashboardFrame {
         }
     }
 
-    public DashboardCustomerView(Integer id){
+    public DashboardCustomerView(Integer id) {
         super("Dashboard Customer");
 
         idCustomer = id;
 
-        roleText.setText("Customer | Nama Customer");
+        roleText.setText("Customer | " + Model.getDetailCustomer(idCustomer)[1].toString());
 
         menuBeranda.addMouseListener(new MouseAdapter(){
             @Override
@@ -202,7 +203,7 @@ public class DashboardCustomerView extends cDashboardFrame {
         initsBeranda();
     }
 
-    private void initsBeranda(){
+    private void initsBeranda() {
         idSelected = null;
         resetSidebar();
         menuBeranda.setBackground(cColors.BLUE);
@@ -210,6 +211,10 @@ public class DashboardCustomerView extends cDashboardFrame {
         refreshContent();
         menuBeranda.setSidebarAktif();
         menuTitle.setText("Beranda");
+
+        valueSisaPulsaBeranda.setText(Model.getDetailPulsaKuotaCustomer(idCustomer)[0].toString());
+        valueSisaKuotaBeranda.setText(Model.getDetailPulsaKuotaCustomer(idCustomer)[1].toString() + " GB");
+
         content.add(labelSisaPulsaBeranda);
         content.add(valueSisaPulsaBeranda);
         content.add(labelSisaKuotaBeranda);
@@ -217,7 +222,7 @@ public class DashboardCustomerView extends cDashboardFrame {
         setVisible(true);
     }
 
-    private void initsBeliPulsa(){
+    private void initsBeliPulsa() {
         idSelected = null;
         resetSidebar();
         menuBeliPulsa.setBackground(cColors.BLUE);
@@ -225,6 +230,9 @@ public class DashboardCustomerView extends cDashboardFrame {
         refreshContent();
         menuBeliPulsa.setSidebarAktif();
         menuTitle.setText("Beli Pulsa");
+
+        valueSisaPulsaBeliPulsa.setText(Model.getDetailPulsaKuotaCustomer(idCustomer)[0].toString());
+
         content.add(labelSisaPulsaBeliPulsa);
         content.add(valueSisaPulsaBeliPulsa);
         content.add(labelPilihanBeliPulsa);
@@ -237,7 +245,7 @@ public class DashboardCustomerView extends cDashboardFrame {
         setVisible(true);
     }
 
-    private void initsBeliPaket(){
+    private void initsBeliPaket() {
         idSelected = null;
         resetSidebar();
         menuBeliPaket.setBackground(cColors.BLUE);
@@ -245,20 +253,44 @@ public class DashboardCustomerView extends cDashboardFrame {
         refreshContent();
         menuBeliPaket.setSidebarAktif();
         menuTitle.setText("Beli Paket");
-        String[] dataUserHeader = {"Nama", "Kuota", "Harga"};
+
+        valueSisaKuotaBeliPaket.setText(Model.getDetailPulsaKuotaCustomer(idCustomer)[1].toString() + " GB");
+        valueDeskripsiPaket.setText(null);
+
+        /* String[] dataUserHeader = {"Nama", "Kuota", "Harga"};
         String[][] dataUser = {
-        {"Row1 Col1", "Row1 Col2", "Row1 Col3"},
-        {"Row2 Col1", "Row2 Col2", "Row2 Col3"},
-        {"Hemat Mantap", "11GB", "76.000"},
-        {"Row4 Col1", "Row4 Col2", "Row4 Col3"},
-        {"Row5 Col1", "Row5 Col2", "Row5 Col3"},
-        {"Row6 Col1", "Row6 Col2", "Row6 Col3"}
+            {"Row1 Col1", "Row1 Col2", "Row1 Col3"},
+            {"Row2 Col1", "Row2 Col2", "Row2 Col3"},
+            {"Hemat Mantap", "11GB", "76.000"},
+            {"Row4 Col1", "Row4 Col2", "Row4 Col3"},
+            {"Row5 Col1", "Row5 Col2", "Row5 Col3"},
+            {"Row6 Col1", "Row6 Col2", "Row6 Col3"}
         };
-        dmPaket = new DefaultTableModel(dataUser, dataUserHeader);
-        dataPaket = new cTable(dmPaket);
+        dmPaket = new DefaultTableModel(dataUser, dataUserHeader); */
+        
+        dataPaket = new cTable(Model.getPaketAktif());
+
+        dataPaket.getColumnModel().getColumn(0).setWidth(0);
+        dataPaket.getColumnModel().getColumn(0).setMinWidth(0);
+        dataPaket.getColumnModel().getColumn(0).setMaxWidth(0);
+
+        dataPaket.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                int selectedIndex = dataPaket.getSelectedRow();
+                int idPaket = Integer.parseInt(dataPaket.getValueAt(selectedIndex, 0).toString());
+
+                String textDeskripsiPaket = Model.getDetailPaket(idPaket)[2].toString();
+
+                valueDeskripsiPaket.setText(textDeskripsiPaket);
+            }
+        });
+
         spDataPaket = new cScrollPane(dataPaket, 25, 190, 428, 190);
-        String textDeskripsiPaket = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam totam doloribus velit ipsa! Beatae tempore quod laborum porro optio aliquam voluptate commodi assumenda explicabo debitis accusamus obcaecati, quo nostrum esse!";
-        valueDeskripsiPaket.setText(textDeskripsiPaket);
+
+        /* String textDeskripsiPaket = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam totam doloribus velit ipsa! Beatae tempore quod laborum porro optio aliquam voluptate commodi assumenda explicabo debitis accusamus obcaecati, quo nostrum esse!";
+        valueDeskripsiPaket.setText(textDeskripsiPaket); */
+
         content.add(labelSisaKuotaBeliPaket);
         content.add(valueSisaKuotaBeliPaket);
         content.add(labelPilihanBeliPaket);
@@ -269,7 +301,7 @@ public class DashboardCustomerView extends cDashboardFrame {
         setVisible(true);
     }
 
-    private void initsHistoryBeliPulsa(){
+    private void initsHistoryBeliPulsa() {
         idSelected = null;
         resetSidebar();
         menuHistoryBeliPulsa.setBackground(cColors.BLUE);
@@ -277,28 +309,31 @@ public class DashboardCustomerView extends cDashboardFrame {
         refreshContent();
         menuHistoryBeliPulsa.setSidebarAktif();
         menuTitle.setText("Transaksi Pulsa Saya");
-        String[] dataHistoryPulsaHeader = {"Pulsa", "Mitra", "Waktu", "Status"};
+
+        /* String[] dataHistoryPulsaHeader = {"Pulsa", "Mitra", "Waktu", "Status"};
         String[][] dataHistoryPulsa = {
-        {"Row1 Col1", "Row1 Col2", "Row1 Col3", "Row1 Col4"},
-        {"5.000", "-", "2021-08-19 15:30:21", "diproses"},
-        {"25.000", "Yudi Cell", "2021-08-19 15:21:20", "selesai"},
-        {"Row4 Col1", "Row4 Col2", "Row4 Col3", "Row4 Col4"},
-        {"Row5 Col1", "Row5 Col2", "Row5 Col3", "Row5 Col4"},
-        {"Row6 Col1", "Row6 Col2", "Row6 Col3", "Row6 Col4"},
-        {"Row7 Col1", "Row7 Col2", "Row7 Col3", "Row7 Col4"},
-        {"Row8 Col1", "Row8 Col2", "Row8 Col3", "Row8 Col4"},
-        {"Row9 Col1", "Row9 Col2", "Row9 Col3", "Row9 Col4"},
-        {"Row10 Col1", "Row10 Col2", "Row10 Col3", "Row10 Col4"}
+            {"Row1 Col1", "Row1 Col2", "Row1 Col3", "Row1 Col4"},
+            {"5.000", "-", "2021-08-19 15:30:21", "diproses"},
+            {"25.000", "Yudi Cell", "2021-08-19 15:21:20", "selesai"},
+            {"Row4 Col1", "Row4 Col2", "Row4 Col3", "Row4 Col4"},
+            {"Row5 Col1", "Row5 Col2", "Row5 Col3", "Row5 Col4"},
+            {"Row6 Col1", "Row6 Col2", "Row6 Col3", "Row6 Col4"},
+            {"Row7 Col1", "Row7 Col2", "Row7 Col3", "Row7 Col4"},
+            {"Row8 Col1", "Row8 Col2", "Row8 Col3", "Row8 Col4"},
+            {"Row9 Col1", "Row9 Col2", "Row9 Col3", "Row9 Col4"},
+            {"Row10 Col1", "Row10 Col2", "Row10 Col3", "Row10 Col4"}
         };
-        dmHistoryPulsa = new DefaultTableModel(dataHistoryPulsa, dataHistoryPulsaHeader);
-        tblDataHistoryPulsa = new cTable(dmHistoryPulsa);
+        dmHistoryPulsa = new DefaultTableModel(dataHistoryPulsa, dataHistoryPulsaHeader); */
+
+        tblDataHistoryPulsa = new cTable(Model.getAllTransaksiPulsaByCustomer(idCustomer));
         spDataHistoryPulsa = new cScrollPane(tblDataHistoryPulsa, 25, 65, 740, 310);
+
         content.add(labelHistoryPulsa);
         content.add(spDataHistoryPulsa);
         setVisible(true);
     }
 
-    private void initsHistoryBeliPaket(){
+    private void initsHistoryBeliPaket() {
         idSelected = null;
         resetSidebar();
         menuHistoryBeliPaket.setBackground(cColors.BLUE);
@@ -306,22 +341,25 @@ public class DashboardCustomerView extends cDashboardFrame {
         refreshContent();
         menuHistoryBeliPaket.setSidebarAktif();
         menuTitle.setText("Transaksi Paket Saya");
-        String[] dataHistoryPaketHeader = {"Paket", "Kuota", "Harga", "Waktu", "Status"};
+
+        /* String[] dataHistoryPaketHeader = {"Paket", "Kuota", "Harga", "Waktu", "Status"};
         String[][] dataHistoryPaket = {
-        {"Row1 Col1", "Row1 Col2", "Row1 Col3", "Row1 Col4", "Row1 Col5"},
-        {"Hemat Mantap", "11GB", "76.000", "2021-08-19 15:21:20", "selesai"},
-        {"Row3 Col1", "Row3 Col2", "Row3 Col3", "Row3 Col4", "Row3 Col5"},
-        {"Row4 Col1", "Row4 Col2", "Row4 Col3", "Row4 Col4", "Row4 Col5"},
-        {"Row5 Col1", "Row5 Col2", "Row5 Col3", "Row5 Col4", "Row5 Col5"},
-        {"Row6 Col1", "Row6 Col2", "Row6 Col3", "Row6 Col4", "Row6 Col5"},
-        {"Row7 Col1", "Row7 Col2", "Row7 Col3", "Row7 Col4", "Row7 Col5"},
-        {"Row8 Col1", "Row8 Col2", "Row8 Col3", "Row8 Col4", "Row8 Col5"},
-        {"Row9 Col1", "Row9 Col2", "Row9 Col3", "Row9 Col4", "Row9 Col5"},
-        {"Row10 Col1", "Row10 Col2", "Row10 Col3", "Row10 Col4", "Row10 Col5"}
+            {"Row1 Col1", "Row1 Col2", "Row1 Col3", "Row1 Col4", "Row1 Col5"},
+            {"Hemat Mantap", "11GB", "76.000", "2021-08-19 15:21:20", "selesai"},
+            {"Row3 Col1", "Row3 Col2", "Row3 Col3", "Row3 Col4", "Row3 Col5"},
+            {"Row4 Col1", "Row4 Col2", "Row4 Col3", "Row4 Col4", "Row4 Col5"},
+            {"Row5 Col1", "Row5 Col2", "Row5 Col3", "Row5 Col4", "Row5 Col5"},
+            {"Row6 Col1", "Row6 Col2", "Row6 Col3", "Row6 Col4", "Row6 Col5"},
+            {"Row7 Col1", "Row7 Col2", "Row7 Col3", "Row7 Col4", "Row7 Col5"},
+            {"Row8 Col1", "Row8 Col2", "Row8 Col3", "Row8 Col4", "Row8 Col5"},
+            {"Row9 Col1", "Row9 Col2", "Row9 Col3", "Row9 Col4", "Row9 Col5"},
+            {"Row10 Col1", "Row10 Col2", "Row10 Col3", "Row10 Col4", "Row10 Col5"}
         };
-        dmHistoryPaket = new DefaultTableModel(dataHistoryPaket, dataHistoryPaketHeader);
-        tblDataHistoryPaket = new cTable(dmHistoryPaket);
+        dmHistoryPaket = new DefaultTableModel(dataHistoryPaket, dataHistoryPaketHeader); */
+
+        tblDataHistoryPaket = new cTable(Model.getAllTransaksiPaketByCustomer(idCustomer));
         spDataHistoryPaket = new cScrollPane(tblDataHistoryPaket, 25, 65, 924, 310);
+
         content.add(labelHistoryPaket);
         content.add(spDataHistoryPaket);
         setVisible(true);
@@ -335,9 +373,18 @@ public class DashboardCustomerView extends cDashboardFrame {
         refreshContent();
         menuAkun.setSidebarAktif();
         menuTitle.setText("Akun Saya");
+
+        Object[] dataCustomer = Model.getDetailCustomer(idCustomer);
+
+        txtNama.setText(dataCustomer[1].toString());
+        txtEmail.setText(dataCustomer[3].toString());
+
         valueNoHp = new cFormLabel("08123xxx", 25, 174, 360, false);
         valueNoHp.setFont(com.partials.cFonts.RADIO_BUTTON_FONT);
         valueNoHp.setForeground(com.partials.cColors.RED);
+
+        valueNoHp.setText(dataCustomer[2].toString());
+
         content.add(labelAkun);
         content.add(labelNama);
         content.add(txtNama);

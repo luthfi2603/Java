@@ -89,7 +89,7 @@ public class DashboardMitraView extends cDashboardFrame {
         }
     }
 
-    public DashboardMitraView(Integer id){
+    public DashboardMitraView(Integer id) {
         super("Dashboard Mitra");
 
         idMitra = id;

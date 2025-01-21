@@ -957,4 +957,110 @@ public class Model {
 
         return tm;
     }
+
+    public static Object[] getDetailCustomer(int idCustomer) {
+        connect();
+
+        Object[] rowData = new Object[4];
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_customer WHERE id_customer = " + idCustomer;
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            rowData[0] = result.getInt("id_customer");
+            rowData[1] = result.getString("nama_customer");
+            rowData[2] = result.getString("nomor_hp_customer");
+            rowData[3] = result.getString("email_customer");
+            
+            // close statement dan connection
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return rowData;
+    }
+
+    public static Object[] getDetailPulsaKuotaCustomer(int idCustomer) {
+        connect();
+
+        Object[] rowData = new Object[2];
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT pulsa_customer, kuota_customer FROM view_pulsa_kuota_customer WHERE id_customer = " + idCustomer;
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            rowData[0] = result.getInt("pulsa_customer");
+            rowData[1] = result.getString("kuota_customer");
+            
+            // close statement dan connection
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return rowData;
+    }
+
+    public static DefaultTableModel getAllTransaksiPulsaByCustomer(int idCustomer) {
+        connect();
+
+        String[] dataHeader = {"Jumlah Pulsa", "Mitra", "Waktu", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_all_transaksi_pulsa WHERE id_customer = " + idCustomer + " ORDER BY waktu_transaksi DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getInt("jumlah_pulsa"), result.getString("nama_mitra"), result.getString("waktu_transaksi"), result.getString("status_transaksi")};
+
+                tm.addRow(rowData);
+            }
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
+
+    public static DefaultTableModel getAllTransaksiPaketByCustomer(int idCustomer) {
+        connect();
+
+        String[] dataHeader = {"Nama Paket", "Kuota", "Harga", "Waktu Transaksi", "Status"};
+        DefaultTableModel tm = new DefaultTableModel(null, dataHeader);
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_all_transaksi_paket WHERE id_customer = " + idCustomer + " ORDER BY waktu_transaksi DESC";
+
+            result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Object[] rowData = {result.getString("nama_paket"), result.getInt("kuota") + " GB", "Rp" + result.getInt("harga_paket"), result.getString("waktu_transaksi"), result.getString("status_transaksi")};
+
+                tm.addRow(rowData);
+            }
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return tm;
+    }
 }
