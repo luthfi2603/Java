@@ -1063,4 +1063,73 @@ public class Model {
 
         return tm;
     }
+
+    public static boolean tambahDataTransaksiPulsa(int idCustomer, int jumlahPulsa) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "INSERT INTO transaksi_pulsa VALUES (" + null + ", " + idCustomer + ", " + jumlahPulsa + ", 3, " + null + ", 'diproses', '1')";
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static int getCountCustomerByEmail(String email) {
+        connect();
+
+        int count = 0;
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT COUNT(*) FROM customer WHERE email_customer = '" + email + "'";
+
+            result = statement.executeQuery(query);
+
+            result.next();
+            count = result.getInt(1);
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return count;
+    }
+
+    public static boolean ubahProfileCustomer(int idCustomer, String namaCustomer, String emailCustomer) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "UPDATE customer SET nama_customer = '" + namaCustomer + "', email_customer = '" + emailCustomer + "' WHERE id_customer = " + idCustomer;
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
 }

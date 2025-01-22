@@ -37,7 +37,7 @@ public class DashboardMitraView extends cDashboardFrame {
     private cTable tblDataRequestSaldo;
     private cScrollPane spDataRequestSaldo;
     private cInfoLabel labelDoRequestSaldoInfoSaldo = new cInfoLabel("Sisa Saldo Anda", 490, 20);
-    private cErrorLabel errorDoRequestSaldoInfoSaldo = new cErrorLabel("tidak bisa melakukan request jika saldo masih diatas 100K", 490, 60, 400, false);
+    private cErrorLabel errorDoRequestSaldoInfoSaldo = new cErrorLabel("Tidak bisa melakukan request jika saldo masih diatas 100K", 490, 60, 400, false);
     private cBlueButton btnRequestSaldo = new cBlueButton("Request", 490, 90, 155);
     
     // komponen di halaman request pulsa

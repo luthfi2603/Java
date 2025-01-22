@@ -1,5 +1,7 @@
 package com.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -14,7 +16,7 @@ import com.templates.cDashboardFrame;
 
 public class DashboardCustomerView extends cDashboardFrame {
     Integer idCustomer = null;
-    Integer idSelected = null;
+    // Integer idSelected = null;
 
     // sidebar menu
     private cSidebarMenu menuBeranda = new cSidebarMenu("Beranda", 70);
@@ -39,7 +41,7 @@ public class DashboardCustomerView extends cDashboardFrame {
     private cRadioButton rd10k = new cRadioButton("10K", "10000", 102, 190, 72);
     private cRadioButton rd25k = new cRadioButton("25K", "25000", 179, 190, 72);
     private cRadioButton rd50k = new cRadioButton("50K", "50000", 256, 190, 72);
-    private cRadioButton rd100k = new cRadioButton("100K", "10000", 333, 190, 72);
+    private cRadioButton rd100k = new cRadioButton("100K", "100000", 333, 190, 72);
     private cBlueButton btnBeliPulsa = new cBlueButton("Beli Pulsa", 25, 220, 155);
     private ButtonGroup rdPilihaPulsa = new ButtonGroup();
 
@@ -70,12 +72,12 @@ public class DashboardCustomerView extends cDashboardFrame {
     private cInfoLabel labelAkun = new cInfoLabel("Data Akun Saya", 25, 20);
     private cFormLabel labelNama = new cFormLabel("Nama", 25, 65, 360, false);
     private cTextField txtNama = new cTextField(25, 90, 360, false);
-    private cErrorLabel errorNama = new cErrorLabel("nama tidak boleh kosong!", 25, 125, 360, false);
+    private cErrorLabel errorNama = new cErrorLabel("Nama tidak boleh kosong!", 25, 125, 360, false);
     private cFormLabel labelNoHp = new cFormLabel("No Hp", 25, 150, 360, false);
     private cFormLabel valueNoHp;
     private cFormLabel labelEmail = new cFormLabel("Email", 25, 202, 360, false);
     private cTextField txtEmail = new cTextField(25, 227, 360, false);
-    private cErrorLabel errorEmail = new cErrorLabel("email tidak boleh kosong!", 25, 262, 360, false);
+    private cErrorLabel errorEmail = new cErrorLabel("Email sudah digunakan!", 25, 262, 360, false);
     private cBlueButton btnUbahAkun = new cBlueButton("Ubah Data Akun", 25, 292, 155);
 
     // method untuk menonaktifkan semua sidebar
@@ -179,7 +181,7 @@ public class DashboardCustomerView extends cDashboardFrame {
 
                 if(konfirmasi == 0){
                     idCustomer = null;
-                    idSelected = null;
+                    // idSelected = null;
     
                     Controller.showLoginCustomer();
                 }
@@ -204,7 +206,7 @@ public class DashboardCustomerView extends cDashboardFrame {
     }
 
     private void initsBeranda() {
-        idSelected = null;
+        // idSelected = null;
         resetSidebar();
         menuBeranda.setBackground(cColors.BLUE);
         menuBeranda.setForeground(cColors.WHITE);
@@ -223,7 +225,7 @@ public class DashboardCustomerView extends cDashboardFrame {
     }
 
     private void initsBeliPulsa() {
-        idSelected = null;
+        // idSelected = null;
         resetSidebar();
         menuBeliPulsa.setBackground(cColors.BLUE);
         menuBeliPulsa.setForeground(cColors.WHITE);
@@ -232,6 +234,25 @@ public class DashboardCustomerView extends cDashboardFrame {
         menuTitle.setText("Beli Pulsa");
 
         valueSisaPulsaBeliPulsa.setText(Model.getDetailPulsaKuotaCustomer(idCustomer)[0].toString());
+
+        rd5k.setSelected(true);
+
+        if (btnBeliPulsa.getActionListeners().length == 0) {
+            btnBeliPulsa.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    int jumlahPulsa = Integer.parseInt(rdPilihaPulsa.getSelection().getActionCommand());
+
+                    if (Model.tambahDataTransaksiPulsa(idCustomer, jumlahPulsa)) {
+                        JOptionPane.showMessageDialog(DashboardCustomerView.this, "Pembelian pulsa masih pending. Silahkan tunggu", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                        initsHistoryBeliPulsa();
+                    } else {
+                        JOptionPane.showMessageDialog(DashboardCustomerView.this, "Pembelian pulsa gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        }
 
         content.add(labelSisaPulsaBeliPulsa);
         content.add(valueSisaPulsaBeliPulsa);
@@ -246,7 +267,7 @@ public class DashboardCustomerView extends cDashboardFrame {
     }
 
     private void initsBeliPaket() {
-        idSelected = null;
+        // idSelected = null;
         resetSidebar();
         menuBeliPaket.setBackground(cColors.BLUE);
         menuBeliPaket.setForeground(cColors.WHITE);
@@ -302,7 +323,7 @@ public class DashboardCustomerView extends cDashboardFrame {
     }
 
     private void initsHistoryBeliPulsa() {
-        idSelected = null;
+        // idSelected = null;
         resetSidebar();
         menuHistoryBeliPulsa.setBackground(cColors.BLUE);
         menuHistoryBeliPulsa.setForeground(cColors.WHITE);
@@ -334,7 +355,7 @@ public class DashboardCustomerView extends cDashboardFrame {
     }
 
     private void initsHistoryBeliPaket() {
-        idSelected = null;
+        // idSelected = null;
         resetSidebar();
         menuHistoryBeliPaket.setBackground(cColors.BLUE);
         menuHistoryBeliPaket.setForeground(cColors.WHITE);
@@ -365,8 +386,8 @@ public class DashboardCustomerView extends cDashboardFrame {
         setVisible(true);
     }
 
-    private void initsAkun(){
-        idSelected = null;
+    private void initsAkun() {
+        // idSelected = null;
         resetSidebar();
         menuAkun.setBackground(cColors.BLUE);
         menuAkun.setForeground(cColors.WHITE);
@@ -385,15 +406,46 @@ public class DashboardCustomerView extends cDashboardFrame {
 
         valueNoHp.setText(dataCustomer[2].toString());
 
+        if (btnUbahAkun.getActionListeners().length == 0) {
+            btnUbahAkun.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    if (txtNama.getText().trim().isEmpty() || (!txtEmail.getText().trim().isEmpty() && !dataCustomer[3].toString().equalsIgnoreCase(txtEmail.getText()) && Model.getCountCustomerByEmail(txtEmail.getText()) == 1)) {
+                        if (txtNama.getText().trim().isEmpty())
+                            content.add(errorNama);
+                        else
+                            content.remove(errorNama);
+                        
+                        if (!txtEmail.getText().trim().isEmpty() && !dataCustomer[3].toString().equalsIgnoreCase(txtEmail.getText()) && Model.getCountCustomerByEmail(txtEmail.getText()) == 1)
+                            content.add(errorEmail);
+                        else
+                            content.remove(errorEmail);
+
+                        content.revalidate();
+                        content.repaint();
+                    } else {
+                        String nama = txtNama.getText();
+                        String email = txtEmail.getText();
+
+                        if (Model.ubahProfileCustomer(idCustomer, nama, email)) {
+                            JOptionPane.showMessageDialog(DashboardCustomerView.this, "Ubah profile berhasil", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                            initsAkun();
+                        } else {
+                            JOptionPane.showMessageDialog(DashboardCustomerView.this, "Ubah profile gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            });
+        }
+
         content.add(labelAkun);
         content.add(labelNama);
         content.add(txtNama);
-        content.add(errorNama);
         content.add(labelNoHp);
         content.add(valueNoHp);
         content.add(labelEmail);
         content.add(txtEmail);
-        content.add(errorEmail);
         content.add(btnUbahAkun);
         setVisible(true);
     }
