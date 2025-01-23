@@ -234,6 +234,7 @@ AFTER UPDATE ON transaksi_pulsa
 FOR EACH ROW
 BEGIN
     UPDATE pulsa_kuota_customer SET pulsa_customer = pulsa_customer + OLD.jumlah_pulsa WHERE id_customer = OLD.id_customer;
+    UPDATE saldo_mitra SET saldo_mitra = saldo_mitra - OLD.jumlah_pulsa WHERE id_mitra = NEW.id_mitra;
 END //
 DELIMITER ;
 

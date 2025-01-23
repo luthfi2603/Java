@@ -34,7 +34,6 @@ class Filter {
 
 public class DashboardAdminView extends cDashboardFrame {
     boolean statusLogin = false;
-    Integer idSelected = null;
 
     // sidebar menu
     private cSidebarMenu menuBeranda = new cSidebarMenu("Beranda", 70);
@@ -313,7 +312,6 @@ public class DashboardAdminView extends cDashboardFrame {
     }
 
     private void initsBeranda(){
-        idSelected = null;
         resetSidebar();
         menuBeranda.setBackground(cColors.BLUE);
         menuBeranda.setForeground(cColors.WHITE);
@@ -344,7 +342,6 @@ public class DashboardAdminView extends cDashboardFrame {
     }
   
     private void initsDataMitra() {
-        idSelected = null;
         resetSidebar();
         menuDataMitra.setBackground(cColors.BLUE);
         menuDataMitra.setForeground(cColors.WHITE);
@@ -398,7 +395,6 @@ public class DashboardAdminView extends cDashboardFrame {
     }
   
     private void initsDataCustomer() {
-        idSelected = null;
         resetSidebar();
         menuDataCustomer.setBackground(cColors.BLUE);
         menuDataCustomer.setForeground(cColors.WHITE);
@@ -452,7 +448,6 @@ public class DashboardAdminView extends cDashboardFrame {
     }
   
     private void initsDataPaket() {
-        idSelected = null;
         resetSidebar();
         menuDataPaket.setBackground(cColors.BLUE);
         menuDataPaket.setForeground(cColors.WHITE);
@@ -561,7 +556,7 @@ public class DashboardAdminView extends cDashboardFrame {
                     int selectedIndex = tblDataDataPaket.getSelectedRow();
 
                     if (selectedIndex == -1) {
-                        JOptionPane.showMessageDialog(DashboardAdminView.this, "Silahkan pilih paket terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(DashboardAdminView.this, "Silahkan pilih paket terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
                     } else {
                         int idPaket = Integer.parseInt(tblDataDataPaket.getValueAt(selectedIndex, 0).toString());
 
@@ -587,7 +582,6 @@ public class DashboardAdminView extends cDashboardFrame {
   
     private void initsTambahPaket() {
         // setVisible(false);
-        idSelected = null;
         resetSidebar();
         menuDataPaket.setBackground(cColors.BLUE);
         menuDataPaket.setForeground(cColors.WHITE);
@@ -668,7 +662,6 @@ public class DashboardAdminView extends cDashboardFrame {
 
     private void initsUbahPaket(int idPaket) {
         // setVisible(false);
-        idSelected = null;
         resetSidebar();
         menuDataPaket.setBackground(cColors.BLUE);
         menuDataPaket.setForeground(cColors.WHITE);
@@ -753,7 +746,6 @@ public class DashboardAdminView extends cDashboardFrame {
     }
   
     private void initsRequestSaldo() {
-        idSelected = null;
         resetSidebar();
         menuRequestSaldo.setBackground(cColors.BLUE);
         menuRequestSaldo.setForeground(cColors.WHITE);
@@ -808,7 +800,6 @@ public class DashboardAdminView extends cDashboardFrame {
   
     private void initsRequestSaldoDone() {
         // setVisible(false);
-        idSelected = null;
         resetSidebar();
         menuRequestSaldo.setBackground(cColors.BLUE);
         menuRequestSaldo.setForeground(cColors.WHITE);
@@ -861,7 +852,6 @@ public class DashboardAdminView extends cDashboardFrame {
     }
   
     private void initsCalonMitra() {
-        idSelected = null;
         resetSidebar();
         menuCalonMitra.setBackground(cColors.BLUE);
         menuCalonMitra.setForeground(cColors.WHITE);
@@ -907,7 +897,6 @@ public class DashboardAdminView extends cDashboardFrame {
     }
   
     private void initsTransaksiPulsa() {
-        idSelected = null;
         resetSidebar();
         menuTransaksiPulsa.setBackground(cColors.BLUE);
         menuTransaksiPulsa.setForeground(cColors.WHITE);
@@ -952,7 +941,6 @@ public class DashboardAdminView extends cDashboardFrame {
     }
   
     private void initsTransaksiPaket() {
-        idSelected = null;
         resetSidebar();
         menuTransaksiPaket.setBackground(cColors.BLUE);
         menuTransaksiPaket.setForeground(cColors.WHITE);
@@ -1002,7 +990,6 @@ public class DashboardAdminView extends cDashboardFrame {
 
         if(confirm == 0){
             this.statusLogin = false;
-            this.idSelected = null;
             Controller.showLoginAdmin();
         }
     }

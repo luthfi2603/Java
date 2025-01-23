@@ -1132,4 +1132,50 @@ public class Model {
 
         return resultState;
     }
+
+    public static boolean isiPulsaCustomer(int idTransaksiPulsa, int idMitra) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "UPDATE transaksi_pulsa SET id_mitra = " + idMitra + ", status_transaksi = 'selesai' WHERE id_transaksi_pulsa = " + idTransaksiPulsa;
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean requestSaldoMitra(int idMitra) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "INSERT INTO transaksi_saldo VALUES (" + null + ", " + idMitra + ", 200000, " + null + ", 'diproses', '1')";
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
 }

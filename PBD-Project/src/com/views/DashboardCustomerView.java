@@ -430,6 +430,7 @@ public class DashboardCustomerView extends cDashboardFrame {
                         if (Model.ubahProfileCustomer(idCustomer, nama, email)) {
                             JOptionPane.showMessageDialog(DashboardCustomerView.this, "Ubah profile berhasil", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
 
+                            roleText.setText("Customer | " + Model.getDetailCustomer(idCustomer)[1].toString());
                             initsAkun();
                         } else {
                             JOptionPane.showMessageDialog(DashboardCustomerView.this, "Ubah profile gagal", "Gagal", JOptionPane.ERROR_MESSAGE);

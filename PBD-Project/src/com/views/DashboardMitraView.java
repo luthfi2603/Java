@@ -1,5 +1,7 @@
 package com.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
@@ -12,7 +14,6 @@ import com.templates.cDashboardFrame;
 
 public class DashboardMitraView extends cDashboardFrame {
     Integer idMitra = null;
-    Integer idSelected = null;
 
     // sidebar menu
     private cSidebarMenu menuBeranda = new cSidebarMenu("Beranda", 70);
@@ -36,7 +37,7 @@ public class DashboardMitraView extends cDashboardFrame {
     // private DefaultTableModel dmRequestSaldo;
     private cTable tblDataRequestSaldo;
     private cScrollPane spDataRequestSaldo;
-    private cInfoLabel labelDoRequestSaldoInfoSaldo = new cInfoLabel("Sisa Saldo Anda", 490, 20);
+    private cInfoLabel labelDoRequestSaldoInfoSaldo = new cInfoLabel("Request Saldo", 490, 20);
     private cErrorLabel errorDoRequestSaldoInfoSaldo = new cErrorLabel("Tidak bisa melakukan request jika saldo masih diatas 100K", 490, 60, 400, false);
     private cBlueButton btnRequestSaldo = new cBlueButton("Request", 490, 90, 155);
     
@@ -132,7 +133,6 @@ public class DashboardMitraView extends cDashboardFrame {
 
                 if(konfirmasi == 0){
                     idMitra = null;
-                    idSelected = null;
     
                     Controller.showLoginMitra();
                 }
@@ -157,7 +157,6 @@ public class DashboardMitraView extends cDashboardFrame {
     }
 
     private void initsBeranda() {
-        idSelected = null;
         resetSidebar();
         menuBeranda.setBackground(cColors.BLUE);
         menuBeranda.setForeground(cColors.WHITE);
@@ -186,7 +185,6 @@ public class DashboardMitraView extends cDashboardFrame {
     }
     
     private void initsInfoSaldo() {
-        idSelected = null;
         resetSidebar();
         menuInfoSaldo.setBackground(cColors.BLUE);
         menuInfoSaldo.setForeground(cColors.WHITE);
@@ -210,18 +208,36 @@ public class DashboardMitraView extends cDashboardFrame {
 
         valueSisaSaldoInfoSaldo.setText(String.valueOf(Model.getDetailSaldoMitra(idMitra)));
 
+        if (Model.getDetailSaldoMitra(idMitra) < 100000)
+            content.add(btnRequestSaldo);
+        else
+            content.remove(btnRequestSaldo);
+
+        if (btnRequestSaldo.getActionListeners().length == 0) {
+            btnRequestSaldo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    if (Model.requestSaldoMitra(idMitra)) {
+                        JOptionPane.showMessageDialog(DashboardMitraView.this, "Request saldo berhasil", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                        initsInfoSaldo();
+                    } else {
+                        JOptionPane.showMessageDialog(DashboardMitraView.this, "Request saldo gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        }
+
         content.add(labelSisaSaldoInfoSaldo);
         content.add(valueSisaSaldoInfoSaldo);
         content.add(labelRequestSaldoInfoSaldo);
         content.add(spDataRequestSaldo);
         content.add(labelDoRequestSaldoInfoSaldo);
         content.add(errorDoRequestSaldoInfoSaldo);
-        content.add(btnRequestSaldo);
         setVisible(true);
     }
   
     private void initsRequestPulsa() {
-        idSelected = null;
         resetSidebar();
         menuRequestPulsa.setBackground(cColors.BLUE);
         menuRequestPulsa.setForeground(cColors.WHITE);
@@ -252,6 +268,35 @@ public class DashboardMitraView extends cDashboardFrame {
 
         spDataRequestPulsa = new cScrollPane(tblDataRequestPulsa, 25, 76, 740, 190);
 
+        if (btnIsiPulsa.getActionListeners().length == 0) {
+            btnIsiPulsa.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    int selectedIndex = tblDataRequestPulsa.getSelectedRow();
+
+                    if (selectedIndex == -1) {
+                        JOptionPane.showMessageDialog(DashboardMitraView.this, "Silahkan pilih data terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        int jumlahPulsa = Integer.parseInt(tblDataRequestPulsa.getValueAt(selectedIndex, 4).toString());
+
+                        if (Model.getDetailSaldoMitra(idMitra) < jumlahPulsa + 1000) {
+                            JOptionPane.showMessageDialog(DashboardMitraView.this, "Saldo anda tidak mencukupi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                        } else {
+                            int idTransaksiPulsa = Integer.parseInt(tblDataRequestPulsa.getValueAt(selectedIndex, 0).toString());
+
+                            if (Model.isiPulsaCustomer(idTransaksiPulsa, idMitra)) {
+                                JOptionPane.showMessageDialog(DashboardMitraView.this, "Isi pulsa berhasil", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                                initsTransaksiSaya();
+                            } else {
+                                JOptionPane.showMessageDialog(DashboardMitraView.this, "Isi pulsa gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
         content.add(labelDataRequestPulsa);
         content.add(spDataRequestPulsa);
         content.add(btnIsiPulsa);
@@ -259,7 +304,6 @@ public class DashboardMitraView extends cDashboardFrame {
     }
   
     private void initsTransaksiSaya() {
-        idSelected = null;
         resetSidebar();
         menuTransaksiSaya.setBackground(cColors.BLUE);
         menuTransaksiSaya.setForeground(cColors.WHITE);
