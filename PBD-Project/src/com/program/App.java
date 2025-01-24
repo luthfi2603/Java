@@ -2,6 +2,8 @@ package com.program;
 
 public class App {
     public static void main(String[] args) {
-        Controller.showDashboardMitra(2);
+        // Controller.showDashboardAdmin(true);
+        // Controller.showDashboardMitra(2);
+        Controller.showDashboardCustomer(2);
     }
 }

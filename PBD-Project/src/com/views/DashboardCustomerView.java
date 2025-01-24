@@ -312,6 +312,34 @@ public class DashboardCustomerView extends cDashboardFrame {
         /* String textDeskripsiPaket = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam totam doloribus velit ipsa! Beatae tempore quod laborum porro optio aliquam voluptate commodi assumenda explicabo debitis accusamus obcaecati, quo nostrum esse!";
         valueDeskripsiPaket.setText(textDeskripsiPaket); */
 
+        if (btnBeliPaket.getActionListeners().length == 0) {
+            btnBeliPaket.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    int selectedIndex = dataPaket.getSelectedRow();
+
+                    if (selectedIndex == -1) {
+                        JOptionPane.showMessageDialog(DashboardCustomerView.this, "Silahkan pilih paket terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        int idPaket = Integer.parseInt(dataPaket.getValueAt(selectedIndex, 0).toString());
+                        int hargaPaket = Integer.parseInt(dataPaket.getValueAt(selectedIndex, 3).toString().substring(2));
+
+                        if (Integer.parseInt(Model.getDetailPulsaKuotaCustomer(idCustomer)[0].toString()) >= hargaPaket) {
+                            if (Model.beliPaket(idPaket, idCustomer)) {
+                                JOptionPane.showMessageDialog(DashboardCustomerView.this, "Beli paket berhasil", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                                initsHistoryBeliPaket();
+                            } else {
+                                JOptionPane.showMessageDialog(DashboardCustomerView.this, "Beli paket gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(DashboardCustomerView.this, "Pulsa anda tidak mencukupi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                }
+            });
+        }
+
         content.add(labelSisaKuotaBeliPaket);
         content.add(valueSisaKuotaBeliPaket);
         content.add(labelPilihanBeliPaket);

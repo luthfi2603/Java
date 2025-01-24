@@ -388,7 +388,7 @@ public class Model {
 
         try {
             statement = connection.createStatement();
-            String query = "SELECT * FROM view_paket_aktif ORDER BY id_paket DESC";
+            String query = "SELECT * FROM view_paket_aktif ORDER BY nama_paket";
 
             result = statement.executeQuery(query);
 
@@ -1168,6 +1168,57 @@ public class Model {
 
             if (statement.executeUpdate(query) > 0) {
                 resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean ubahPulsaKuotaCustomerByPaket(int idCustomer, int hargaPaket, int kuota) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "UPDATE pulsa_kuota_customer SET pulsa_customer = pulsa_customer - " + hargaPaket + ", kuota_customer = kuota_customer + " + kuota + " WHERE id_customer = " + idCustomer;
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean beliPaket(int idPaket, int idCustomer) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "INSERT INTO transaksi_paket VALUES (" + null + ", " + idCustomer + ", " + idPaket + ", " + null + ", 'selesai', '1')";
+
+            if (statement.executeUpdate(query) > 0) {
+                int hargaPaket = Integer.parseInt(getDetailPaket(idPaket)[4].toString());
+                int kuota = Integer.parseInt(getDetailPaket(idPaket)[3].toString());
+                
+                if (ubahPulsaKuotaCustomerByPaket(idCustomer, hargaPaket, kuota)) {
+                    resultState = true;
+                }
             }
             
             statement.close();
