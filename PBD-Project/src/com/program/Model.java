@@ -1358,4 +1358,50 @@ public class Model {
 
         return resultState;
     }
+    
+    public static boolean hapusMitra(int idMitra) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "UPDATE mitra SET status_aktif = '0' WHERE id_mitra = " + idMitra;
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+    
+    public static boolean hapusCustomer(int idCustomer) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "UPDATE customer SET status_aktif = '0' WHERE id_customer = " + idCustomer;
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
 }

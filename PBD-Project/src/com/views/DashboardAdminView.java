@@ -391,6 +391,29 @@ public class DashboardAdminView extends cDashboardFrame {
             }
         });
 
+        if (btnHapusDataMitra.getActionListeners().length == 0) {
+            btnHapusDataMitra.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    int selectedIndex = tblDataDataMitra.getSelectedRow();
+
+                    if (selectedIndex == -1) {
+                        JOptionPane.showMessageDialog(DashboardAdminView.this, "Silahkan pilih data terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        int idMitra = Integer.parseInt(tblDataDataMitra.getValueAt(selectedIndex, 1).toString());
+
+                        if (Model.hapusMitra(idMitra)) {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Mitra berhasil dihapus", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                            initsDataMitra();
+                        } else {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Mitra gagal dihapus", "Gagal", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            });
+        }
+
         content.add(labelDataMitra);
         content.add(labelCariDataMitra);
         content.add(txtCariDataMitra);
@@ -448,6 +471,29 @@ public class DashboardAdminView extends cDashboardFrame {
                 tblDataDataCustomer.getColumnModel().getColumn(1).setMaxWidth(0);
             }
         });
+
+        if (btnHapusDataCustomer.getActionListeners().length == 0) {
+            btnHapusDataCustomer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    int selectedIndex = tblDataDataCustomer.getSelectedRow();
+
+                    if (selectedIndex == -1) {
+                        JOptionPane.showMessageDialog(DashboardAdminView.this, "Silahkan pilih data terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        int idCustomer = Integer.parseInt(tblDataDataCustomer.getValueAt(selectedIndex, 1).toString());
+
+                        if (Model.hapusCustomer(idCustomer)) {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Customer berhasil dihapus", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                            initsDataCustomer();
+                        } else {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Customer gagal dihapus", "Gagal", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            });
+        }
 
         content.add(labelDataCustomer);
         content.add(labelCariDataCustomer);
