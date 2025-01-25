@@ -1164,7 +1164,7 @@ public class Model {
         try {
             statement = connection.createStatement();
 
-            String query = "INSERT INTO transaksi_saldo VALUES (" + null + ", " + idMitra + ", 200000, " + null + ", 'diproses', '1')";
+            String query = "INSERT INTO transaksi_saldo VALUES (" + null + ", " + idMitra + ", 250000, " + null + ", 'diproses', '1')";
 
             if (statement.executeUpdate(query) > 0) {
                 resultState = true;
@@ -1217,6 +1217,135 @@ public class Model {
                 int kuota = Integer.parseInt(getDetailPaket(idPaket)[3].toString());
                 
                 if (ubahPulsaKuotaCustomerByPaket(idCustomer, hargaPaket, kuota)) {
+                    resultState = true;
+                }
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static Object[] getDetailTransaksiSaldo(int idTransaksiSaldo) {
+        connect();
+
+        Object[] rowData = new Object[6];
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_all_transaksi_saldo WHERE id_transaksi_saldo = " + idTransaksiSaldo;
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            rowData[0] = result.getInt("id_transaksi_saldo");
+            rowData[1] = result.getInt("id_mitra");
+            rowData[2] = result.getString("nama_mitra");
+            rowData[3] = result.getInt("jumlah_saldo");
+            rowData[4] = result.getString("waktu_transaksi");
+            rowData[5] = result.getString("status_transaksi");
+            
+            // close statement dan connection
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return rowData;
+    }
+
+    public static boolean ubahSaldoMitraByRequestSaldo(int idMitra) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "UPDATE saldo_mitra SET saldo_mitra = saldo_mitra + 250000 WHERE id_mitra = " + idMitra;
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean verifikasiRequestSaldo(int idRequestSaldo) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "UPDATE transaksi_saldo SET status_transaksi = 'selesai' WHERE id_transaksi_saldo = " + idRequestSaldo;
+
+            if (statement.executeUpdate(query) > 0) {
+                /* int idMitra = Integer.parseInt(getDetailTransaksiSaldo(idRequestSaldo)[1].toString());
+        
+                if (ubahSaldoMitraByRequestSaldo(idMitra)) {
+                    resultState = true;
+                } */
+
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+    
+    public static boolean ubahSaldoMitraByVerifikasiMitra(int idMitra) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "UPDATE saldo_mitra SET saldo_mitra = 150000 WHERE id_mitra = " + idMitra;
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+    
+    public static boolean verifikasiMitra(int idMitra) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "UPDATE mitra SET status_verifikasi = '1' WHERE id_mitra = " + idMitra;
+
+            if (statement.executeUpdate(query) > 0) {
+                if (ubahSaldoMitraByVerifikasiMitra(idMitra)) {
                     resultState = true;
                 }
             }

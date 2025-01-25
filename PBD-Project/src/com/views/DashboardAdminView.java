@@ -348,6 +348,9 @@ public class DashboardAdminView extends cDashboardFrame {
         refreshContent();
         menuDataMitra.setSidebarAktif();
         menuTitle.setText("Data Mitra");
+
+        txtCariDataMitra.setText(null);
+
         /* String[] dataUserHeader = {"Header 1", "Header 2", "Header 3"};
         String[][] dataUser = {
             {"Row1 Col1", "Row1 Col2", "Row1 Col3"},
@@ -356,7 +359,9 @@ public class DashboardAdminView extends cDashboardFrame {
             {"Row4 Col1", "Row4 Col2", "Row4 Col3"},
             {"Row5 Col1", "Row5 Col2", "Row5 Col3"}
         };
+
         dmDataMitra = new DefaultTableModel(dataUser, dataUserHeader); */
+
         tblDataDataMitra = new cTable(Model.getAllDataSaldoMitra());
 
         tblDataDataMitra.getColumnModel().getColumn(0).setWidth(0);
@@ -401,6 +406,9 @@ public class DashboardAdminView extends cDashboardFrame {
         refreshContent();
         menuDataCustomer.setSidebarAktif();
         menuTitle.setText("Data Customer");
+
+        txtCariDataCustomer.setText(null);
+
         /* String[] dataUserHeader = {"Header 1", "Header 2", "Header 3"};
         String[][] dataUser = {
             {"Row1 Col1", "Row1 Col2", "Row1 Col3"},
@@ -409,7 +417,9 @@ public class DashboardAdminView extends cDashboardFrame {
             {"Row4 Col1", "Row4 Col2", "Row4 Col3"},
             {"Row5 Col1", "Row5 Col2", "Row5 Col3"}
         };
+
         dmDataCustomer = new DefaultTableModel(dataUser, dataUserHeader); */
+
         tblDataDataCustomer = new cTable(Model.getPulsaKuotaCustomer());
 
         tblDataDataCustomer.getColumnModel().getColumn(0).setWidth(0);
@@ -752,6 +762,9 @@ public class DashboardAdminView extends cDashboardFrame {
         refreshContent();
         menuRequestSaldo.setSidebarAktif();
         menuTitle.setText("Request Saldo Pending");
+
+        txtCariRequestSaldo.setText(null);
+
         /* String[] dataUserHeader = {"Header 1", "Header 2", "Header 3"};
         String[][] dataUser = {
             {"Row1 Col1", "Row1 Col2", "Row1 Col3"},
@@ -760,7 +773,9 @@ public class DashboardAdminView extends cDashboardFrame {
             {"Row4 Col1", "Row4 Col2", "Row4 Col3"},
             {"Row5 Col1", "Row5 Col2", "Row5 Col3"}
         };
+
         dmRequestSaldo = new DefaultTableModel(dataUser, dataUserHeader); */
+
         tblDataRequestSaldo = new cTable(Model.getPendingTransaksiSaldo());
 
         tblDataRequestSaldo.getColumnModel().getColumn(0).setWidth(0);
@@ -781,14 +796,39 @@ public class DashboardAdminView extends cDashboardFrame {
                 tblDataRequestSaldo.getColumnModel().getColumn(0).setMaxWidth(0);
             }
         });
-    
-        btnLihatBerhasilRequestSaldo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                initsRequestSaldoDone();
-            }
-        });
-    
+
+        if (btnLihatBerhasilRequestSaldo.getActionListeners().length == 0) {
+            btnLihatBerhasilRequestSaldo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    initsRequestSaldoDone();
+                }
+            });
+        }
+
+        if (btnApproveRequestSaldo.getActionListeners().length == 0) {
+            btnApproveRequestSaldo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    int selectedIndex = tblDataRequestSaldo.getSelectedRow();
+
+                    if (selectedIndex == -1) {
+                        JOptionPane.showMessageDialog(DashboardAdminView.this, "Silahkan pilih data terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        int idRequestSaldo = Integer.parseInt(tblDataRequestSaldo.getValueAt(selectedIndex, 0).toString());
+
+                        if (Model.verifikasiRequestSaldo(idRequestSaldo)) {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Request saldo berhasil disetujui", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                            initsRequestSaldoDone();
+                        } else {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Request saldo gagal disetujui", "Gagal", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            });
+        }
+
         content.add(labelRequestSaldo);
         content.add(labelCariRequestSaldo);
         content.add(txtCariRequestSaldo);
@@ -836,12 +876,14 @@ public class DashboardAdminView extends cDashboardFrame {
             }
         });
     
-        btnLihatPendingRequestSaldoDone.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                initsRequestSaldo();
-            }
-        });
+        if (btnLihatPendingRequestSaldoDone.getActionListeners().length == 0) {
+            btnLihatPendingRequestSaldoDone.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    initsRequestSaldo();
+                }
+            });
+        }
     
         content.add(labelRequestSaldoDone);
         content.add(labelCariRequestSaldoDone);
@@ -858,6 +900,9 @@ public class DashboardAdminView extends cDashboardFrame {
         refreshContent();
         menuCalonMitra.setSidebarAktif();
         menuTitle.setText("Calon Mitra");
+
+        txtCariCalonMitra.setText(null);
+
         /* String[] dataUserHeader = {"Header 1", "Header 2", "Header 3"};
         String[][] dataUser = {
             {"Row1 Col1", "Row1 Col2", "Row1 Col3"},
@@ -866,7 +911,9 @@ public class DashboardAdminView extends cDashboardFrame {
             {"Row4 Col1", "Row4 Col2", "Row4 Col3"},
             {"Row5 Col1", "Row5 Col2", "Row5 Col3"}
         };
+        
         dmCalonMitra = new DefaultTableModel(dataUser, dataUserHeader); */
+
         tblDataCalonMitra = new cTable(Model.getNotVerifiedMitra());
 
         tblDataCalonMitra.getColumnModel().getColumn(0).setWidth(0);
@@ -888,6 +935,29 @@ public class DashboardAdminView extends cDashboardFrame {
             }
         });
 
+        if (btnApproveCalonMitra.getActionListeners().length == 0) {
+            btnApproveCalonMitra.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    int selectedIndex = tblDataCalonMitra.getSelectedRow();
+
+                    if (selectedIndex == -1) {
+                        JOptionPane.showMessageDialog(DashboardAdminView.this, "Silahkan pilih data terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        int idMitra = Integer.parseInt(tblDataCalonMitra.getValueAt(selectedIndex, 0).toString());
+
+                        if (Model.verifikasiMitra(idMitra)) {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Mitra berhasil disetujui", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                            initsDataMitra();
+                        } else {
+                            JOptionPane.showMessageDialog(DashboardAdminView.this, "Mitra gagal disetujui", "Gagal", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            });
+        }
+
         content.add(labelCalonMitra);
         content.add(labelCariCalonMitra);
         content.add(txtCariCalonMitra);
@@ -903,6 +973,9 @@ public class DashboardAdminView extends cDashboardFrame {
         refreshContent();
         menuTransaksiPulsa.setSidebarAktif();
         menuTitle.setText("Transaksi Pulsa");
+
+        txtCariTransaksiPulsa.setText(null);
+
         /* String[] dataUserHeader = {"Header 1", "Header 2", "Header 3"};
         String[][] dataUser = {
             {"Row1 Col1", "Row1 Col2", "Row1 Col3"},
@@ -911,7 +984,9 @@ public class DashboardAdminView extends cDashboardFrame {
             {"Row4 Col1", "Row4 Col2", "Row4 Col3"},
             {"Row5 Col1", "Row5 Col2", "Row5 Col3"}
         };
+
         dmTransaksiPulsa = new DefaultTableModel(dataUser, dataUserHeader); */
+
         tblDataTransaksiPulsa = new cTable(Model.getAllTransaksiPulsa());
 
         tblDataTransaksiPulsa.getColumnModel().getColumn(0).setWidth(0);
@@ -947,6 +1022,9 @@ public class DashboardAdminView extends cDashboardFrame {
         refreshContent();
         menuTransaksiPaket.setSidebarAktif();
         menuTitle.setText("Transaksi Paket");
+
+        txtCariTransaksiPaket.setText(null);
+
         /* String[] dataUserHeader = {"Header 1", "Header 2", "Header 3"};
         String[][] dataUser = {
             {"Row1 Col1", "Row1 Col2", "Row1 Col3"},
@@ -955,7 +1033,9 @@ public class DashboardAdminView extends cDashboardFrame {
             {"Row4 Col1", "Row4 Col2", "Row4 Col3"},
             {"Row5 Col1", "Row5 Col2", "Row5 Col3"}
         };
+
         dmTransaksiPaket = new DefaultTableModel(dataUser, dataUserHeader); */
+
         tblDataTransaksiPaket = new cTable(Model.getAllTransaksiPaket());
 
         tblDataTransaksiPaket.getColumnModel().getColumn(0).setWidth(0);
