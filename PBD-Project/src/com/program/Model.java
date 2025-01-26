@@ -807,6 +807,33 @@ public class Model {
         return rowData;
     }
 
+    public static Object[] getDetailMitraByEmail(String email) {
+        connect();
+
+        Object[] rowData = new Object[4];
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_all_mitra WHERE email_mitra = '" + email + "'";
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            rowData[0] = result.getInt("id_mitra");
+            rowData[1] = result.getString("nama_mitra");
+            rowData[2] = result.getString("email_mitra");
+            rowData[3] = result.getString("status_verifikasi");
+            
+            // close statement dan connection
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return rowData;
+    }
+
     public static int getDetailSaldoMitra(int idMitra) {
         connect();
 
@@ -985,6 +1012,33 @@ public class Model {
         return rowData;
     }
 
+    public static Object[] getDetailCustomerByNoHp(String noHp) {
+        connect();
+
+        Object[] rowData = new Object[4];
+
+        try {
+            statement = connection.createStatement();
+            String query = "SELECT * FROM view_customer WHERE nomor_hp_customer = " + noHp;
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            rowData[0] = result.getInt("id_customer");
+            rowData[1] = result.getString("nama_customer");
+            rowData[2] = result.getString("nomor_hp_customer");
+            rowData[3] = result.getString("email_customer");
+            
+            // close statement dan connection
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return rowData;
+    }
+
     public static Object[] getDetailPulsaKuotaCustomer(int idCustomer) {
         connect();
 
@@ -1117,8 +1171,14 @@ public class Model {
 
         try {
             statement = connection.createStatement();
+            
+            String query = "";
 
-            String query = "UPDATE customer SET nama_customer = '" + namaCustomer + "', email_customer = '" + emailCustomer + "' WHERE id_customer = " + idCustomer;
+            if (!emailCustomer.equalsIgnoreCase("")) {
+                query = "UPDATE customer SET nama_customer = '" + namaCustomer + "', email_customer = '" + emailCustomer + "' WHERE id_customer = " + idCustomer;
+            } else {
+                query = "UPDATE customer SET nama_customer = '" + namaCustomer + "', email_customer = NULL WHERE id_customer = " + idCustomer;
+            }
 
             if (statement.executeUpdate(query) > 0) {
                 resultState = true;
@@ -1393,6 +1453,156 @@ public class Model {
             String query = "UPDATE customer SET status_aktif = '0' WHERE id_customer = " + idCustomer;
 
             if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean verifikasiAkunMitra(String email, String password) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "SELECT COUNT(*) FROM view_all_mitra WHERE email_mitra = '" + email + "' AND password_mitra = '" + password + "'";
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            if (result.getInt(1) == 1) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean verifikasiEmailMitra(String email) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "SELECT COUNT(*) FROM view_all_mitra WHERE email_mitra = '" + email + "'";
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            if (result.getInt(1) == 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean verifikasiNoHpCustomer(String noHp) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "SELECT COUNT(*) FROM view_customer WHERE nomor_hp_customer = '" + noHp + "'";
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            if (result.getInt(1) == 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean daftarMitra(String nama, String email, String password) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "INSERT INTO mitra VALUES (NULL, '" + nama + "', '" + email + "', '" + password + "', '0', '1')";
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean daftarCustomer(String nama, String noHp, String password) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "INSERT INTO customer VALUES (NULL, '" + nama + "', '" + noHp + "', NULL, '" + password + "', '1')";
+
+            if (statement.executeUpdate(query) > 0) {
+                resultState = true;
+            }
+            
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return resultState;
+    }
+
+    public static boolean verifikasiAkunCustomer(String noHp, String password) {
+        connect();
+        
+        boolean resultState = false;
+
+        try {
+            statement = connection.createStatement();
+
+            String query = "SELECT COUNT(*) FROM view_customer WHERE nomor_hp_customer = '" + noHp + "' AND password_customer = '" + password + "'";
+
+            result = statement.executeQuery(query);
+            
+            result.next();
+            if (result.getInt(1) == 1) {
                 resultState = true;
             }
             

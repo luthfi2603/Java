@@ -183,6 +183,7 @@ public class DashboardCustomerView extends cDashboardFrame {
                     idCustomer = null;
                     // idSelected = null;
     
+                    DashboardCustomerView.this.setVisible(false);
                     Controller.showLoginCustomer();
                 }
             }
@@ -424,6 +425,7 @@ public class DashboardCustomerView extends cDashboardFrame {
         menuTitle.setText("Akun Saya");
 
         Object[] dataCustomer = Model.getDetailCustomer(idCustomer);
+        dataCustomer[3] = dataCustomer[3] != null ? dataCustomer[3] : "";
 
         txtNama.setText(dataCustomer[1].toString());
         txtEmail.setText(dataCustomer[3].toString());

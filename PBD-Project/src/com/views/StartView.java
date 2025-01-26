@@ -5,8 +5,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
 import com.partials.*;
 import com.program.Controller;
+import com.program.Model;
 import com.templates.cStartFrame;
 
 public class StartView extends cStartFrame {
@@ -81,7 +84,7 @@ public class StartView extends cStartFrame {
     private cStartLink toDaftarCustomerLoginAdmin = new cStartLink("Daftar sebagai customer", 362);
     private cStartLink toLoginCustomerLoginAdmin = new cStartLink("Sudah punya akun customer?", 382);
 
-    public StartView(){
+    public StartView() {
         super();
 
         // link di frame login customer
@@ -215,23 +218,40 @@ public class StartView extends cStartFrame {
         });
     }
 
-    public void initsLoginCustomer(){
-        if(btnLoginLoginCustomer.getActionListeners().length == 0){
-            btnLoginLoginCustomer.addActionListener(new ActionListener(){
+    public void initsLoginCustomer() {
+        if (btnLoginLoginCustomer.getActionListeners().length == 0) {
+            btnLoginLoginCustomer.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent ae){
-                    if(txtNoHpLoginCustomer.getText().equalsIgnoreCase("") || String.valueOf(txtPasswordLoginCustomer.getPassword()).equalsIgnoreCase("")){
+                public void actionPerformed(ActionEvent ae) {
+                    String noHp = txtNoHpLoginCustomer.getText();
+                    String password = String.valueOf(txtPasswordLoginCustomer.getPassword());
+
+                    if (noHp.equalsIgnoreCase("") || password.equalsIgnoreCase("")) {
                         Controller.showLoginCustomer();
-                        if(txtNoHpLoginCustomer.getText().equalsIgnoreCase("")){
+
+                        if (noHp.equalsIgnoreCase("")) {
                             cardStart.add(errorNoHpLoginCustomer);
                         }
-                        if(String.valueOf(txtPasswordLoginCustomer.getPassword()).equalsIgnoreCase("")){
+
+                        if (password.equalsIgnoreCase("")) {
                             cardStart.add(errorPasswordLoginCustomer);
+                        }
+                    } else {
+                        if (Model.verifikasiAkunCustomer(noHp, password)) {
+                            txtNoHpLoginCustomer.setText(null);
+                            txtPasswordLoginCustomer.setText(null);
+
+                            Controller.showDashboardCustomer(Integer.parseInt(Model.getDetailCustomerByNoHp(noHp)[0].toString()));
+                        } else {
+                            JOptionPane.showMessageDialog(StartView.this, "Silahkan periksa nomor hp dan password", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+
+                            Controller.showLoginCustomer();
                         }
                     }
                 }
             });
         }
+
         this.setTitle("Login Customer");
         cardStart.removeAll();
         titleStart.setText("Login Customer");
@@ -247,26 +267,54 @@ public class StartView extends cStartFrame {
         cardStart.add(toLoginAdminLoginCustomer);
     }
 
-    public void initsDaftarCustomer(){
-        if(btnDaftarDaftarCustomer.getActionListeners().length == 0){
-            btnDaftarDaftarCustomer.addActionListener(new ActionListener(){
+    public void initsDaftarCustomer() {
+        if (btnDaftarDaftarCustomer.getActionListeners().length == 0) {
+            btnDaftarDaftarCustomer.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent ae){
-                    if(txtNamaDaftarCustomer.getText().equalsIgnoreCase("") || txtNoHpDaftarCustomer.getText().equalsIgnoreCase("") || String.valueOf(txtPasswordDaftarCustomer.getPassword()).equalsIgnoreCase("")){
+                public void actionPerformed(ActionEvent ae) {
+                    String nama = txtNamaDaftarCustomer.getText();
+                    String noHp = txtNoHpDaftarCustomer.getText();
+                    String password = String.valueOf(txtPasswordDaftarCustomer.getPassword());
+
+                    if (nama.equalsIgnoreCase("") || noHp.equalsIgnoreCase("") || password.equalsIgnoreCase("")) {
                         Controller.showDaftarCustomer();
-                        if(txtNamaDaftarCustomer.getText().equalsIgnoreCase("")){
+
+                        if (nama.equalsIgnoreCase("")) {
                             cardStart.add(errorNamaDaftarCustomer);
                         }
-                        if(txtNoHpDaftarCustomer.getText().equalsIgnoreCase("")){
+
+                        if (noHp.equalsIgnoreCase("")) {
                             cardStart.add(errorNoHpDaftarCustomer);
                         }
-                        if(String.valueOf(txtPasswordDaftarCustomer.getPassword()).equalsIgnoreCase("")){
+
+                        if (password.equalsIgnoreCase("")) {
                             cardStart.add(errorPasswordDaftarCustomer);
+                        }
+                    } else {
+                        if (Model.verifikasiNoHpCustomer(noHp)) {
+                            if (Model.daftarCustomer(nama, noHp, password)) {
+                                txtNamaDaftarCustomer.setText(null);
+                                txtNoHpDaftarCustomer.setText(null);
+                                txtPasswordDaftarCustomer.setText(null);
+
+                                JOptionPane.showMessageDialog(StartView.this, "Daftar customer berhasil", "Daftar Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                                Controller.showLoginCustomer();
+                            } else {
+                                JOptionPane.showMessageDialog(StartView.this, "Daftar customer gagal", "Daftar Gagal", JOptionPane.ERROR_MESSAGE);
+                                
+                                Controller.showDaftarCustomer();
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(StartView.this, "Nomor hp sudah digunakan", "Daftar Gagal", JOptionPane.ERROR_MESSAGE);
+
+                            Controller.showDaftarCustomer();
                         }
                     }
                 }
             });
         }
+
         this.setTitle("Daftar Customer");
         cardStart.removeAll();
         titleStart.setText("Daftar Customer");
@@ -284,23 +332,40 @@ public class StartView extends cStartFrame {
         cardStart.add(toLoginAdminDaftarCustomer);
     }
 
-    public void initsLoginMitra(){
-        if(btnLoginLoginMitra.getActionListeners().length == 0){
-            btnLoginLoginMitra.addActionListener(new ActionListener(){
+    public void initsLoginMitra() {
+        if (btnLoginLoginMitra.getActionListeners().length == 0) {
+            btnLoginLoginMitra.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent ae){
-                    if(txtEmailLoginMitra.getText().equalsIgnoreCase("") || String.valueOf(txtPasswordLoginMitra.getPassword()).equalsIgnoreCase("")){
+                public void actionPerformed(ActionEvent ae) {
+                    String email = txtEmailLoginMitra.getText();
+                    String password = String.valueOf(txtPasswordLoginMitra.getPassword());
+
+                    if (email.equalsIgnoreCase("") || password.equalsIgnoreCase("")) {
                         Controller.showLoginMitra();
-                        if(txtEmailLoginMitra.getText().equalsIgnoreCase("")){
+
+                        if (email.equalsIgnoreCase("")) {
                             cardStart.add(errorEmailLoginMitra);
                         }
-                        if(String.valueOf(txtPasswordLoginMitra.getPassword()).equalsIgnoreCase("")){
+
+                        if (password.equalsIgnoreCase("")) {
                             cardStart.add(errorPasswordLoginMitra);
+                        }
+                    } else {
+                        if (Model.verifikasiAkunMitra(email, password)) {
+                            txtEmailLoginMitra.setText(null);
+                            txtPasswordLoginMitra.setText(null);
+
+                            Controller.showDashboardMitra(Integer.parseInt(Model.getDetailMitraByEmail(email)[0].toString()));
+                        } else {
+                            JOptionPane.showMessageDialog(StartView.this, "Silahkan periksa email dan password", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+
+                            Controller.showLoginMitra();
                         }
                     }
                 }
             });
         }
+
         this.setTitle("Login Mitra");
         cardStart.removeAll();
         titleStart.setText("Login Mitra");
@@ -316,26 +381,52 @@ public class StartView extends cStartFrame {
         cardStart.add(toLoginAdminLoginMitra);
     }
 
-    public void initsDaftarMitra(){
-        if(btnDaftarDaftarMitra.getActionListeners().length == 0){
-            btnDaftarDaftarMitra.addActionListener(new ActionListener(){
+    public void initsDaftarMitra() {
+        if (btnDaftarDaftarMitra.getActionListeners().length == 0) {
+            btnDaftarDaftarMitra.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent ae){
-                    if(txtNamaDaftarMitra.getText().equalsIgnoreCase("") || txtEmailDaftarMitra.getText().equalsIgnoreCase("") || String.valueOf(txtPasswordDaftarMitra.getPassword()).equalsIgnoreCase("")){
+                public void actionPerformed(ActionEvent ae) {
+                    String nama = txtNamaDaftarMitra.getText();
+                    String email = txtEmailDaftarMitra.getText();
+                    String password = String.valueOf(txtPasswordDaftarMitra.getPassword());
+
+                    if (nama.equalsIgnoreCase("") || email.equalsIgnoreCase("") || password.equalsIgnoreCase("")) {
                         Controller.showDaftarMitra();
-                        if(txtNamaDaftarMitra.getText().equalsIgnoreCase("")){
+
+                        if (nama.equalsIgnoreCase("")) {
                             cardStart.add(errorNamaDaftarMitra);
                         }
-                        if(txtEmailDaftarMitra.getText().equalsIgnoreCase("")){
+
+                        if (email.equalsIgnoreCase("")) {
                             cardStart.add(errorEmailDaftarMitra);
                         }
-                        if(String.valueOf(txtPasswordDaftarMitra.getPassword()).equalsIgnoreCase("")){
+
+                        if (password.equalsIgnoreCase("")) {
                             cardStart.add(errorPasswordDaftarMitra);
+                        }
+                    } else {
+                        if (Model.verifikasiEmailMitra(email)) {
+                            if (Model.daftarMitra(nama, email, password)) {
+                                txtNamaDaftarMitra.setText(null);
+                                txtEmailDaftarMitra.setText(null);
+                                txtPasswordDaftarMitra.setText(null);
+
+                                JOptionPane.showMessageDialog(StartView.this, "Daftar mitra berhasil", "Daftar Berhasil", JOptionPane.INFORMATION_MESSAGE);
+
+                                Controller.showLoginMitra();
+                            } else {
+                                JOptionPane.showMessageDialog(StartView.this, "Daftar mitra gagal", "Daftar Gagal", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(StartView.this, "Email sudah digunakan", "Daftar Gagal", JOptionPane.ERROR_MESSAGE);
+
+                            Controller.showDaftarMitra();
                         }
                     }
                 }
             });
         }
+
         this.setTitle("Daftar Mitra");
         cardStart.removeAll();
         titleStart.setText("Daftar Mitra");
@@ -353,23 +444,40 @@ public class StartView extends cStartFrame {
         cardStart.add(toLoginAdminDaftarMitra);
     }
 
-    public void initsLoginAdmin(){
-        if(btnLoginLoginAdmin.getActionListeners().length == 0){
-            btnLoginLoginAdmin.addActionListener(new ActionListener(){
+    public void initsLoginAdmin() {
+        if (btnLoginLoginAdmin.getActionListeners().length == 0) {
+            btnLoginLoginAdmin.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent ae){
-                    if(txtUsernameLoginAdmin.getText().equalsIgnoreCase("") || String.valueOf(txtPasswordLoginAdmin.getPassword()).equalsIgnoreCase("")){
+                public void actionPerformed(ActionEvent ae) {
+                    String username = txtUsernameLoginAdmin.getText();
+                    String password = String.valueOf(txtPasswordLoginAdmin.getPassword());
+
+                    if (username.equalsIgnoreCase("") || password.equalsIgnoreCase("")) {
                         Controller.showLoginAdmin();
-                        if(txtUsernameLoginAdmin.getText().equalsIgnoreCase("")){
+
+                        if (username.equalsIgnoreCase("")) {
                             cardStart.add(errorUsernameLoginAdmin);
                         }
-                        if(String.valueOf(txtPasswordLoginAdmin.getPassword()).equalsIgnoreCase("")){
+
+                        if (password.equalsIgnoreCase("")) {
                             cardStart.add(errorPasswordLoginAdmin);
+                        }
+                    } else {
+                        if (username.equals("admin") && password.equals("password")) {
+                            txtUsernameLoginAdmin.setText(null);
+                            txtPasswordLoginAdmin.setText(null);
+
+                            Controller.showDashboardAdmin(true);
+                        } else {
+                            JOptionPane.showMessageDialog(StartView.this, "Silahkan periksa username dan password", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+
+                            Controller.showLoginAdmin();
                         }
                     }
                 }
             });
         }
+
         this.setTitle("Login Admin");
         cardStart.removeAll();
         titleStart.setText("Login Admin");

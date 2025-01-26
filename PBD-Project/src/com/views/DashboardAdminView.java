@@ -228,7 +228,7 @@ public class DashboardAdminView extends cDashboardFrame {
         }
     }
 
-    public DashboardAdminView(boolean statusLogin){
+    public DashboardAdminView(boolean statusLogin) {
         super("Dashboard Admin");
 
         this.statusLogin = statusLogin;
@@ -1110,12 +1110,14 @@ public class DashboardAdminView extends cDashboardFrame {
         setVisible(true);
     }
   
-    private void initsLogout(){
-        Object[] options = {"YA", "BATAL"};
+    private void initsLogout() {
+        Object[] options = {"Iya", "Batal"};
         int confirm = JOptionPane.showOptionDialog(null, "Yakin ingin logout?", "Logout", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-        if(confirm == 0){
+        if (confirm == 0) {
             this.statusLogin = false;
+            
+            DashboardAdminView.this.setVisible(false);
             Controller.showLoginAdmin();
         }
     }

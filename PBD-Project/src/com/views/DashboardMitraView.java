@@ -134,6 +134,7 @@ public class DashboardMitraView extends cDashboardFrame {
                 if(konfirmasi == 0){
                     idMitra = null;
     
+                    DashboardMitraView.this.setVisible(false);
                     Controller.showLoginMitra();
                 }
             }
