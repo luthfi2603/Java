@@ -1,0 +1,20 @@
+
+
+Version:	3.50
+CmdLine:	D:\Code\Java\PBD-Project\PBD-Project.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	D:\Code\Java\PBD-Project\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	1.004.000
+Java max ver:	
+Substitute:	JAVA_HOME = C:\Program Files\Java\jdk-21
+Substitute:	PATH = C:\Program Files (x86)\VMware\VMware Player\bin\;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\ComposerSetup\bin;C:\ProgramData\chocolatey\bin;C:\mingw64\bin;C:\xampp\mysql\bin;C:\xampp\php;C:\BigData\hadoop-2.9.2\bin;C:\BigData\hadoop-2.9.2\sbin;C:\Users\HP\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Android\Android Studio\plugins\Kotlin\kotlinc\bin;C:\Program Files\Java\jdk-21\bin;C:\Program Files\Gradle\gradle-8.10.2\bin;C:\Program Files\Git\cmd;C:\Users\HP\AppData\Local\Microsoft\WindowsApps;C:\Users\HP\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\HP\AppData\Roaming\Composer\vendor\bin;C:\Users\HP\AppData\Roaming\npm;C:\Program Files\Java\jdk-21\bin
+JRE paths:	C:\Program Files\Java\jdk-21;C:\Program Files (x86)\VMware\VMware Player\bin\;C:\Python311\Scripts\;C:\Python311\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\ComposerSetup\bin;C:\ProgramData\chocolatey\bin;C:\mingw64\bin;C:\xampp\mysql\bin;C:\xampp\php;C:\BigData\hadoop-2.9.2\bin;C:\BigData\hadoop-2.9.2\sbin;C:\Users\HP\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Android\Android Studio\plugins\Kotlin\kotlinc\bin;C:\Program Files\Java\jdk-21\bin;C:\Program Files\Gradle\gradle-8.10.2\bin;C:\Program Files\Git\cmd;C:\Users\HP\AppData\Local\Microsoft\WindowsApps;C:\Users\HP\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\HP\AppData\Roaming\Composer\vendor\bin;C:\Users\HP\AppData\Roaming\npm;C:\Program Files\Java\jdk-21\bin
+Check launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe (OK)
+Version string: 1.021.000 / 64-Bit (OK)
+Launcher:	C:\Program Files\Java\jdk-21\bin\javaw.exe
+Launcher args:	-jar "D:\Code\Java\PBD-Project\PBD-Project.exe"
+Args length:	47/32768 chars
+Exit code:	0
